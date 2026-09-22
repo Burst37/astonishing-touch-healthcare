@@ -1,0 +1,75 @@
+{
+  "cinematography": {
+    "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+    "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+    "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+    "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+  },
+  "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+  "invariants": [
+    "Preserve approved reference identities, clothing, room continuity and the exact supplied agency logo and wordmark on the upper LEFT chest. Do not invent brand lettering.",
+    "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+    "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+    "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+    "Silent: no music, speech or sound effects.",
+    "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+  ],
+  "meta_tokens": [
+    "IMG_9854.CR2",
+    "film_stills_archive",
+    "editorial_packshot",
+    "commercial_hero_frame",
+    "product_exhibit_#1984",
+    "anamorphic lens flare (extremely restrained)",
+    "ray tracing reflections",
+    "photogrammetry",
+    "HDR10+",
+    "Vogue editorial",
+    "Nike campaign",
+    "Apple keynote aesthetic"
+  ],
+  "project": "{{AGENCY_NAME}} — {{SERVICE_ID}}",
+  "sequence": [
+    {
+      "time": "0–4s",
+      "camera": "ARRI Alexa LF / Cooke 35mm, medium wide, gentle side dolly",
+      "action": "Caregiver moves vacuum head forward across a rug, then visibly draws it back; client rests safely clear of the path. Show the complete travel, not tapping the handle."
+    },
+    {
+      "time": "4–8s",
+      "camera": "Cut to Leica Summilux-C 50mm, table-height medium close-up",
+      "action": "Same caregiver at a nearby table folds one side of a clean shirt inward, then the other side, folds the lower half up and places it on a neat stack. Maintain coherent hands and fabric."
+    }
+  ],
+  "service_note": "This two-action example is for an agency that explicitly offers BOTH housekeeping and laundry together. If separate menu items, generate separate films showing each service only.",
+  "image_first": {
+    "reference": "Create and inspect a branded opening image first; upload that approved image to image-to-video.",
+    "image_prompt": "Photoreal {{AGENCY_NAME}} home-care commercial. {{VERIFIED_SERVICE_ACTION_START}} in a warm lived-in home; respectful caregiver/client relationship; clear hands and relevant objects. ARRI Alexa LF / Cooke 35mm aesthetic, soft motivated daylight from OFFSCREEN ARRI SkyPanel diffusion and OFFSCREEN Aputure 600D window key. Exact supplied logo on upper LEFT chest. Natural skin and fabric. No equipment, rigs, crew, captions, watermarks or meta-token text in scene. Apply the meta_tokens array as aesthetic cues only."
+  },
+  "hero_loop": {
+    "duration_seconds": 12,
+    "shots": [
+      "0–3: approved opening composition, shared puzzle",
+      "3–5.5: meal served onto plate",
+      "5.5–8: cards actually dealt or played",
+      "8–10: safe park walk with visible steps",
+      "10–12: return to exact opening composition and pose"
+    ],
+    "rules": [
+      "Include only enabled services.",
+      "Use the same approved first/last image if engine supports it.",
+      "Inspect generated first/last frames and movement velocity; matching input frames alone do not prove a seamless result.",
+      "Use a restrained finishing blend only if needed; never reverse human actions."
+    ]
+  },
+  "acceptance": [
+    "Silent generation and exported file has no audio track.",
+    "Correct service visible without reading its caption.",
+    "Each timed action completes physically.",
+    "No hand rubbing repeated across categories.",
+    "Exact brand, stable identity, coherent anatomy and object persistence.",
+    "No foreign or invented text; no lights or cameras in frame.",
+    "Watch normal speed and inspect contact sheets at 0.5s intervals.",
+    "Review mobile framing and loop boundary."
+  ]
+}

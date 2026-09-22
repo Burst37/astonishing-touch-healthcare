@@ -1,0 +1,288 @@
+[
+  {
+    "id": "7d510e9b-9198-425f-a422-6058501b186a",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "fc350a4f-8d70-443a-aa18-41c68e614995",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/fc350a4f-8d70-443a-aa18-41c68e614995.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "Respite care: elder and caregiver remain seated, gently smile at one another, caregiver keeps her hand resting reassuringly. Family member at door gives one small wave, then rests hand, no walking. Preserve exact people, faces, ages, wardrobe, existing logos, architecture and daylight from the reference. Ultra-photorealistic home-care commercial, 8 seconds, 16:9. 0-2.5s: original medium-wide frame, gentle precision dolly-in. 2.5-5s: clean cut to macro of the meaningful detail (hands, album or uniform), natural texture. 5-8s: cut to slightly different eye-level medium-wide angle, restrained 6-degree orbit settling into perfect uncluttered 16:9 editorial hero frame. ARRI Alexa LF, Cooke 50mm / Leica Summilux 85mm, dolly rig. Diffused ARRI SkyPanel, Aputure 600D window bounce, natural golden-hour warmth. Denis Villeneuve restraint, Gucci x Vogue human warmth, Apple keynote clarity. No dialogue/music/captions/new text. No face morph, altered logo, extra fingers, plastic skin, whip pans, dramatic expressions or camera shake. Metadata, not visible text: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_022841_7d510e9b-9198-425f-a422-6058501b186a.mp4"
+  },
+  {
+    "id": "d7d385e4-cd6e-402f-acc4-eb3a1f5e4453",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "2fbebc56-305b-4387-bef5-cd8fae006e7c",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/2fbebc56-305b-4387-bef5-cd8fae006e7c.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "Personal support: man stays seated holding his cane. Male caregiver gives one reassuring gentle hand squeeze. They exchange a quiet smile. Do not lift, stand, walk or change posture. Preserve exact people, faces, ages, wardrobe, existing logos, architecture and daylight from the reference. Ultra-photorealistic home-care commercial, 8 seconds, 16:9. 0-2.5s: original medium-wide frame, gentle precision dolly-in. 2.5-5s: clean cut to macro of the meaningful detail (hands, album or uniform), natural texture. 5-8s: cut to slightly different eye-level medium-wide angle, restrained 6-degree orbit settling into perfect uncluttered 16:9 editorial hero frame. ARRI Alexa LF, Cooke 50mm / Leica Summilux 85mm, dolly rig. Diffused ARRI SkyPanel, Aputure 600D window bounce, natural golden-hour warmth. Denis Villeneuve restraint, Gucci x Vogue human warmth, Apple keynote clarity. No dialogue/music/captions/new text. No face morph, altered logo, extra fingers, plastic skin, whip pans, dramatic expressions or camera shake. Metadata, not visible text: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_022841_d7d385e4-cd6e-402f-acc4-eb3a1f5e4453.mp4"
+  },
+  {
+    "id": "7231a1a6-ed3d-4df0-9589-47ab4411974b",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "8db6c343-1e2a-4f7c-97cb-5e780776f780",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/8db6c343-1e2a-4f7c-97cb-5e780776f780.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "Hygiene assistance: fully covered senior woman remains in the closed white robe. Female caregiver gently smooths the robe collar once. Respectful dignity, absolutely no disrobing or bathing, no exposed skin added. Preserve exact people, faces, ages, wardrobe, existing logos, architecture and daylight from the reference. Ultra-photorealistic home-care commercial, 8 seconds, 16:9. 0-2.5s: original medium-wide frame, gentle precision dolly-in. 2.5-5s: clean cut to macro of the meaningful detail (hands, album or uniform), natural texture. 5-8s: cut to slightly different eye-level medium-wide angle, restrained 6-degree orbit settling into perfect uncluttered 16:9 editorial hero frame. ARRI Alexa LF, Cooke 50mm / Leica Summilux 85mm, dolly rig. Diffused ARRI SkyPanel, Aputure 600D window bounce, natural golden-hour warmth. Denis Villeneuve restraint, Gucci x Vogue human warmth, Apple keynote clarity. No dialogue/music/captions/new text. No face morph, altered logo, extra fingers, plastic skin, whip pans, dramatic expressions or camera shake. Metadata, not visible text: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_022841_7231a1a6-ed3d-4df0-9589-47ab4411974b.mp4"
+  },
+  {
+    "id": "5b0df397-9961-4ad1-8777-c02d3cb71e27",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "80bfdbac-65fb-431b-9b04-06569049f253",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/80bfdbac-65fb-431b-9b04-06569049f253.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "Meal preparation: maintain kitchen and ingredients. Caregiver lowers knife to rest flat on cutting board, hands stay safely away from blade, senior gently places one pepper piece into salad bowl. No rapid cutting. Preserve exact people, faces, ages, wardrobe, existing logos, architecture and daylight from the reference. Ultra-photorealistic home-care commercial, 8 seconds, 16:9. 0-2.5s: original medium-wide frame, gentle precision dolly-in. 2.5-5s: clean cut to macro of the meaningful detail (hands, album or uniform), natural texture. 5-8s: cut to slightly different eye-level medium-wide angle, restrained 6-degree orbit settling into perfect uncluttered 16:9 editorial hero frame. ARRI Alexa LF, Cooke 50mm / Leica Summilux 85mm, dolly rig. Diffused ARRI SkyPanel, Aputure 600D window bounce, natural golden-hour warmth. Denis Villeneuve restraint, Gucci x Vogue human warmth, Apple keynote clarity. No dialogue/music/captions/new text. No face morph, altered logo, extra fingers, plastic skin, whip pans, dramatic expressions or camera shake. Metadata, not visible text: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_022841_5b0df397-9961-4ad1-8777-c02d3cb71e27.mp4"
+  },
+  {
+    "id": "5839e86d-45ea-4d1f-924a-27dfe925cf0b",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "b679079a-a8da-4c16-a5eb-77b22a52d64b",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/b679079a-a8da-4c16-a5eb-77b22a52d64b.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "Companionship: caregiver and senior look at the same open photo album, elder gently points at one photo, shared smiles. Album remains open, preserve hands and page contents. Preserve exact people, faces, ages, wardrobe, existing logos, architecture and daylight from the reference. Ultra-photorealistic home-care commercial, 8 seconds, 16:9. 0-2.5s: original medium-wide frame, gentle precision dolly-in. 2.5-5s: clean cut to macro of the meaningful detail (hands, album or uniform), natural texture. 5-8s: cut to slightly different eye-level medium-wide angle, restrained 6-degree orbit settling into perfect uncluttered 16:9 editorial hero frame. ARRI Alexa LF, Cooke 50mm / Leica Summilux 85mm, dolly rig. Diffused ARRI SkyPanel, Aputure 600D window bounce, natural golden-hour warmth. Denis Villeneuve restraint, Gucci x Vogue human warmth, Apple keynote clarity. No dialogue/music/captions/new text. No face morph, altered logo, extra fingers, plastic skin, whip pans, dramatic expressions or camera shake. Metadata, not visible text: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_023932_5839e86d-45ea-4d1f-924a-27dfe925cf0b.mp4"
+  },
+  {
+    "id": "560ff94c-7e58-4e20-9ef0-db559b8fcd85",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "35387430-54ad-4134-8278-84ff926d1928",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/35387430-54ad-4134-8278-84ff926d1928.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "Team portrait: keep exactly the five people and their reference faces, foreground woman in white blazer stays focal point. Tiny natural blinks and breaths, subtle smiles, no synchronized movements, no changing attire or people. Preserve exact people, faces, ages, wardrobe, existing logos, architecture and daylight from the reference. Ultra-photorealistic home-care commercial, 8 seconds, 16:9. 0-2.5s: original medium-wide frame, gentle precision dolly-in. 2.5-5s: clean cut to macro of the meaningful detail (hands, album or uniform), natural texture. 5-8s: cut to slightly different eye-level medium-wide angle, restrained 6-degree orbit settling into perfect uncluttered 16:9 editorial hero frame. ARRI Alexa LF, Cooke 50mm / Leica Summilux 85mm, dolly rig. Diffused ARRI SkyPanel, Aputure 600D window bounce, natural golden-hour warmth. Denis Villeneuve restraint, Gucci x Vogue human warmth, Apple keynote clarity. No dialogue/music/captions/new text. No face morph, altered logo, extra fingers, plastic skin, whip pans, dramatic expressions or camera shake. Metadata, not visible text: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_022841_560ff94c-7e58-4e20-9ef0-db559b8fcd85.mp4"
+  },
+  {
+    "id": "e5ff83eb-58fb-4c80-a76c-07cc59ec7837",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "760dbbde-84f1-4d72-aa92-cfafcb241ce0",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/760dbbde-84f1-4d72-aa92-cfafcb241ce0.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "Warm home visit: preserve both women and doorway. One small natural handshake, then hold hands still and exchange smiles. Bag stays on caregiver shoulder. No entering the house or walking. Preserve exact people, faces, ages, wardrobe, existing logos, architecture and daylight from the reference. Ultra-photorealistic home-care commercial, 8 seconds, 16:9. 0-2.5s: original medium-wide frame, gentle precision dolly-in. 2.5-5s: clean cut to macro of the meaningful detail (hands, album or uniform), natural texture. 5-8s: cut to slightly different eye-level medium-wide angle, restrained 6-degree orbit settling into perfect uncluttered 16:9 editorial hero frame. ARRI Alexa LF, Cooke 50mm / Leica Summilux 85mm, dolly rig. Diffused ARRI SkyPanel, Aputure 600D window bounce, natural golden-hour warmth. Denis Villeneuve restraint, Gucci x Vogue human warmth, Apple keynote clarity. No dialogue/music/captions/new text. No face morph, altered logo, extra fingers, plastic skin, whip pans, dramatic expressions or camera shake. Metadata, not visible text: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_023932_e5ff83eb-58fb-4c80-a76c-07cc59ec7837.mp4"
+  },
+  {
+    "id": "e99a73b5-3263-421e-8a99-e1e654e93e24",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 12,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "ad635707-dc98-4e36-b940-91a3ea439392",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/ad635707-dc98-4e36-b940-91a3ea439392.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "Create a 12-second ultra-photorealistic premium home-care website hero film from this exact reference. Preserve both women, faces, ages, teal uniform and existing embroidered logo, home layout and warm daylight. No added writing, no dialogue, no music. Shot 1 0-3s: start in this composition; slow precision dolly toward their gently clasped hands, caregiver gives one small reassuring squeeze. Shot 2 3-6s: clean cut to macro detail of hands and realistic fabric, soft focus falloff. Shot 3 6-9s: cut to intimate eye-level medium two-shot, shallow 8-degree orbit, natural blinking, a small warm smile; seated client stays seated. Shot 4 9-12s: return to original wide angle, slow dolly back into a perfectly stable 16:9 hero frame with clean negative space on the LEFT for website typography. ARRI Alexa LF, Cooke 50mm and Leica Summilux 85mm macro, precision dolly rig; diffused ARRI SkyPanel and Aputure 600D through the existing window, natural golden-hour softness. Restrained Denis Villeneuve composition, Gucci x Vogue editorial warmth, Apple keynote clarity. Realistic skin pores, restrained highlights, no plastic skin, no morphing, no extra fingers, no added objects, no sudden movements. Cinematography metadata, never render as text: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_022720_e99a73b5-3263-421e-8a99-e1e654e93e24.mp4"
+  },
+  {
+    "id": "ef00fcf8-efca-4a52-8c42-1732e2c3aa11",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "ad635707-dc98-4e36-b940-91a3ea439392",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/ad635707-dc98-4e36-b940-91a3ea439392.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "LIGHT HOUSEKEEPING. Begin at reference: elder seated comfortably. Cut to close-up of this same teal-uniform caregiver's hands gently straightening a loose throw blanket and adjusting a cushion on the adjacent empty sofa seat, not on the elder. Cut back to medium-wide same room, caregiver smooths cushion once while senior relaxes. No standing or lifting the senior, no cleaning chemicals. Keep the same people, faces, ages, wardrobe, logos and home as uploaded reference. Start at supplied image, then make two subtle editorial cuts. 8s 16:9 ultra-photorealistic commercial. 0-2s original wide with gentle dolly; 2-5s macro action insert; 5-8s eye-level medium angle with 5-degree orbit ending perfectly stable uncluttered hero. ARRI Alexa LF, Cooke 50mm, Leica Summilux 85mm, precision dolly, soft ARRI SkyPanel and Aputure 600D through window, existing natural warm daylight. Denis Villeneuve restraint, Vogue editorial warmth. No additional people, captions, text, invented logo, face changes, extra fingers, music or dialogue. Subtle movement only. Metadata never printed: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_024240_ef00fcf8-efca-4a52-8c42-1732e2c3aa11.mp4"
+  },
+  {
+    "id": "cd563729-1513-448d-b0f4-9fd5f8ff4e4e",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "8db6c343-1e2a-4f7c-97cb-5e780776f780",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/8db6c343-1e2a-4f7c-97cb-5e780776f780.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "LAUNDRY ASSISTANCE. Begin at reference with senior fully covered in closed white robe. Cut to close-up of this same caregiver's hands folding a clean white bath towel on the bathroom counter alongside the existing towel stack. Cut to medium view of caregiver gently setting folded towel onto stack. Senior remains comfortably still and fully dressed, no bathing, no disrobing. Keep the same people, faces, ages, wardrobe, logos and home as uploaded reference. Start at supplied image, then make two subtle editorial cuts. 8s 16:9 ultra-photorealistic commercial. 0-2s original wide with gentle dolly; 2-5s macro action insert; 5-8s eye-level medium angle with 5-degree orbit ending perfectly stable uncluttered hero. ARRI Alexa LF, Cooke 50mm, Leica Summilux 85mm, precision dolly, soft ARRI SkyPanel and Aputure 600D through window, existing natural warm daylight. Denis Villeneuve restraint, Vogue editorial warmth. No additional people, captions, text, invented logo, face changes, extra fingers, music or dialogue. Subtle movement only. Metadata never printed: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_024240_cd563729-1513-448d-b0f4-9fd5f8ff4e4e.mp4"
+  },
+  {
+    "id": "06f332c9-4f61-44a5-97ab-4e94a1e21a47",
+    "model": "minimax_h3",
+    "params": {
+      "aigc_watermark": false,
+      "aspect_ratio": "16:9",
+      "batch_size": 1,
+      "duration": 8,
+      "height": 1440,
+      "medias": [
+        {
+          "data": {
+            "id": "2fbebc56-305b-4387-bef5-cd8fae006e7c",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/2fbebc56-305b-4387-bef5-cd8fae006e7c.jpg"
+          },
+          "role": "start_image"
+        }
+      ],
+      "prompt": "MEDICATION REMINDER SERVICE. Begin at reference with man seated holding cane and male caregiver reassuring him. Cut to close-up of caregiver gently tapping his own wristwatch once as a friendly routine reminder, no readable watch lettering. Cut to medium two-shot and senior gives a small acknowledging nod and smile. Do not show medication administration, pills, containers, swallowing, medical procedure or standing up. Keep the same people, faces, ages, wardrobe, logos and home as uploaded reference. Start at supplied image, then make two subtle editorial cuts. 8s 16:9 ultra-photorealistic commercial. 0-2s original wide with gentle dolly; 2-5s macro action insert; 5-8s eye-level medium angle with 5-degree orbit ending perfectly stable uncluttered hero. ARRI Alexa LF, Cooke 50mm, Leica Summilux 85mm, precision dolly, soft ARRI SkyPanel and Aputure 600D through window, existing natural warm daylight. Denis Villeneuve restraint, Vogue editorial warmth. No additional people, captions, text, invented logo, face changes, extra fingers, music or dialogue. Subtle movement only. Metadata never printed: IMG_9854.CR2, film_stills_archive, editorial_packshot, commercial_hero_frame, product_exhibit_#1984, subtle anamorphic lens flare, ray tracing reflections, photogrammetry, HDR10+, Vogue editorial, Nike campaign, Apple keynote aesthetic.",
+      "reference_elements": [],
+      "resolution": "2K",
+      "width": 2560
+    },
+    "original_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260905_024240_06f332c9-4f61-44a5-97ab-4e94a1e21a47.mp4"
+  }
+]

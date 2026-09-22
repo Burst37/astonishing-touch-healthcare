@@ -1,0 +1,126 @@
+{
+  "date": "2026-09-15",
+  "model": "minimax_h3",
+  "jobs": [
+    {
+      "index": 0,
+      "job_id": "22cdd77d-6e3e-499c-b221-3f8da8a653e8",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_204353_22cdd77d-6e3e-499c-b221-3f8da8a653e8.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185645_57651aa1-c6bd-47ee-90a7-ea5f95b832f4.png",
+      "type": "video"
+    },
+    {
+      "index": 1,
+      "job_id": "01517d5e-addc-46da-bae8-8b431388c7e9",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_204354_01517d5e-addc-46da-bae8-8b431388c7e9.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185645_37afd9e5-5f27-4683-a88d-5749c3823d6f.png",
+      "type": "video"
+    },
+    {
+      "index": 3,
+      "job_id": "cd74fe0a-e513-4658-a86e-8273280c9487",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_204353_cd74fe0a-e513-4658-a86e-8273280c9487.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185645_0347c28c-469b-4ed4-b333-2c1c499d1320.png",
+      "type": "video"
+    },
+    {
+      "index": 4,
+      "job_id": "f6ee7cae-208d-467b-8629-3d05517b2de5",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_204354_f6ee7cae-208d-467b-8629-3d05517b2de5.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185645_20aa7246-b478-4cc0-bc4d-252f00e4691b.png",
+      "type": "video"
+    },
+    {
+      "index": 5,
+      "job_id": "6649607f-6859-44be-8f23-7570ebdcc9d4",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_204354_6649607f-6859-44be-8f23-7570ebdcc9d4.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185646_5d6987f3-b523-409a-a259-1f6458f69007.png",
+      "type": "video"
+    },
+    {
+      "index": 6,
+      "job_id": "cf278336-94cf-40e5-bd0d-110eff8514ae",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_204354_cf278336-94cf-40e5-bd0d-110eff8514ae.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185716_f8b1da6b-fd81-489a-a560-5dd1ade132d7.png",
+      "type": "video"
+    },
+    {
+      "index": 2,
+      "job_id": "b04c7069-b7a1-43dd-b827-673d39adfcd2",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_204950_b04c7069-b7a1-43dd-b827-673d39adfcd2.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/9b6f63c9-4d53-4457-8f70-1c027cbeaeb6.png",
+      "type": "video"
+    },
+    {
+      "index": 8,
+      "job_id": "7d586b8d-6b19-4e50-b5cc-38424771634d",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_205023_7d586b8d-6b19-4e50-b5cc-38424771634d.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185716_0f233ecf-3e9d-41d8-8051-95b8b0b6e695.png",
+      "type": "video"
+    },
+    {
+      "index": 7,
+      "job_id": "b27fe890-15a3-47fb-900a-b9074fa4a0bd",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_205144_b27fe890-15a3-47fb-900a-b9074fa4a0bd.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185716_5e513690-dbe4-4c47-9369-4062ff37edea.png",
+      "type": "video"
+    },
+    {
+      "index": 9,
+      "job_id": "838804ea-38c5-47e6-b79d-bef62785f512",
+      "model": "minimax_h3",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_205405_838804ea-38c5-47e6-b79d-bef62785f512.mp4",
+      "status": "completed",
+      "thumbnail_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260915_185645_57651aa1-c6bd-47ee-90a7-ea5f95b832f4.png",
+      "type": "video"
+    }
+  ],
+  "remaining": [],
+  "corrected_personal_care_media": "9b6f63c9-4d53-4457-8f70-1c027cbeaeb6",
+  "actions": [
+    "0\u20133s daughter waves and walks out through doorway while caregiver slides puzzle piece to client. Cut at 3s to medium three-quarter table view; client picks up and fits piece while caregiver sorts pieces until 8s.",
+    "0\u20133s caregiver deals two cards onto table, client picks up cards. Cut at 3s to over-shoulder medium view: client places a card, caregiver laughs and plays another card. Show complete card movements.",
+    null,
+    "0\u20134s caregiver gently brushes client's hair with two complete brush strokes. Cut at 4s to three-quarter medium angle and brush other side. Preserve accurate mirror reflection and fully clothed client.",
+    "0\u20134s caregiver actively stirs skillet, food visibly moves with spoon. Cut at 4s to medium side view caregiver sets prepared plate before client who reaches for fork.",
+    "0\u20133s caregiver wipes tabletop with two broad complete cloth strokes. Hard cut at 3s to medium-wide view of same caregiver vacuuming rug beside client: push cordless vacuum forward then pull back twice, clearly moving vacuum head over floor.",
+    "0\u20133s caregiver pulls clean towel from dryer into basket. Hard cut at 3s to same people at folding counter: caregiver folds a clean shirt, bringing sleeves inward then bottom to top, places folded shirt on stack. Client folds small washcloth alongside. Show real folding, not touching a premade stack.",
+    "0\u20134s caregiver points at phone medication reminder, client notices and looks at own organizer. Cut at 4s over client shoulder: client pulls own organizer closer and checks compartment. Caregiver hands remain away. Reminder only, no administering, prescribing, pills in mouth or injections.",
+    "0\u20134s caregiver checks shopping list, picks red pepper and shows client who nods. Cut at 4s cart-level three-quarter view: caregiver places pepper into cart, client pushes cart and both walk forward."
+  ],
+  "hero": "completed; four-shot sequence visually checked",
+  "review": {
+    "method": "one-second frame sequences inspected for distinct actions and scene cuts",
+    "passed_action_checks": [
+      "respite-care",
+      "companionship",
+      "personal-care",
+      "hygiene-assistance",
+      "meal-preparation",
+      "housekeeping",
+      "laundry",
+      "medication-reminders",
+      "errands",
+      "hero"
+    ],
+    "note": "Generated uniform wordmarks can vary; exact supplied logo remains in website header and footer."
+  }
+}

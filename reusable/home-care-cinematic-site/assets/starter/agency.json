@@ -1,0 +1,95 @@
+{
+  "name": "Your Agency",
+  "tagline": "Thoughtful care. Familiar comforts.",
+  "phone": "",
+  "email": "",
+  "address": "",
+  "domain": "",
+  "logo": "",
+  "heroVideo": "",
+  "bookingUrl": "",
+  "factsVerified": false,
+  "services": [
+    {
+      "id": "respite-care",
+      "title": "Respite care",
+      "description": "Family member leaves for a break; caregiver and client complete a puzzle action.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    },
+    {
+      "id": "companionship",
+      "title": "Companionship",
+      "description": "Deal and play cards, share a laugh, then continue the game.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    },
+    {
+      "id": "personal-care",
+      "title": "Personal care",
+      "description": "Guide forearm through a cardigan sleeve and gently adjust clothing.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    },
+    {
+      "id": "hygiene-assistance",
+      "title": "Hygiene assistance",
+      "description": "Visible hair-brushing strokes and tidy grooming, preserving dignity.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    },
+    {
+      "id": "meal-preparation",
+      "title": "Meal preparation",
+      "description": "Prepare ingredients, then serve actual food onto a plate.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    },
+    {
+      "id": "housekeeping",
+      "title": "Light housekeeping",
+      "description": "Wipe a surface, cut to a complete forward/back vacuum pass.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    },
+    {
+      "id": "laundry",
+      "title": "Laundry assistance",
+      "description": "Remove clean laundry, fold a shirt fully, place it on a stack.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    },
+    {
+      "id": "medication-reminders",
+      "title": "Medication reminders",
+      "description": "Prompt an existing routine; client opens their own English-labeled organizer and reaches for water. No dosing advice or administration.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    },
+    {
+      "id": "errands",
+      "title": "Errand assistance",
+      "description": "Select produce, put it in a bag, release the bag into the cart, then move together.",
+      "enabled": false,
+      "verified": false,
+      "video": "",
+      "poster": ""
+    }
+  ]
+}

@@ -1,0 +1,606 @@
+[
+  {
+    "duration": 8,
+    "index": 0,
+    "job_id": "2b7d0448-8377-4375-8870-1dd03600795a",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 respite-care",
+      "sequence": [
+        {
+          "action": "Caregiver and client work at puzzle table while daughter in tan jacket waves and takes two clear steps OUT through the open front door, giving family caregiver a break.",
+          "camera": "Cooke 40mm medium establishing, slow dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "Cut to table-height close-up: older woman picks up one puzzle piece, caregiver points to its matching gap, older woman fits piece into the puzzle.",
+          "camera": "Leica Summilux-C 75mm action detail, mostly locked",
+          "time": "3\u20136s"
+        },
+        {
+          "action": "Gentle wider reveal of the two continuing the puzzle together, daughter now outside; natural shared smile.",
+          "camera": "Cooke 40mm restrained 10-degree orbit into clean hero frame",
+          "time": "6\u20138s"
+        }
+      ]
+    },
+    "reference_media": "6ae122ab-04f1-4fd5-83ed-7601e5c8829e",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115629_2b7d0448-8377-4375-8870-1dd03600795a.mp4",
+    "slug": "respite-care",
+    "status": "completed",
+    "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/6ae122ab-04f1-4fd5-83ed-7601e5c8829e.webp",
+    "type": "video",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Family member exits while client places a puzzle piece with caregiver support.",
+      "audio": "Removed in final web encoding"
+    }
+  },
+  {
+    "duration": 8,
+    "index": 1,
+    "job_id": "68a975c9-ce72-4e5a-8440-a9154045b74d",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 companionship",
+      "sequence": [
+        {
+          "action": "Caregiver places one playing card onto the table, then draws back her hand. Older woman studies her own cards.",
+          "camera": "Cooke 40mm medium establishing, slow dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "Cut to over-shoulder detail: older woman chooses one card from her hand, places it on the table and releases it. Cards remain physically coherent.",
+          "camera": "Leica Summilux-C 75mm action detail, mostly locked",
+          "time": "3\u20136s"
+        },
+        {
+          "action": "Return to medium two-shot: caregiver responds with another card and both naturally laugh. No idle hand rubbing.",
+          "camera": "Cooke 40mm restrained 10-degree orbit into clean hero frame",
+          "time": "6\u20138s"
+        }
+      ]
+    },
+    "reference_media": "a361f521-9697-4d2c-9695-1af3981db7b9",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115031_68a975c9-ce72-4e5a-8440-a9154045b74d.mp4",
+    "slug": "companionship",
+    "status": "completed",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Both participants visibly place cards, then share a laugh.",
+      "audio": "Removed in final web encoding"
+    }
+  },
+  {
+    "duration": 8,
+    "index": 2,
+    "job_id": "a4b440da-c2fa-4805-9ca2-68b3d4c0c157",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 personal-care",
+      "sequence": [
+        {
+          "action": "Older man pushes his right forearm THROUGH the open sleeve of his blue cardigan. Male caregiver supports and guides loose fabric, not pulling client's arm.",
+          "camera": "Cooke 40mm medium establishing, slow dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "Cut closer at torso height: client's hand visibly emerges from cuff; caregiver gently draws cardigan fabric into place over shoulder.",
+          "camera": "Leica Summilux-C 75mm action detail, mostly locked",
+          "time": "3\u20136s"
+        },
+        {
+          "action": "Gentle dolly reveal: caregiver smooths shoulder seam once, older man adjusts front of cardigan himself and smiles. Clothing stays over undershirt throughout.",
+          "camera": "Cooke 40mm restrained 10-degree orbit into clean hero frame",
+          "time": "6\u20138s"
+        }
+      ]
+    },
+    "reference_media": "9b6f63c9-4d53-4457-8f70-1c027cbeaeb6",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115031_a4b440da-c2fa-4805-9ca2-68b3d4c0c157.mp4",
+    "slug": "personal-care",
+    "status": "completed",
+    "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/9b6f63c9-4d53-4457-8f70-1c027cbeaeb6.png",
+    "type": "video",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Client arm passes through sleeve; cardigan is adjusted and worn.",
+      "audio": "Removed in final web encoding"
+    }
+  },
+  {
+    "duration": 8,
+    "index": 3,
+    "job_id": "35cc7f59-f285-4cb9-b2c2-5b397b9bf555",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 hygiene-assistance",
+      "sequence": [
+        {
+          "action": "Caregiver draws hairbrush from crown down the side of client's silver hair in TWO complete slow brush strokes, lifting brush clear between strokes.",
+          "camera": "Cooke 40mm medium establishing, slow dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "Cut to front three-quarter angle: caregiver brushes the other side once from roots to ends; client stays comfortably seated and fully clothed.",
+          "camera": "Leica Summilux-C 75mm action detail, mostly locked",
+          "time": "3\u20136s"
+        },
+        {
+          "action": "Caregiver lowers brush, client touches her neatly groomed hair and smiles. No mirror/reflections, no bathroom exposure.",
+          "camera": "Cooke 40mm restrained 10-degree orbit into clean hero frame",
+          "time": "6\u20138s"
+        }
+      ]
+    },
+    "reference_media": "862ddba6-e6e2-4ce1-8daa-5c8113376349",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115031_35cc7f59-f285-4cb9-b2c2-5b397b9bf555.mp4",
+    "slug": "hygiene-assistance",
+    "status": "completed",
+    "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/862ddba6-e6e2-4ce1-8daa-5c8113376349.webp",
+    "type": "video",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Complete brush strokes from two angles; client touches groomed hair.",
+      "audio": "Removed in final web encoding"
+    }
+  },
+  {
+    "duration": 8,
+    "index": 4,
+    "job_id": "b09cc727-ace3-4157-9764-d27d2564acf9",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 meal-preparation",
+      "sequence": [
+        {
+          "action": "Caregiver stirs vegetables in skillet with wooden spoon in two broad circles; vegetables visibly move while skillet stays securely on stove.",
+          "camera": "Cooke 40mm medium establishing, slow dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "Cut to plate-level medium detail: caregiver lifts a serving spoonful of vegetables and deposits them ON the older woman's white plate, visibly transferring food.",
+          "camera": "Leica Summilux-C 75mm action detail, mostly locked",
+          "time": "3\u20136s"
+        },
+        {
+          "action": "Client sets napkin in lap, looks at her served meal and smiles; caregiver sets utensil safely down. No impossible utensils or empty spoon serving.",
+          "camera": "Cooke 40mm restrained 10-degree orbit into clean hero frame",
+          "time": "6\u20138s"
+        }
+      ]
+    },
+    "reference_media": "29590906-2b72-4331-a14b-10ce3d7f1a95",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115031_b09cc727-ace3-4157-9764-d27d2564acf9.mp4",
+    "slug": "meal-preparation",
+    "status": "completed",
+    "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/29590906-2b72-4331-a14b-10ce3d7f1a95.webp",
+    "type": "video",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Food moves from skillet to plate; meal is served.",
+      "audio": "Removed in final web encoding"
+    }
+  },
+  {
+    "duration": 8,
+    "index": 5,
+    "job_id": "f1a35eb1-b9fa-4cc6-ab95-7bde8ac943af",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 housekeeping",
+      "sequence": [
+        {
+          "action": "Male caregiver wipes wooden table with blue cloth in two long complete left-right passes. Older man reads behind him.",
+          "camera": "Cooke 40mm medium establishing, slow dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "Hard cut to wider floor-level angle in same room: caregiver pushes upright vacuum FORWARD one full stroke, then pulls it BACK across rug; visible wheels and head travel over floor.",
+          "camera": "Leica Summilux-C 75mm action detail, mostly locked",
+          "time": "3\u20136s"
+        },
+        {
+          "action": "Continue a second vacuum stroke while client relaxes in chair. Full caregiver head and feet in wide shot; cable stays out of walkway.",
+          "camera": "Cooke 40mm restrained 10-degree orbit into clean hero frame",
+          "time": "6\u20138s"
+        }
+      ]
+    },
+    "reference_media": "76622d60-d033-497e-b676-975be0230215",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115031_f1a35eb1-b9fa-4cc6-ab95-7bde8ac943af.mp4",
+    "slug": "housekeeping",
+    "status": "completed",
+    "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/76622d60-d033-497e-b676-975be0230215.webp",
+    "type": "video",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Broad table wiping followed by visible forward/backward vacuum strokes.",
+      "audio": "Removed in final web encoding"
+    }
+  },
+  {
+    "duration": 8,
+    "index": 6,
+    "job_id": "ca72668e-5b49-4b8d-9d8a-3162459b4c9a",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 laundry",
+      "sequence": [
+        {
+          "action": "Caregiver visibly pulls one clean white towel completely OUT of open dryer, then lowers it into laundry basket.",
+          "camera": "Cooke 40mm medium establishing, slow dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "Hard cut to waist-height view at folding counter: same caregiver stands and folds a flat shirt: each sleeve inward, bottom upward. Older client folds a small washcloth alongside.",
+          "camera": "Leica Summilux-C 75mm action detail, mostly locked",
+          "time": "3\u20136s"
+        },
+        {
+          "action": "Caregiver places the visibly folded shirt onto tidy stack. Real continuous fabric, no vanishing clothing; no idle dryer tapping.",
+          "camera": "Cooke 40mm restrained 10-degree orbit into clean hero frame",
+          "time": "6\u20138s"
+        }
+      ]
+    },
+    "reference_media": "5325fce0-1943-4816-992f-a7b165ab9c03",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115727_ca72668e-5b49-4b8d-9d8a-3162459b4c9a.mp4",
+    "slug": "laundry",
+    "status": "completed",
+    "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/5325fce0-1943-4816-992f-a7b165ab9c03.webp",
+    "type": "video",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Towel leaves dryer; cut to folding clothing and adding it to stack.",
+      "audio": "Removed in final web encoding"
+    }
+  },
+  {
+    "duration": 8,
+    "index": 7,
+    "job_id": "a6995931-7d80-4346-af10-16e31baaedc1",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "8 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 errands",
+      "sequence": [
+        {
+          "action": "Caregiver looks at English shopping list, lifts one red pepper from display, and holds it up briefly for client's approval; client nods.",
+          "camera": "Cooke 40mm medium establishing, slow dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "Cut to close medium angle: caregiver lowers red pepper into open grocery bag in cart and RELEASES it, hand visibly moves away empty.",
+          "camera": "Leica Summilux-C 75mm action detail, mostly locked",
+          "time": "3\u20136s"
+        },
+        {
+          "action": "Wider dolly tracking: client pushes cart and caregiver walks beside her down aisle for two steps. All legible words remain English; no invented signs.",
+          "camera": "Cooke 40mm restrained 10-degree orbit into clean hero frame",
+          "time": "6\u20138s"
+        }
+      ]
+    },
+    "reference_media": "4a7c4d46-e566-4999-ad1c-19b5acd137d8",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115629_a6995931-7d80-4346-af10-16e31baaedc1.mp4",
+    "slug": "errands",
+    "status": "completed",
+    "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/4a7c4d46-e566-4999-ad1c-19b5acd137d8.webp",
+    "type": "video",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Pepper selected, lowered into bag, released; cart moves down aisle.",
+      "audio": "Removed in final web encoding"
+    }
+  },
+  {
+    "duration": 12,
+    "end_media": "6ae122ab-04f1-4fd5-83ed-7601e5c8829e",
+    "index": 8,
+    "job_id": "e6f96e3b-e2c6-42a9-91f5-6383dbe022c8",
+    "model": "minimax_h3",
+    "prompt": {
+      "cinematography": {
+        "camera": "ARRI Alexa LF, natural 24fps / 180-degree shutter aesthetic",
+        "direction": "Roger Deakins motivated naturalism, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human care commercial.",
+        "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and OFFSCREEN Aputure 600D window key. Only the soft daylight result appears. Absolutely no lights, softboxes, cameras, rigs, stands, cables or crew in frame.",
+        "texture": "Natural skin, embroidered cloth and physically coherent objects. Soft highlight rolloff; no plastic skin or oversharpening."
+      },
+      "format": "12 seconds, silent, 16:9 image-to-video, clear editorial cuts, real-time human action",
+      "invariants": [
+        "Preserve reference identities, clothing, room continuity and exact supplied red-heart/blue-hand Astonishing Touch upper LEFT chest embroidered logo and wordmark throughout.",
+        "Service action MUST be physically visible and complete; not merely touching, tapping, smiling, idle hand rubbing or camera zoom on a still.",
+        "Natural anatomically coherent hands, objects persist, no teleporting or morphing.",
+        "English-only legible text when present; no captions, subtitles, watermarks or invented signs.",
+        "Silent: no music, speech or sound effects.",
+        "Camera and lighting names and meta tokens are OFFSCREEN aesthetic instructions only, never visible objects/text.",
+        "Start image and end image are identical. Finish in that exact composition for a continuous loop; do not end at park."
+      ],
+      "meta_tokens": [
+        "IMG_9854.CR2",
+        "film_stills_archive",
+        "editorial_packshot",
+        "commercial_hero_frame",
+        "product_exhibit_#1984",
+        "anamorphic lens flare (extremely restrained)",
+        "ray tracing reflections",
+        "photogrammetry",
+        "HDR10+",
+        "Vogue editorial",
+        "Nike campaign",
+        "Apple keynote aesthetic"
+      ],
+      "project": "Astonishing Touch \u2014 hero",
+      "sequence": [
+        {
+          "action": "Begin exact start frame. Daughter smiles and waves from doorway while caregiver and client place a puzzle piece together.",
+          "camera": "ARRI Alexa LF, Cooke 35mm gentle lateral dolly",
+          "time": "0\u20133s"
+        },
+        {
+          "action": "HARD CUT to same caregiver serving vegetables from spoon onto older woman's plate in kitchen. Food visibly lands on plate.",
+          "camera": "Leica Summilux-C 50mm locked meal detail",
+          "time": "3\u20135.5s"
+        },
+        {
+          "action": "HARD CUT to same pair playing cards: client places a card then both share a warm laugh.",
+          "camera": "Cooke 40mm gentle 10-degree orbit",
+          "time": "5.5\u20138s"
+        },
+        {
+          "action": "HARD CUT to same pair taking two clear steps along sunny level park path.",
+          "camera": "Cooke 32mm stabilized dolly",
+          "time": "8\u201310s"
+        },
+        {
+          "action": "Clean editorial CUT BACK to original living room and original puzzle-table composition. Ease into supplied end frame, which is exactly the opening frame: daughter standing at door, caregiver and client poised over puzzle. Match faces, framing, hand positions, lighting and props precisely. Last frame must match first frame for seamless repeated playback. No reverse playback.",
+          "camera": "Cooke 35mm locked opening camera position",
+          "time": "10\u201312s"
+        }
+      ]
+    },
+    "reference_media": "6ae122ab-04f1-4fd5-83ed-7601e5c8829e",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_115629_e6f96e3b-e2c6-42a9-91f5-6383dbe022c8.mp4",
+    "slug": "hero",
+    "status": "completed",
+    "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/6ae122ab-04f1-4fd5-83ed-7601e5c8829e.webp",
+    "type": "video",
+    "review": {
+      "method": "Half-second frame sequence inspection",
+      "finding": "Five-shot care montage returns to opening room. Actual opening video frame blended into final 0.6 seconds; decoded seam mean absolute RGB difference 0.94/255 at 160x90.",
+      "audio": "Removed in final web encoding"
+    }
+  }
+]

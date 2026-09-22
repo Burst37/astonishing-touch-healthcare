@@ -1,0 +1,63 @@
+{
+  "job_id": "19d2aee0-e46d-4afd-ab49-b9ffa5cf3a16",
+  "model": "minimax_h3",
+  "reference_media": "a87c27a9-4723-461a-9278-2cda0ae5ed45",
+  "prompt": {
+    "cinematography": {
+      "direction": "Roger Deakins naturalistic lighting, Denis Villeneuve compositional restraint, Apple keynote clarity; warm human home-care commercial.",
+      "lighting": "OFFSCREEN ARRI SkyPanel bounced through diffusion and Aputure 600D window key; soft natural daylight result. Absolutely NO lighting equipment, stands, cables, cameras or crew in picture.",
+      "texture": "Realistic skin pores, embroidered fabric, physically coherent transparent plastic and water reflections, restrained highlight rolloff."
+    },
+    "format": "8 seconds, 16:9, silent image-to-video",
+    "invariants": [
+      "Exact supplied Astonishing Touch heart-and-hand chest logo and wordmark from reference",
+      "Same people and clothing throughout",
+      "Exactly seven fixed FRONT labels: MON TUE WED THU FRI SAT SUN; uppercase English Latin letters, no other glyphs",
+      "Phone reads Medication reminder",
+      "Lid must visibly OPEN, not tapping or repeated touching",
+      "No pills administered or dosing advice; client handles his own organizer",
+      "Silent; no captions or watermarks"
+    ],
+    "meta_note": "All equipment and meta terms are offscreen aesthetic guidance only, never visible objects or text.",
+    "meta_tokens": [
+      "IMG_9854.CR2",
+      "film_stills_archive",
+      "editorial_packshot",
+      "commercial_hero_frame",
+      "product_exhibit_#1984",
+      "anamorphic lens flare (extremely restrained)",
+      "ray tracing reflections",
+      "photogrammetry",
+      "HDR10+",
+      "Vogue editorial",
+      "Nike campaign",
+      "Apple keynote aesthetic"
+    ],
+    "project": "Astonishing Touch \u2014 medication reminders",
+    "sequence": [
+      {
+        "action": "Begin from reference then push toward phone displaying exactly Medication reminder. Caregiver points once, then lowers hand; client notices reminder.",
+        "camera": "ARRI Alexa LF, Leica Summilux-C 75mm close detail",
+        "time": "0\u20132s"
+      },
+      {
+        "action": "Reveal client acknowledging with nod and reaching toward his own organizer.",
+        "camera": "Cooke 40mm prime, gentle Chapman dolly reveal",
+        "time": "2\u20133s"
+      },
+      {
+        "action": "Client hooks thumb under MON compartment lid and lifts it from CLOSED horizontal to FULLY OPEN vertical. Clearly show hinged lid traveling and staying open. Other six lids remain closed. Client releases raised lid then reaches toward glass. Caregiver never touches box.",
+        "camera": "75mm close shot at table height, restrained 10-degree stabilized orbit",
+        "time": "3\u20137s"
+      },
+      {
+        "action": "Hold clean editorial frame of open MON lid, legible organizer and client's hand beside water. 16:9 uncluttered hero finish.",
+        "camera": "Locked 50mm hero frame",
+        "time": "7\u20138s"
+      }
+    ]
+  },
+  "status": "completed",
+  "review": "Half-second frame sequence checked: English MON through SUN, lid opens and remains raised, client reaches for water; no administration by caregiver.",
+  "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_30Zz3LHrTCA6JoAXpOu8nLQx0Ic/hf_20260916_001308_19d2aee0-e46d-4afd-ab49-b9ffa5cf3a16.mp4"
+}

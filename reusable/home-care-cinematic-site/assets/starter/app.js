@@ -1,0 +1,18 @@
+const agency=await fetch('./agency.json').then(r=>r.json());
+const enabled=agency.services.filter(s=>s.enabled&&s.verified);
+const $=s=>document.querySelector(s);const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const el=(tag,text)=>{const n=document.createElement(tag);if(text)n.textContent=text;return n};
+$('#brand').textContent=agency.name;$('h1').textContent=agency.name;$('#tagline').textContent=agency.tagline;
+if(agency.heroVideo)$('.hero video').src=agency.heroVideo;
+if(agency.phone)$('#contact').href='tel:'+agency.phone;else $('#contact').href='#details';
+$('#details').textContent=[agency.address,agency.phone,agency.email].filter(Boolean).join(' • ');
+if(agency.bookingUrl){$('#booking').textContent='Request an appointment';$('#booking').href=agency.bookingUrl;}
+for(const s of enabled){const a=el('a',s.title);a.href='#'+s.id;$('nav').append(a);const section=el('section');section.className='chapter';section.id=s.id;const media=el('div');media.className='media';if(s.video){const v=el('video');v.src=s.video;v.muted=true;v.loop=true;v.playsInline=true;v.controls=reduced;v.preload='metadata';v.poster=s.poster||'placeholder.svg';v.setAttribute('aria-label',s.title);media.append(v);}else{const im=el('img');im.src=s.poster||'placeholder.svg';im.alt=s.title;media.append(im);}const copy=el('div');copy.className='copy';copy.append(el('h2',s.title),el('p',s.description));section.append(media,copy);$('#chapters').append(section);const card=el('article');card.className='card';const image=el('img');image.src=s.poster||'placeholder.svg';image.alt=s.title;card.append(image,el('h3',s.title));$('.gallery').append(card);}
+if(!enabled.length)$('#chapters').append(el('p','No services enabled yet. Configure agency.json to preview confirmed services.'));
+if(!reduced)document.body.classList.add('motion');
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{e.target.classList.toggle('visible',e.isIntersecting);for(const v of e.target.querySelectorAll('video')){if(e.isIntersecting&&!reduced&&!document.hidden)v.play().catch(()=>{v.controls=true});else v.pause()}}),{threshold:.25});document.querySelectorAll('.chapter,.hero').forEach(e=>observer.observe(e));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)document.querySelectorAll('video').forEach(v=>v.pause());else document.querySelectorAll('.visible video').forEach(v=>{if(!reduced)v.play().catch(()=>{v.controls=true})})});
+const gallery=$('.gallery');const position=()=>{const b=gallery.getBoundingClientRect();gallery.querySelectorAll('.card').forEach(c=>{const r=c.getBoundingClientRect();const d=Math.max(-1,Math.min(1,(r.left+r.width/2-b.left-b.width/2)/b.width));c.style.setProperty('--tilt',(-d*14)+'deg');c.style.setProperty('--scale',String(1-Math.abs(d)*.12))})};if(!reduced){gallery.addEventListener('scroll',position,{passive:true});window.addEventListener('resize',position);position();}
+// One verified list supplies discovery and receptionist grounding; backend integration is separate.
+window.agencyKnowledge={name:agency.name,services:enabled.map(({title,description})=>({title,description})),pricing:'Refer to a live employee.',booking:agency.bookingUrl||'Not connected'};
+const schema=el('script');schema.type='application/ld+json';schema.textContent=JSON.stringify({'@context':'https://schema.org','@type':'LocalBusiness',name:agency.name,...(agency.domain?{url:agency.domain}:{}),...(agency.phone?{telephone:agency.phone}:{}),hasOfferCatalog:{'@type':'OfferCatalog',name:'Services',itemListElement:enabled.map(s=>({'@type':'Offer',itemOffered:{'@type':'Service',name:s.title,description:s.description}}))}});document.head.append(schema);
