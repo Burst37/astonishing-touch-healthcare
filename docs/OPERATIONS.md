@@ -7,12 +7,12 @@
 - Ask Brittany uses server-configured conversational AI, site-specific knowledge, current-information search with source links, directions and a pricing handoff to a live employee.
 - Server-generated speech supports ElevenLabs and Gemini TTS. Last selected ElevenLabs voice: P7x743VjyZEOihNNygQ9; existing hosted configuration is preserved.
 - Microphone input uses browser speech recognition where supported. Conversation mode listens after each spoken reply, with explicit stop/interrupt controls. Typed chat remains available.
-- Care inquiries save to D1. The owner inbox at /inquiries requires the configured LEAD_ADMIN_EMAIL. The visitor receives a reference, not a booking confirmation.
+- Care inquiries are sent to the configured HTTPS `INQUIRY_WEBHOOK_URL`. The `/inquiries` page is informational on Vercel; it is not an owner inbox. The visitor receives a reference only after the webhook accepts the inquiry, not a booking confirmation.
 - Metadata and organization/service/FAQ structured data use published company facts. No invented reviews, credentials or rates.
 
 ## Owner connections still required for public launch
 - Set BOOKING_URL to the business's scheduler to expose real appointment slots. No calendar is connected by this code update; the user's personal calendar is not used.
-- Inquiry email notifications are not configured. The owner must check the private inbox; the interface does not claim an email was sent.
+- Configure and verify `INQUIRY_WEBHOOK_URL` before launch so the owner can receive inquiries. This app does not send email or claim a notification was sent.
 - This deployment remains owner-private and noindex. Public search indexing requires an authorized public launch, the intended domain, crawlable robots/canonical configuration and a sitemap. No search or LLM ranking is guaranteed.
 - Runtime credentials stay in hosted secrets and must never be committed.
 
