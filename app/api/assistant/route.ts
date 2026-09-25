@@ -36,6 +36,19 @@ const config=process.env as Record<string,string|undefined>;
  const newsFollowup=currentTopic.test(lastUser)&&/\b(that|those|it|more|else|why|when|where|what about|tell me)\b/i.test(message);
  if((currentTopic.test(message)&&(!/\b(office|hours|your care|your services|care today|care tomorrow)\b/i.test(message)||/\b(news|headlines|weather|forecast)\b/i.test(message)))||newsFollowup)return Response.json(await currentInformation(message,history),{headers:{'Cache-Control':'no-store'}});
 
+ // Use Gemini directly when selected, or when a Gemini key is present and no
+ // separate completion provider is configured. Low thinking reduces voice wait time.
+ if(config.GEMINI_API_KEY&&(config.CARE_AI_PROVIDER==='gemini'||(!config.CARE_AI_PROVIDER&&!config.CARE_AI_ENDPOINT))){
+  try{
+   const model=config.CARE_AI_MODEL?.startsWith('gemini-')?config.CARE_AI_MODEL:'gemini-3.8-flash';
+   const response=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{
+    method:'POST',signal:AbortSignal.timeout(15000),headers:{'Content-Type':'application/json','x-goog-api-key':config.GEMINI_API_KEY},
+    body:JSON.stringify({systemInstruction:{parts:[{text:brittanyInstructions()}]},contents:[...history.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),{role:'user',parts:[{text:message}]}],generationConfig:{maxOutputTokens:1200,thinkingConfig:{thinkingLevel:'low'}}})
+   });
+   if(response.ok){const data=await response.json() as {candidates?:{content?:{parts?:{text?:string}[]};finishReason?:string}[]};const candidate=data.candidates?.[0];const reply=candidate?.content?.parts?.map(p=>p.text||'').join('').trim();if(reply&&reply.length<=6000&&candidate?.finishReason!=='MAX_TOKENS')return Response.json({reply,mode:'ai'},{headers:{'Cache-Control':'no-store'}})}
+  }catch{/* bounded published-information fallback */}
+  return Response.json({reply:fallback,mode:'guide'},{headers:{'Cache-Control':'no-store'}});
+ }
  // Any OpenAI-compatible completion provider; secrets stay on the server.
  if(config.CARE_AI_ENDPOINT?.startsWith('https://')&&config.CARE_AI_KEY&&config.CARE_AI_MODEL){
  try{const response=await fetch(config.CARE_AI_ENDPOINT,{method:'POST',signal:AbortSignal.timeout(30000),headers:{Authorization:'Bearer '+config.CARE_AI_KEY,'Content-Type':'application/json'},body:JSON.stringify({model:config.CARE_AI_MODEL,max_tokens:2400,reasoning_effort:config.CARE_AI_MODEL==='gemini-2.5-flash'?'none':'low',messages:[{role:'system',content:brittanyInstructions()},...history,{role:'user',content:message}]})});if(response.ok){const data=await response.json() as {choices?:{finish_reason?:string,message?:{content?:string}}[]};const reply=data.choices?.[0]?.message?.content;if(typeof reply==='string'&&reply.trim().length>0&&reply.length<=6000&&data.choices?.[0]?.finish_reason!=='length')return Response.json({reply,mode:'ai'},{headers:{'Cache-Control':'no-store'}})}}catch{/* bounded published-information fallback */}}
