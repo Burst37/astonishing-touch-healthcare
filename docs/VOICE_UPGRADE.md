@@ -10,7 +10,7 @@ GEMINI_TTS_MODEL=gemini-3.8-flash-tts
 GEMINI_TTS_VOICE=Sulafat
 ```
 
-`CARE_AI_PROVIDER=gemini` selects direct Gemini text answers, even if the former OpenAI-compatible settings are still present. The assistant requests low thinking for quicker responses. When no separate completion endpoint is configured, a Gemini key alone also enables Gemini answers. `SPEECH_PROVIDER=elevenlabs` explicitly keeps the existing ElevenLabs speech route; omit it or set it to `gemini` to use Gemini TTS.
+With a Gemini key, the site selects direct Gemini text answers and Gemini 3.8 TTS even if older completion or ElevenLabs settings remain. The assistant requests low thinking for quicker responses. Set `CARE_AI_PROVIDER=openai` only if you intentionally want to retain the former text-answer provider. If Gemini is unavailable and `SPEECH_PROVIDER=elevenlabs`, the existing ElevenLabs speech route remains the fallback.
 
 The voice model only turns completed answer text into speech. The browser currently waits for the entire assistant response before requesting the first speech segment, so the change to 3.8 TTS alone cannot remove all of the pause. Low thinking and shorter outputs can reduce the first stage. Further latency reduction requires streaming the answer and synthesizing its first sentence as it arrives, or a Live API conversation implementation. Measure each stage on the deployed host before promising a response time.
 
