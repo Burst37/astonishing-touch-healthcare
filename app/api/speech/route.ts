@@ -6,9 +6,8 @@ type AudioStep = {type?:string;content?:{type?:string;data?:string;mime_type?:st
 export async function POST(request:Request){
  if(request.headers.get('origin')!==new URL(request.url).origin)return Response.json({error:'Invalid origin'},{status:403});
  const config=process.env as Record<string,string|undefined>;
- // A configured Gemini key takes priority for the requested 3.8 voice upgrade.
- // Keep ElevenLabs as a fallback when Gemini has not been connected.
- const eleven=config.SPEECH_PROVIDER==='elevenlabs'&&!config.GEMINI_API_KEY;
+ // Keep the selected ElevenLabs voice for Brittany when configured.
+ const eleven=config.SPEECH_PROVIDER==='elevenlabs';
  if(eleven?(!config.ELEVENLABS_API_KEY||!config.ELEVENLABS_VOICE_ID):!config.GEMINI_API_KEY)return Response.json({error:'Voice is not connected.'},{status:503,headers:noStore});
  let text:string;try{const raw=await request.text();if(raw.length>30000)throw Error();const body=JSON.parse(raw);if(typeof body.text!=='string'||body.text.length>6000||!body.text.trim())throw Error();text=body.text.trim();}catch{return Response.json({error:'Enter a short reply.'},{status:400});}
  try{
