@@ -12,7 +12,7 @@ Nine full-screen service films with alternating scroll entrances, 12-second hero
 ## Working state
 H3 movies generated and integrated. Typography/motion/source checks complete. Native video posters and static copy remain available when motion is disabled or media fails. Browser end-to-end QA has not been performed.
 
-The care guide can use Gemini for AI answers and Gemini 3.8 Flash TTS for spoken replies. See [voice setup](docs/VOICE_UPGRADE.md) for server-side settings. Calendar booking, telephony and email notifications are not configured. Inquiries are saved; appointments are not promised.
+The care guide can use Gemini for AI answers and the selected ElevenLabs voice for Brittany's spoken replies. See [voice setup](docs/VOICE_UPGRADE.md) for server-side settings. Calendar booking, telephony and email notifications are not configured. Inquiry delivery requires the configured webhook; appointments are not promised.
 
 See [operations](docs/OPERATIONS.md), [design](docs/DESIGN_DNA.md), [motion](docs/MOTION_MAP.md), [typography](docs/TYPOGRAPHY_SYSTEM.md), [build contract](docs/BUILD_CONTRACT.md) and [QA ledger](docs/QA_LEDGER.md).
 
