@@ -1,29 +1,20 @@
-# Vercel handoff — Astonishing Touch
+# Astonishing Touch — Vercel deployment
 
-This archive contains the complete source, brand files, images and cinematic videos for the Astonishing Touch website.
+This project is a Next.js 16 app. `npm install` followed by `npm run build` completed successfully on September 25, 2026 with Node 24. The Cloudflare worker, Vite plugin, and unused D1 adapter remain in the source as historical tooling; `tsconfig.json` excludes them from the Vercel build. The active inquiry route uses a webhook and does not call D1.
 
-## What can be moved directly
+## Deploy
 
-- All React UI, pages, styling, video assets, images and SEO content.
-- The `public/` directory, including the full-screen hero and nine service videos.
-- `app/` content and service pages.
+1. Import `Burst37/astonishing-touch-healthcare` into Vercel as a Next.js project. Use the repository root and Node 22 or later. Run `npm install` when the repository has no lockfile.
+2. Configure server-only environment variables for every production and preview environment that needs them:
 
-## What requires conversion before deployment
+   - `GEMINI_API_KEY`: required for Ask Brittany speech and direct Gemini answers.
+   - `CARE_AI_PROVIDER=gemini`, `CARE_AI_MODEL=gemini-3.8-flash`: selects fast direct Gemini answers.
+   - `GEMINI_TTS_MODEL=gemini-3.8-flash-tts`, `GEMINI_TTS_VOICE=Sulafat`: optional explicit speech defaults.
+   - `INQUIRY_WEBHOOK_URL`: required HTTPS endpoint that securely receives and stores the validated inquiry payload. Without it, the form returns 503 and prompts the visitor to call.
+   - `BOOKING_URL`: optional actual scheduler URL. Never present scheduling as confirmed without an integration.
 
-This is currently a Cloudflare Workers / D1 project, not a Vercel-native project. Do not deploy it to Vercel unchanged.
+   Do not set API keys in `NEXT_PUBLIC_` variables or commit secrets. The webhook receives name, phone, optional email, selected service, consent, reference, and creation time. Confirm that its owner can access and act on those messages.
+3. Deploy a preview. Test homepage videos on desktop/mobile, assistant response (`mode: ai`), speech playback, and an inquiry end to end with consent. Verify the submitted inquiry reached its destination; a 201 response alone is not the whole check.
+4. Point the public domain and enable indexing in `app/search-config.ts` only after owner approval and full launch checks. The project currently declares `publicIndexing=false`.
 
-1. Replace the Cloudflare Vite plugin and Worker-specific configuration with a Vercel-compatible Next.js or Vite deployment configuration.
-2. Port `app/api/inquiries` from D1 to Vercel Postgres, Supabase, or another database. Create the needed environment variables in Vercel.
-3. Port the `app/api/assistant` runtime adapter and add its AI provider key as a Vercel environment variable. Do not add secrets to the repository.
-4. Keep `app/search-config.ts` set to `publicIndexing=false` until the owner approves public indexing and the live domain is connected.
-5. Test the full site, form submission and voice assistant after the conversion.
-
-## Recommended Vercel route
-
-Create a GitHub repository from this archive, import it into Vercel, then have a coding agent perform the small platform conversion above. The visual website and media assets should remain untouched.
-
-## Existing project notes
-
-- Use Node 22 or later.
-- Install dependencies with `npm ci` (or `npm install` if no lockfile is present), then run `npm run build` after conversion.
-- Production secrets were intentionally excluded from this archive.
+The previously documented D1 migration is not required for the current webhook based form. The `/inquiries` page is informational and not an owner inbox on Vercel.

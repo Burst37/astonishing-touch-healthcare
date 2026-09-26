@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "npm run build && node --test tests/*.test.mjs"
+    "test": "npm run build && node --test tests/search-structure.test.cjs tests/receptionist-lifecycle.test.cjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
