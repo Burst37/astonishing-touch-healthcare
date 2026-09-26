@@ -38,9 +38,9 @@ const config=process.env as Record<string,string|undefined>;
 
  // Use Gemini directly when selected, or when a Gemini key is present and no
  // separate completion provider is configured. Low thinking reduces voice wait time.
- if(config.GEMINI_API_KEY&&(config.CARE_AI_PROVIDER==='gemini'||(!config.CARE_AI_PROVIDER&&!config.CARE_AI_ENDPOINT))){
+ if(config.GEMINI_API_KEY&&config.CARE_AI_PROVIDER!=='openai'){
   try{
-   const model=config.CARE_AI_MODEL?.startsWith('gemini-')?config.CARE_AI_MODEL:'gemini-3.8-flash';
+   const model=config.CARE_AI_MODEL?.startsWith('gemini-3.8-')?config.CARE_AI_MODEL:'gemini-3.8-flash';
    const response=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{
     method:'POST',signal:AbortSignal.timeout(15000),headers:{'Content-Type':'application/json','x-goog-api-key':config.GEMINI_API_KEY},
     body:JSON.stringify({systemInstruction:{parts:[{text:brittanyInstructions()}]},contents:[...history.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),{role:'user',parts:[{text:message}]}],generationConfig:{maxOutputTokens:1200,thinkingConfig:{thinkingLevel:'low'}}})
