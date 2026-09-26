@@ -7,9 +7,10 @@ This project is a Next.js 16 app. `npm install` followed by `npm run build` comp
 1. Import `Burst37/astonishing-touch-healthcare` into Vercel as a Next.js project. Use the repository root and Node 22 or later. Run `npm install` when the repository has no lockfile.
 2. Configure server-only environment variables for every production and preview environment that needs them:
 
-   - `GEMINI_API_KEY`: required for Ask Brittany speech and direct Gemini answers.
+   - `GEMINI_API_KEY`: required for direct Gemini answers.
    - `CARE_AI_PROVIDER=gemini`, `CARE_AI_MODEL=gemini-3.8-flash`: selects fast direct Gemini answers.
-   - `GEMINI_TTS_MODEL=gemini-3.8-flash-tts`, `GEMINI_TTS_VOICE=Sulafat`: optional explicit speech defaults.
+   - `SPEECH_PROVIDER=elevenlabs`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`: preserve Brittany's selected ElevenLabs voice.
+   - `GEMINI_TTS_MODEL=gemini-3.8-flash-tts`: optional alternate speech provider, only when ElevenLabs is not selected.
    - `INQUIRY_WEBHOOK_URL`: required HTTPS endpoint that securely receives and stores the validated inquiry payload. Without it, the form returns 503 and prompts the visitor to call.
    - `BOOKING_URL`: optional actual scheduler URL. Never present scheduling as confirmed without an integration.
 
