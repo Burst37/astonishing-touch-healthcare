@@ -300,8 +300,8 @@ footer .brand.brand-original{width:350px;flex-shrink:0;max-width:100%}
 @media(prefers-reduced-motion:reduce){.scene-transitions .service-chapter .chapter-copy,.motion-ready .service-chapter .chapter-copy>*{transform:none!important;opacity:1!important}}
 
 /* One neumorphic surface for every action, selection and disclosure. */
-:root{--neo-face:#eaf0f2;--neo-ink:#13364b;--neo-raised:7px 7px 14px #60798566,-5px -5px 12px #ffffffd9,inset 1px 1px 2px #ffffffb3;--neo-pressed:inset 5px 5px 10px #637c8966,inset -5px -5px 10px #ffffff;--neo-hover:9px 9px 18px #536e7e70,-6px -6px 14px #ffffff,inset 1px 1px 2px #ffffff}
-body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue){background:var(--neo-face)!important;color:var(--neo-ink)!important;border:1px solid #ffffff80!important;box-shadow:var(--neo-raised)!important;border-radius:999px!important;text-shadow:none!important;backdrop-filter:none;transition:box-shadow .22s ease,background .22s ease,transform .22s ease}
+:root{--neo-face:#edf2f4;--neo-ink:#13364b;--neo-raised:5px 5px 10px rgba(75,91,99,.18),-5px -5px 10px rgba(255,255,255,.92),inset 1px 1px 1px rgba(255,255,255,.72);--neo-pressed:inset 3px 3px 6px rgba(75,91,99,.18),inset -3px -3px 6px rgba(255,255,255,.86);--neo-hover:6px 6px 12px rgba(75,91,99,.2),-6px -6px 12px rgba(255,255,255,.94),inset 1px 1px 1px rgba(255,255,255,.72)}
+body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue){background:var(--neo-face)!important;color:var(--neo-ink)!important;border:1px solid rgba(255,255,255,.58)!important;box-shadow:var(--neo-raised)!important;border-radius:999px!important;text-shadow:none!important;backdrop-filter:none;transition:box-shadow .22s ease,background .22s ease,transform .22s ease}
 .button::before{display:none}
 body :is(.text-link,.chapter-cta,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue){padding:13px 20px;min-height:44px;text-decoration:none;max-width:100%}
 .chapter-copy .chapter-cta{display:flex;width:fit-content;gap:18px;font-size:.9rem;margin-top:22px}
@@ -350,3 +350,8 @@ body .scroll-cue svg{border:0;padding:8px}
 /* Transparent original-brand cutout, with no logo tile or backing. */
 .brand-original>img,.resource-header img{aspect-ratio:4.5;object-fit:cover;object-position:center;height:auto}
 .site-header:not(.scrolled) .brand-original>img,footer .brand-original>img{filter:none}
+
+/* Refined neumorphism: soft molded surfaces without outer glow. */
+body .guide-launcher>img{border:4px solid var(--neo-face);box-shadow:4px 4px 9px rgba(75,91,99,.18),-4px -4px 9px rgba(255,255,255,.92)}
+body .guide-launcher>span{box-shadow:4px 4px 9px rgba(75,91,99,.18),-4px -4px 9px rgba(255,255,255,.92)}
+body :is(.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue){filter:none!important}
