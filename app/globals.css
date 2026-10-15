@@ -474,3 +474,29 @@ body .guide-launcher:hover>span{
   .brittany-avatar-rig .brittany-face{animation:none!important}
   .brittany-brow,.brittany-mouth,.brittany-eye-lid{transition:none!important}
 }
+
+
+/* Brittany face alignment hotfix: mouth was animating over the neck. */
+.brittany-mouth{display:none!important}
+.brittany-brow{display:none!important}
+.brittany-mouth-slice{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:50% 36%!important;
+  z-index:4!important;
+  pointer-events:none!important;
+  user-select:none!important;
+  clip-path:inset(43% 36% 43% 36%)!important;
+  transform:scaleY(var(--mouth-scale,1))!important;
+  transform-origin:50% 49%!important;
+  transition:transform 38ms linear!important;
+}
+.brittany-avatar-rig:not(.speaking) .brittany-mouth-slice{
+  transform:scaleY(1)!important;
+}
+.brittany-avatar-rig.speaking .brittany-mouth-slice{
+  transform:scaleY(var(--mouth-scale,1))!important;
+}
