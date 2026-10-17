@@ -1,16 +1,22 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
-type Recognition={lang:string;continuous:boolean;interimResults:boolean;onresult:((e:{results:ArrayLike<ArrayLike<{transcript:string}>>})=>void)|null;onerror:((e:{error:string})=>void)|null;onend:(()=>void)|null;start:()=>void;abort:()=>void;stop:()=>void};
-type VoiceWindow=Window&{SpeechRecognition?:new()=>Recognition;webkitSpeechRecognition?:new()=>Recognition};
+import {CareMicrophone,canRecordMicrophone} from './care-microphone';
 
 export function useCareVoice(open:boolean,onTranscript:(text:string)=>void){
  const [enabled,setEnabled]=useState(true),[supported,setSupported]=useState(false),[listening,setListening]=useState(false),[speaking,setSpeaking]=useState(false),[voiceLevel,setVoiceLevel]=useState(0),[status,setStatus]=useState('Voice replies are on. You can type or talk to Brittany.');
- const [needsPlay,setNeedsPlay]=useState(false);const lastReply=useRef('');
+ const [microphoneBusy,setMicrophoneBusy]=useState(false);const [needsPlay,setNeedsPlay]=useState(false);const lastReply=useRef('');
  const [conversationActive,setConversationActive]=useState(false);const conversation=useRef(false);const session=useRef(0);
- const recognition=useRef<Recognition|null>(null),audio=useRef<HTMLAudioElement|null>(null),audioUrl=useRef(''),generation=useRef(0),controller=useRef<AbortController|null>(null),isOpen=useRef(open),callback=useRef(onTranscript),audioContext=useRef<AudioContext|null>(null),analyser=useRef<AnalyserNode|null>(null),sourceNode=useRef<MediaElementAudioSourceNode|null>(null),levelFrame=useRef<number|null>(null);
+ const microphone=useRef<CareMicrophone|null>(null),audio=useRef<HTMLAudioElement|null>(null),audioUrl=useRef(''),generation=useRef(0),controller=useRef<AbortController|null>(null),isOpen=useRef(open),callback=useRef(onTranscript),audioContext=useRef<AudioContext|null>(null),analyser=useRef<AnalyserNode|null>(null),sourceNode=useRef<MediaElementAudioSourceNode|null>(null),levelFrame=useRef<number|null>(null);
  isOpen.current=open;callback.current=onTranscript;
 
- function cancelRecognition(){const rec=recognition.current;recognition.current=null;if(rec){rec.onresult=null;rec.onerror=null;rec.onend=null;rec.abort()}setListening(false)}
+ function cancelRecognition(){microphone.current?.cancel();setListening(false);setMicrophoneBusy(false)}
+ function getMicrophone(){if(!microphone.current)microphone.current=new CareMicrophone({
+  onState:state=>{setListening(state==='recording');setMicrophoneBusy(state==='requesting'||state==='transcribing')},
+  onStatus:text=>{if(isOpen.current)setStatus(text)},
+  onTranscript:text=>{if(isOpen.current)callback.current(text)},
+  onError:text=>{if(isOpen.current){conversation.current=false;setConversationActive(false);setStatus(text)}}
+ });return microphone.current}
+
  function stopLevelMeter(){if(levelFrame.current!==null){cancelAnimationFrame(levelFrame.current);levelFrame.current=null}setVoiceLevel(0)}
  // Run synchronously from a click/tap, before any request. Reuse this unlocked
  // player and context for all turns; recreating them loses mobile permission.
@@ -42,7 +48,7 @@ export function useCareVoice(open:boolean,onTranscript:(text:string)=>void){
  function stopPlayback(){generation.current++;controller.current?.abort();audio.current?.pause();stopLevelMeter();if(audio.current){audio.current.onended=null;audio.current.onerror=null;}if(audioUrl.current){URL.revokeObjectURL(audioUrl.current);audioUrl.current=''}if('speechSynthesis'in window)window.speechSynthesis.cancel();setSpeaking(false)}
  function endConversation(){setNeedsPlay(false);session.current++;conversation.current=false;setConversationActive(false);cancelRecognition();stopPlayback();setStatus('Conversation ended. You can type or start talking again.')}
 
- useEffect(()=>{const w=window as VoiceWindow;setSupported(Boolean(w.SpeechRecognition||w.webkitSpeechRecognition));if(!w.SpeechRecognition&&!w.webkitSpeechRecognition)setStatus('Voice replies are on. Microphone input is unavailable in this browser, but you can still type and hear Brittany.');return()=>{generation.current++;controller.current?.abort();recognition.current?.abort();audio.current?.pause();if(levelFrame.current!==null)cancelAnimationFrame(levelFrame.current);sourceNode.current?.disconnect();analyser.current?.disconnect();void audioContext.current?.close();if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);window.speechSynthesis?.cancel()}},[]);
+ useEffect(()=>{const available=canRecordMicrophone();setSupported(available);if(!available)setStatus('Voice replies are on. Microphone input is unavailable in this browser, but you can still type and hear Brittany.');return()=>{generation.current++;controller.current?.abort();microphone.current?.dispose();audio.current?.pause();if(levelFrame.current!==null)cancelAnimationFrame(levelFrame.current);sourceNode.current?.disconnect();analyser.current?.disconnect();void audioContext.current?.close();if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);window.speechSynthesis?.cancel()}},[]);
  useEffect(()=>{if(!open){endConversation()}},[open]);
 
  function speakWithDeviceFallback(text:string,ticket:number){
@@ -95,17 +101,10 @@ export function useCareVoice(open:boolean,onTranscript:(text:string)=>void){
   }
  }
 
- function startListening(){
-  if(!isOpen.current)return;cancelRecognition();stopPlayback();const w=window as VoiceWindow;const C=w.SpeechRecognition||w.webkitSpeechRecognition;if(!C)return;
-  const rec=new C();recognition.current=rec;let received=false;rec.lang='en-US';rec.continuous=false;rec.interimResults=false;
-  rec.onresult=e=>{const text=e.results[0]?.[0]?.transcript?.trim();if(text&&isOpen.current){received=true;setStatus('Thinking about your question…');callback.current(text)}};
-  rec.onerror=e=>{conversation.current=false;setConversationActive(false);setListening(false);setStatus(e.error==='not-allowed'?'Microphone permission was denied. You can still type and hear replies.':e.error==='no-speech'?'I didn’t catch anything. Tap the microphone when you’re ready.':'The microphone stopped. Tap to continue or type below.');};
-  rec.onend=()=>{if(recognition.current===rec){setListening(false);recognition.current=null;if(!received){conversation.current=false;setConversationActive(false)}}};
-  try{rec.start();setListening(true);setEnabled(true);setStatus('Listening. Speak naturally; Brittany will listen again after her reply.');}catch{conversation.current=false;setConversationActive(false);setStatus('Microphone could not start. Please type your question.');}
- }
+ function startListening(){if(!isOpen.current)return;cancelRecognition();stopPlayback();void getMicrophone().start()}
+ function toggleListening(){prepareAudio();if(listening){microphone.current?.finish();return}conversation.current=true;setConversationActive(true);setEnabled(true);startListening();}
 
- function toggleListening(){prepareAudio();if(listening){endConversation();return}conversation.current=true;setConversationActive(true);setEnabled(true);startListening();}
  function toggleEnabled(){prepareAudio();if(enabled){endConversation();setEnabled(false);setStatus('Voice replies are off.');}else{setEnabled(true);setStatus('Voice replies are on.');void speak('Welcome to Ask Brittany, your virtual care receptionist. How can I help you today?',true);}}
  function replay(){prepareAudio();setEnabled(true);if(lastReply.current)void speak(lastReply.current,true);}
- return {prepareAudio,needsPlay,replay,enabled,supported,listening,speaking,voiceLevel,status,speak,stop:endConversation,toggleListening,toggleEnabled,conversationActive,endConversation,session};
+ return {pauseInput:cancelRecognition,microphoneBusy,prepareAudio,needsPlay,replay,enabled,supported,listening,speaking,voiceLevel,status,speak,stop:endConversation,toggleListening,toggleEnabled,conversationActive,endConversation,session};
 }
