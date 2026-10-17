@@ -401,102 +401,19 @@ body .guide-launcher:hover>span{
 }
 
 
-/* Ask Brittany live portrait rig: audio-driven mouth + restrained micro-expressions. */
+/* Ask Brittany: static portrait. Speech status is indicated by the outer ring. */
 .guide-avatar{
   width:76px!important;height:76px!important;overflow:visible!important;
   padding:4px!important;border-radius:50%!important;
 }
 .brittany-avatar-rig{
-  --mouth-open:.08;--voice-energy:0;--brow-lift:.08;
   position:relative;width:68px;height:68px;display:block;isolation:isolate;
 }
 .brittany-face{
   position:relative;width:100%;height:100%;overflow:hidden;border-radius:50%;
   background:var(--neo-face,#edf2f4);
-  transform:translateZ(0);
 }
 .brittany-face>img{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 36%;
   user-select:none;pointer-events:none;
-}
-.brittany-avatar-rig.idle .brittany-face{animation:brittany-idle 5.8s ease-in-out infinite}
-.brittany-avatar-rig.listening .brittany-face{animation:brittany-listen 2.8s ease-in-out infinite}
-.brittany-avatar-rig.speaking .brittany-face{animation:brittany-speak 2.2s ease-in-out infinite}
-
-.brittany-eye-lid{
-  position:absolute;top:38.5%;width:12.5%;height:4.5%;
-  background:rgba(112,72,55,.52);border-radius:999px;
-  transform:scaleY(.03);transform-origin:center;opacity:0;z-index:3;pointer-events:none;
-  transition:transform 70ms linear,opacity 70ms linear;
-}
-.brittany-eye-left{left:31%}.brittany-eye-right{right:31%}
-.brittany-avatar-rig.blink .brittany-eye-lid{transform:scaleY(1);opacity:.82}
-
-.brittany-brow{
-  position:absolute;top:31%;width:13%;height:2.2%;border-radius:999px;
-  background:rgba(48,31,27,.70);z-index:3;pointer-events:none;
-  transform:translateY(calc(var(--brow-lift) * -2.4px));
-  transition:transform 120ms ease-out;
-}
-.brittany-brow-left{left:30%;transform-origin:right center;rotate:-5deg}
-.brittany-brow-right{right:30%;transform-origin:left center;rotate:5deg}
-
-.brittany-mouth{
-  position:absolute;left:50%;top:61.5%;width:16%;height:8.5%;
-  transform:translateX(-50%) scaleX(calc(.92 + var(--voice-energy) * .10)) scaleY(calc(.18 + var(--mouth-open) * 1.35));
-  transform-origin:center;border-radius:40% 40% 48% 48%/35% 35% 65% 65%;
-  background:rgba(74,32,35,.82);z-index:4;overflow:hidden;pointer-events:none;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.08);
-  transition:transform 42ms linear,opacity 90ms ease;
-  opacity:.0;
-}
-.brittany-avatar-rig.speaking .brittany-mouth{opacity:.92}
-.brittany-mouth-inner{
-  position:absolute;left:18%;right:18%;top:11%;height:24%;border-radius:999px;
-  background:rgba(246,231,224,.82);
-}
-.brittany-avatar-rig.listening .brittany-brow-left{transform:translateY(-1px) rotate(-7deg)}
-.brittany-avatar-rig.listening .brittany-brow-right{transform:translateY(-1px) rotate(7deg)}
-
-@keyframes brittany-idle{
-  0%,100%{transform:translate3d(0,0,0) rotate(0)}
-  50%{transform:translate3d(0,-1px,0) rotate(.35deg)}
-}
-@keyframes brittany-listen{
-  0%,100%{transform:translate3d(0,0,0) scale(1)}
-  50%{transform:translate3d(0,-1px,0) scale(1.008)}
-}
-@keyframes brittany-speak{
-  0%,100%{transform:translate3d(0,0,0) rotate(-.25deg)}
-  50%{transform:translate3d(0,-1px,0) rotate(.35deg)}
-}
-@media (prefers-reduced-motion:reduce){
-  .brittany-avatar-rig .brittany-face{animation:none!important}
-  .brittany-brow,.brittany-mouth,.brittany-eye-lid{transition:none!important}
-}
-
-
-/* Brittany face alignment hotfix: mouth was animating over the neck. */
-.brittany-mouth{display:none!important}
-.brittany-brow{display:none!important}
-.brittany-mouth-slice{
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  object-fit:cover!important;
-  object-position:50% 36%!important;
-  z-index:4!important;
-  pointer-events:none!important;
-  user-select:none!important;
-  clip-path:inset(43% 36% 43% 36%)!important;
-  transform:scaleY(var(--mouth-scale,1))!important;
-  transform-origin:50% 49%!important;
-  transition:transform 38ms linear!important;
-}
-.brittany-avatar-rig:not(.speaking) .brittany-mouth-slice{
-  transform:scaleY(1)!important;
-}
-.brittany-avatar-rig.speaking .brittany-mouth-slice{
-  transform:scaleY(var(--mouth-scale,1))!important;
 }
