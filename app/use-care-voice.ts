@@ -5,29 +5,44 @@ type VoiceWindow=Window&{SpeechRecognition?:new()=>Recognition;webkitSpeechRecog
 
 export function useCareVoice(open:boolean,onTranscript:(text:string)=>void){
  const [enabled,setEnabled]=useState(true),[supported,setSupported]=useState(false),[listening,setListening]=useState(false),[speaking,setSpeaking]=useState(false),[voiceLevel,setVoiceLevel]=useState(0),[status,setStatus]=useState('Voice replies are on. You can type or talk to Brittany.');
+ const [needsPlay,setNeedsPlay]=useState(false);const lastReply=useRef('');
  const [conversationActive,setConversationActive]=useState(false);const conversation=useRef(false);const session=useRef(0);
  const recognition=useRef<Recognition|null>(null),audio=useRef<HTMLAudioElement|null>(null),audioUrl=useRef(''),generation=useRef(0),controller=useRef<AbortController|null>(null),isOpen=useRef(open),callback=useRef(onTranscript),audioContext=useRef<AudioContext|null>(null),analyser=useRef<AnalyserNode|null>(null),sourceNode=useRef<MediaElementAudioSourceNode|null>(null),levelFrame=useRef<number|null>(null);
  isOpen.current=open;callback.current=onTranscript;
 
  function cancelRecognition(){const rec=recognition.current;recognition.current=null;if(rec){rec.onresult=null;rec.onerror=null;rec.onend=null;rec.abort()}setListening(false)}
  function stopLevelMeter(){if(levelFrame.current!==null){cancelAnimationFrame(levelFrame.current);levelFrame.current=null}setVoiceLevel(0)}
- function disconnectAudioGraph(){stopLevelMeter();try{sourceNode.current?.disconnect()}catch{}try{analyser.current?.disconnect()}catch{}sourceNode.current=null;analyser.current=null;if(audioContext.current){void audioContext.current.close();audioContext.current=null}}
- function startLevelMeter(player:HTMLAudioElement){
-  disconnectAudioGraph();
+ // Run synchronously from a click/tap, before any request. Reuse this unlocked
+ // player and context for all turns; recreating them loses mobile permission.
+ function prepareAudio(){
   try{
-   const C=window.AudioContext||(window as unknown as {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;if(!C)return;
-   const ctx=new C();const meter=ctx.createAnalyser();meter.fftSize=256;meter.smoothingTimeConstant=.72;
-   const source=ctx.createMediaElementSource(player);source.connect(meter);meter.connect(ctx.destination);
-   audioContext.current=ctx;analyser.current=meter;sourceNode.current=source;
+   if(!audio.current){audio.current=new Audio();audio.current.preload='auto';audio.current.setAttribute('playsinline','true');
+    audio.current.src='data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQIAAAAAAA==';
+    void audio.current.play().catch(()=>{});
+   }
+   const C=window.AudioContext||(window as unknown as {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
+   if(C){if(!audioContext.current)audioContext.current=new C();if(audioContext.current.state!=='running')void audioContext.current.resume().catch(()=>{});}
+  }catch{/* Native playback remains available without the animation meter. */}
+ }
+
+ function startLevelMeter(player:HTMLAudioElement){
+  stopLevelMeter();
+  const ctx=audioContext.current;
+  // Never route audible playback through a suspended context.
+  if(!ctx||ctx.state!=='running'){if(sourceNode.current)throw new DOMException('Tap Play reply to enable audio.','NotAllowedError');return;}
+  try{
+   if(!sourceNode.current){const meter=ctx.createAnalyser();meter.fftSize=256;meter.smoothingTimeConstant=.72;
+    const source=ctx.createMediaElementSource(player);source.connect(meter);meter.connect(ctx.destination);analyser.current=meter;sourceNode.current=source;}
+   const meter=analyser.current;if(!meter)return;
    const data=new Uint8Array(meter.frequencyBinCount);let smooth=0;
    const tick=()=>{meter.getByteFrequencyData(data);let sum=0;for(let i=0;i<data.length;i++)sum+=data[i];const raw=(sum/data.length)/128;smooth+=(Math.min(1,raw*1.35)-smooth)*.3;setVoiceLevel(smooth);levelFrame.current=requestAnimationFrame(tick)};
    levelFrame.current=requestAnimationFrame(tick);
-  }catch{setVoiceLevel(.36)}
+  }catch(error){if(error instanceof DOMException&&error.name==='NotAllowedError')throw error;setVoiceLevel(0)}
  }
- function stopPlayback(){generation.current++;controller.current?.abort();audio.current?.pause();audio.current=null;disconnectAudioGraph();if(audioUrl.current){URL.revokeObjectURL(audioUrl.current);audioUrl.current=''}if('speechSynthesis'in window)window.speechSynthesis.cancel();setSpeaking(false)}
- function endConversation(){session.current++;conversation.current=false;setConversationActive(false);cancelRecognition();stopPlayback();setStatus('Conversation ended. You can type or start talking again.')}
+ function stopPlayback(){generation.current++;controller.current?.abort();audio.current?.pause();stopLevelMeter();if(audio.current){audio.current.onended=null;audio.current.onerror=null;}if(audioUrl.current){URL.revokeObjectURL(audioUrl.current);audioUrl.current=''}if('speechSynthesis'in window)window.speechSynthesis.cancel();setSpeaking(false)}
+ function endConversation(){setNeedsPlay(false);session.current++;conversation.current=false;setConversationActive(false);cancelRecognition();stopPlayback();setStatus('Conversation ended. You can type or start talking again.')}
 
- useEffect(()=>{const w=window as VoiceWindow;setSupported(Boolean(w.SpeechRecognition||w.webkitSpeechRecognition));if(!w.SpeechRecognition&&!w.webkitSpeechRecognition)setStatus('Voice replies are on. Microphone input is unavailable in this browser, but you can still type and hear Brittany.');return()=>{generation.current++;controller.current?.abort();recognition.current?.abort();audio.current?.pause();if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);window.speechSynthesis?.cancel()}},[]);
+ useEffect(()=>{const w=window as VoiceWindow;setSupported(Boolean(w.SpeechRecognition||w.webkitSpeechRecognition));if(!w.SpeechRecognition&&!w.webkitSpeechRecognition)setStatus('Voice replies are on. Microphone input is unavailable in this browser, but you can still type and hear Brittany.');return()=>{generation.current++;controller.current?.abort();recognition.current?.abort();audio.current?.pause();if(levelFrame.current!==null)cancelAnimationFrame(levelFrame.current);sourceNode.current?.disconnect();analyser.current?.disconnect();void audioContext.current?.close();if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);window.speechSynthesis?.cancel()}},[]);
  useEffect(()=>{if(!open){endConversation()}},[open]);
 
  function speakWithDeviceFallback(text:string,ticket:number){
@@ -45,8 +60,9 @@ export function useCareVoice(open:boolean,onTranscript:(text:string)=>void){
   });
  }
 
- async function speak(text:string){
-  if(!isOpen.current||!enabled)return;
+ async function speak(text:string,force=false){
+  if(!isOpen.current||(!enabled&&!force))return;
+  lastReply.current=text;setNeedsPlay(false);
   cancelRecognition();stopPlayback();const ticket=generation.current;const abort=new AbortController();controller.current=abort;setStatus('Preparing Brittany’s reply…');
   const spokenText=text.replace(/\[([^\]]+)\]\(https?:[^)]+\)/g,'$1').replace(/https?:\/\/\S+/g,'').replace(/[*#`]/g,'').trim();
   const sentences=spokenText.match(/[\s\S]+?(?:[.!?](?=\s|$)|$)/g)||[spokenText];const chunks:string[]=[];
@@ -65,13 +81,14 @@ export function useCareVoice(open:boolean,onTranscript:(text:string)=>void){
      return;
     }
     if(i+1<chunks.length)next=prepare(chunks[i+1]);
-    if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);audioUrl.current=URL.createObjectURL(blob);const player=new Audio(audioUrl.current);audio.current=player;startLevelMeter(player);
-    await new Promise<void>((resolve,reject)=>{const cancel=()=>{player.pause();stopLevelMeter();resolve()};abort.signal.addEventListener('abort',cancel,{once:true});const cleanup=()=>abort.signal.removeEventListener('abort',cancel);player.onended=()=>{cleanup();stopLevelMeter();resolve()};player.onerror=()=>{cleanup();stopLevelMeter();reject(Error())};player.play().then(()=>{if(ticket!==generation.current){player.pause();cleanup();stopLevelMeter();resolve();return}setSpeaking(true);setStatus('Brittany is speaking.');}).catch(()=>{cleanup();stopLevelMeter();reject(Error())})});
+    if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);audioUrl.current=URL.createObjectURL(blob);const player=audio.current||new Audio();audio.current=player;player.src=audioUrl.current;player.volume=1;player.muted=false;startLevelMeter(player);
+    await new Promise<void>((resolve,reject)=>{const cancel=()=>{player.pause();stopLevelMeter();resolve()};abort.signal.addEventListener('abort',cancel,{once:true});const cleanup=()=>abort.signal.removeEventListener('abort',cancel);player.onended=()=>{cleanup();stopLevelMeter();resolve()};player.onerror=()=>{cleanup();stopLevelMeter();reject(Error())};player.play().then(()=>{if(ticket!==generation.current){player.pause();cleanup();stopLevelMeter();resolve();return}setSpeaking(true);setStatus('Brittany is speaking.');}).catch(error=>{cleanup();stopLevelMeter();reject(error)})});
     if(ticket!==generation.current||!isOpen.current)return;
    }
    setSpeaking(false);if(conversation.current)startListening();else setStatus('Voice replies are on. Ask another question anytime.');
-  }catch{
+  }catch(error){
    if(ticket!==generation.current||!isOpen.current)return;
+   if(error instanceof DOMException&&error.name==='NotAllowedError'){setSpeaking(false);setNeedsPlay(true);setStatus('Tap Play reply to enable Brittany’s audio.');return;}
    const fellBack=await speakWithDeviceFallback(spokenText,ticket);
    if(!fellBack){abort.abort();conversation.current=false;setConversationActive(false);setSpeaking(false);setStatus('Voice playback is unavailable right now. Her full answer is still in the conversation.');return}
    if(conversation.current)startListening();else setStatus('Brittany’s studio voice is unavailable, so your device voice was used.');
@@ -87,7 +104,8 @@ export function useCareVoice(open:boolean,onTranscript:(text:string)=>void){
   try{rec.start();setListening(true);setEnabled(true);setStatus('Listening. Speak naturally; Brittany will listen again after her reply.');}catch{conversation.current=false;setConversationActive(false);setStatus('Microphone could not start. Please type your question.');}
  }
 
- function toggleListening(){if(listening){endConversation();return}conversation.current=true;setConversationActive(true);setEnabled(true);startListening();}
- function toggleEnabled(){if(enabled){endConversation();setEnabled(false);setStatus('Voice replies are off.');}else{setEnabled(true);setStatus('Voice replies are on.');void speak('Welcome to Ask Brittany, your virtual care receptionist. How can I help you today?');}}
- return {enabled,supported,listening,speaking,voiceLevel,status,speak,stop:endConversation,toggleListening,toggleEnabled,conversationActive,endConversation,session};
+ function toggleListening(){prepareAudio();if(listening){endConversation();return}conversation.current=true;setConversationActive(true);setEnabled(true);startListening();}
+ function toggleEnabled(){prepareAudio();if(enabled){endConversation();setEnabled(false);setStatus('Voice replies are off.');}else{setEnabled(true);setStatus('Voice replies are on.');void speak('Welcome to Ask Brittany, your virtual care receptionist. How can I help you today?',true);}}
+ function replay(){prepareAudio();setEnabled(true);if(lastReply.current)void speak(lastReply.current,true);}
+ return {prepareAudio,needsPlay,replay,enabled,supported,listening,speaking,voiceLevel,status,speak,stop:endConversation,toggleListening,toggleEnabled,conversationActive,endConversation,session};
 }
