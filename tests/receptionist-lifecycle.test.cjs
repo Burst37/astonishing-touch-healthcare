@@ -19,7 +19,7 @@ test('Replies reuse gesture-unlocked audio and stop never closes its context',as
  class Context {constructor(){contexts++;this.state='suspended';}resume(){resumes++;this.state='running';return Promise.resolve()}close(){closes++;this.state='closed';return Promise.resolve()}createAnalyser(){return {fftSize:0,frequencyBinCount:128,connect(){},disconnect(){},getByteFrequencyData(){}}}createMediaElementSource(){assert.equal(this.state,'running');sources++;return {connect(){},disconnect(){}}}}
  try{
  global.Audio=Player;global.window={AudioContext:Context};global.requestAnimationFrame=()=>1;global.cancelAnimationFrame=()=>{};global.fetch=async()=>({ok:true,blob:async()=>new Blob(['audio'],{type:'audio/wav'})});
- const {useCareVoice}=load('app/use-care-voice.ts',{'./care-microphone':load('app/care-microphone.ts',{}),react:{useState:value=>[value,()=>{}],useRef:value=>({current:value}),useEffect:fn=>effects.push(fn)}});
+ const {useCareVoice}=load('app/use-care-voice.ts',{'./care-live-voice':load('app/care-live-voice.ts',{}),react:{useState:value=>[value,()=>{}],useRef:value=>({current:value}),useEffect:fn=>effects.push(fn)}});
  const voice=useCareVoice(true,()=>{});const cleanup=effects[0]();
  voice.prepareAudio();assert.equal(resumes,1);
  await voice.speak('First reply.');await voice.speak('Second reply.');voice.endConversation();
@@ -31,7 +31,7 @@ test('Browser autoplay rejection offers a gesture-based Play reply action',async
  const previous={window:global.window,Audio:global.Audio,fetch:global.fetch};const values=[];
  try{
  global.window={};global.Audio=class {pause(){}play(){return Promise.reject(new DOMException('gesture required','NotAllowedError'))}};global.fetch=async()=>({ok:true,blob:async()=>new Blob(['audio'],{type:'audio/wav'})});
- const {useCareVoice}=load('app/use-care-voice.ts',{'./care-microphone':load('app/care-microphone.ts',{}),react:{useState:value=>[value,next=>values.push(next)],useRef:value=>({current:value}),useEffect(){}}});
+ const {useCareVoice}=load('app/use-care-voice.ts',{'./care-live-voice':load('app/care-live-voice.ts',{}),react:{useState:value=>[value,next=>values.push(next)],useRef:value=>({current:value}),useEffect(){}}});
  await useCareVoice(true,()=>{}).speak('Hello.');
  assert.ok(values.includes('Tap Play reply to enable Brittany’s audio.'));assert.ok(values.includes(true));
  }finally{global.window=previous.window;global.Audio=previous.Audio;global.fetch=previous.fetch;}

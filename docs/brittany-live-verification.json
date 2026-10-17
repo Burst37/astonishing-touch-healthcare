@@ -1,0 +1,10 @@
+{
+  "test_input": "newly synthesized non-personal office-hours question",
+  "ephemeral_auth": true,
+  "locked_voice": "voice_5xtnac9ck36r",
+  "first_audio_after_speech_ms": 577,
+  "input_transcript": "Hello. What are your office hours?",
+  "output_transcript": "Hi there! Our office hours are Monday through Friday, from nine AM to five PM.",
+  "audio_bytes": 238082,
+  "scope": "Synthetic test over a persistent connection; excludes initial connection setup and physical phone microphone capture."
+}
