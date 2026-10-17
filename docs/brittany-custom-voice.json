@@ -1,0 +1,27 @@
+{
+  "name": "Brittany - Astonishing Touch Professional Receptionist",
+  "provider": "Google Gemini API",
+  "model": "gemini-3.8-flash-tts",
+  "voice_id": "voice_5xtnac9ck36r",
+  "voice_type": "prompted",
+  "language_code": "en-US",
+  "gender": "female",
+  "voice_description": "A professional African American woman in her late 30s with a warm, clear adult female voice, a smooth medium register, and a subtle natural St. Louis / Midwestern American cadence. She sounds poised, intelligent, approachable and reassuring, with crisp diction, relaxed conversational rhythm and gentle expressive inflection; never robotic, theatrical, exaggerated or sing-song.",
+  "created_date_utc": "2026-10-17",
+  "expire_time": "2027-10-17T03:45:27.141201210Z",
+  "runtime_environment_variable": "GEMINI_TTS_VOICE",
+  "replication_used": false,
+  "verification": {
+    "voice_id": "voice_5xtnac9ck36r",
+    "sample_rate": 24000,
+    "duration_seconds": 14.56,
+    "peak": 27133,
+    "valid_wav": true
+  },
+  "notes": [
+    "Synthetic designed voice; not a clone of the founder.",
+    "Google currently applies a one-year TTL to saved voices. Review before expire_time; no automatic renewal has been configured.",
+    "Keep permanent identity in this saved voice. Use speech_metadata.style only for delivery.",
+    "The portrait is intentionally static."
+  ]
+}
