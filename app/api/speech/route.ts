@@ -19,7 +19,7 @@ export async function POST(request:Request){
   const designedVoice=voice.startsWith('voice_')||voice.startsWith('voicekey_');
   const style=designedVoice
    ? 'Warm, calm, polished and reassuring. Conversational American English with clear diction, measured pace, subtle empathy and confident professionalism.'
-   : 'A poised, educated African American woman in her mid-40s working as a senior home-healthcare receptionist in St. Louis. Warm, intelligent, composed and reassuring; natural American English, clear diction, moderate pace, subtle empathy, confident professionalism, never theatrical or overly cheerful.';
+   : 'A professional African American woman in her late 30s working as a home-healthcare receptionist in St. Louis. Warm, intelligent, composed and reassuring, with a natural adult female voice, clear American English and confident professionalism. Use realistic conversational intonation, varied but measured pacing, gentle emphasis and subtle empathy appropriate to each sentence. Avoid a robotic or sing-song delivery, exaggerated accents, caricature, theatrical acting or excessive cheerfulness.';
 
   const response=await fetch('https://generativelanguage.googleapis.com/v1beta/interactions',{
    method:'POST',
