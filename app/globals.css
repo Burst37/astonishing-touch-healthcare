@@ -540,6 +540,7 @@ body button#ask-brittany-launcher:hover>img{transform:translateY(-2px)!important
 /* A held outgoing film and feathered incoming scene replace the straight seam.
    The browser retains native scrolling, hash links and touch momentum. */
 .film-transitions .care-chapters{position:relative;isolation:isolate;background:#102c46}
+.global-film-control{position:fixed;right:190px;bottom:30px;z-index:41}
 .film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature){
  --film-feather:0px;
  --film-dim:0;
@@ -556,12 +557,14 @@ body button#ask-brittany-launcher:hover>img{transform:translateY(-2px)!important
 .film-transitions :is(.hero-film,.chapter-image .film,.promise-scene>.film){transform-origin:50% 50%}
 .film-transitions .service-chapter .chapter-image :is(img,video){transform:none;transition:none}
 .film-transitions .pin-spacer{background:transparent!important}
+.film-transitions .pin-spacer:focus-within{z-index:20!important}
 /* Never obscure focused controls, even while two scenes overlap. */
 .film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature):focus-within{
  -webkit-mask-image:none;mask-image:none;
 }
 .film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature):focus-within::after{opacity:0}
 @media(max-width:600px){
+ .global-film-control{left:20px;right:auto;bottom:24px}
  .film-transitions .service-chapter{padding-top:40px;padding-bottom:52px}
  .film-transitions .service-chapter .chapter-image{border-radius:16px}
 }
