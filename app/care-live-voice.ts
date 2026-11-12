@@ -34,11 +34,12 @@ export class CareLiveVoice {
  async start(){
   this.callbacks.onState('connecting');
   // Fetch authentication while the device grants permission and initializes audio.
-  const tokenRequest=fetch('/api/live-token',{method:'POST',signal:this.abort.signal}).then(async response=>{
+  const requestToken=()=>{const requestedAt=Date.now();return fetch('/api/live-token',{method:'POST',signal:this.abort.signal}).then(async response=>{
    const data=await response.json() as {token?:string,model?:string,error?:string};
    if(!response.ok||!data.token)throw Error(data.error||'Brittany could not connect. Please try again.');
-   return {...data,token:data.token};
-  });
+   return {...data,token:data.token,requestedAt};
+  })};
+  const tokenRequest=requestToken();
   void tokenRequest.catch(()=>{});
   try{
    // Resume audio in the tap handler, before awaiting permission/network.
@@ -58,7 +59,10 @@ export class CareLiveVoice {
    this.recorder=new AudioWorkletNode(this.input,'care-pcm');this.source=this.input.createMediaStreamSource(stream);this.sink=this.input.createGain();this.sink.gain.value=0;
    this.source.connect(this.recorder);this.recorder.connect(this.sink);this.sink.connect(this.input.destination);
    this.recorder.port.onmessage=event=>{this.capturedPackets++;if(this.connected){const samples=new Int16Array(event.data);let peak=0;for(const value of samples)peak=Math.max(peak,Math.abs(value)/32768);this.callbacks.onInputLevel?.(Math.min(1,peak*4));if((this.socket?.bufferedAmount||0)>32000){this.fail('The voice connection is too slow. Tap Talk to Brittany to reconnect.');return}this.send({realtimeInput:{audio:{data:toBase64(new Uint8Array(event.data)),mimeType:'audio/pcm;rate=16000'}}})}};
-   const data=await tokenRequest;if(this.stopped)return;
+   let data=await tokenRequest;if(this.stopped)return;
+   // Permission prompts can outlast the credential's one-minute session-start window.
+   // Refresh before opening the socket, with headroom for network/setup time.
+   if(Date.now()-data.requestedAt>=45000){data=await requestToken();if(this.stopped)return;}
    this.socket=new WebSocket('wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContentConstrained?access_token='+encodeURIComponent(data.token));
    this.setupTimer=setTimeout(()=>this.fail('The voice connection timed out. Please try again.'),20000);
    this.socket.onopen=()=>this.send({setup:{model:'models/'+data.model}});

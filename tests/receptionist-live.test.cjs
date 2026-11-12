@@ -95,3 +95,13 @@ test('A new voice conversation can greet without fabricating a visitor transcrip
 });
 
 test('Live care action opens the requested review card without claiming a completed booking',async()=>{const e=environment();try{await e.voice.start();e.sockets[0].onmessage({data:JSON.stringify({setupComplete:{}})});await flush();e.sockets[0].onmessage({data:JSON.stringify({toolCall:{functionCalls:[{id:'action-1',name:'show_care_action',args:{action:'schedule_visit'}}]}})});await flush();assert.ok(e.events.some(v=>Array.isArray(v)&&v[0]==='action'&&v[1]==='schedule_visit'));const result=e.sent.at(-1).toolResponse.functionResponses[0].response;assert.equal(result.shown,true);assert.match(result.note,/No call, email, inquiry submission or appointment has been completed/)}finally{e.restore()}});
+
+
+test('Delayed microphone permission refreshes the short-lived credential before opening a socket',async()=>{
+ let allow,calls=0,clock=100000;const originalNow=Date.now;const e=environment(()=>new Promise(resolve=>allow=resolve));
+ try{Date.now=()=>clock;global.fetch=async()=>Response.json({token:'credential-'+(++calls),model:'gemini-3.8-live'});const pending=e.voice.start();await flush();clock+=65000;allow(e.stream);await pending;assert.equal(calls,2);assert.equal(e.sockets.length,1);assert.match(e.sockets[0].url,/access_token=credential-2/)}finally{Date.now=originalNow;e.restore()}
+});
+test('Cancelling while a stale credential refreshes never opens a late voice socket',async()=>{
+ let allow,refresh,calls=0,clock=100000;const originalNow=Date.now;const e=environment(()=>new Promise(resolve=>allow=resolve));
+ try{Date.now=()=>clock;global.fetch=async()=>++calls===1?Response.json({token:'old',model:'gemini-3.8-live'}):new Promise(resolve=>refresh=resolve);const pending=e.voice.start();await flush();clock+=65000;allow(e.stream);await flush();assert.equal(calls,2);e.voice.close();refresh(Response.json({token:'new',model:'gemini-3.8-live'}));await pending;assert.equal(e.sockets.length,0);assert.equal(e.counts().tracksStopped,1)}finally{Date.now=originalNow;e.restore()}
+});
