@@ -536,3 +536,35 @@ body button#ask-brittany-launcher>.guide-launcher-label{display:block!important;
 body button#ask-brittany-launcher:hover>img{transform:translateY(-2px)!important;box-shadow:var(--neo-hover)!important}
 @media(max-width:600px){body button#ask-brittany-launcher{width:146px;gap:8px}body button#ask-brittany-launcher>img{width:68px;height:68px}body button#ask-brittany-launcher>.guide-launcher-label{font-size:12px}}
 @media(prefers-reduced-motion:reduce){body button#ask-brittany-launcher:hover>img{transform:none!important}}
+
+/* A held outgoing film and feathered incoming scene replace the straight seam.
+   The browser retains native scrolling, hash links and touch momentum. */
+.film-transitions .care-chapters{position:relative;isolation:isolate;background:#102c46}
+.film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature){
+ --film-feather:0px;
+ --film-dim:0;
+ clip-path:none;
+ border-radius:0;
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 var(--film-feather),#000 100%);
+ mask-image:linear-gradient(to bottom,transparent 0,#000 var(--film-feather),#000 100%);
+}
+.film-transitions .hero::after,.film-transitions .promise-scene::after,
+.film-transitions .service-chapter::after,.film-transitions .team-feature::after{
+ content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
+ background:#071d2b;opacity:var(--film-dim,0);
+}
+.film-transitions :is(.hero-film,.chapter-image .film,.promise-scene>.film){transform-origin:50% 50%}
+.film-transitions .service-chapter .chapter-image :is(img,video){transform:none;transition:none}
+.film-transitions .pin-spacer{background:transparent!important}
+/* Never obscure focused controls, even while two scenes overlap. */
+.film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature):focus-within{
+ -webkit-mask-image:none;mask-image:none;
+}
+.film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature):focus-within::after{opacity:0}
+@media(max-width:600px){
+ .film-transitions .service-chapter{padding-top:40px;padding-bottom:52px}
+ .film-transitions .service-chapter .chapter-image{border-radius:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature){-webkit-mask-image:none;mask-image:none}
+}
