@@ -1,9 +1,12 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 import {CareLiveVoice,canUseLiveVoice,type VoiceHistory} from './care-live-voice';
+import type {CareAction} from '@/lib/care-plan';
+import {trackCareEvent} from './care-events';
 
-export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',text:string,id:string)=>void,history:VoiceHistory[]=[]){
+export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',text:string,id:string)=>void,history:VoiceHistory[]=[],onAction?:(action:CareAction)=>void){
  const [enabled,setEnabled]=useState(true),[supported,setSupported]=useState(false),[listening,setListening]=useState(false),[speaking,setSpeaking]=useState(false),[voiceLevel,setVoiceLevel]=useState(0),[status,setStatus]=useState('Voice replies are on. You can type or talk to Brittany.');
+ const actionCallback=useRef(onAction);actionCallback.current=onAction;
  const historyRef=useRef(history);historyRef.current=history;
  const [microphoneLevel,setMicrophoneLevel]=useState(0);
  const [microphoneBusy,setMicrophoneBusy]=useState(false);const [needsPlay,setNeedsPlay]=useState(false);const lastReply=useRef('');
@@ -104,17 +107,19 @@ export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',
  function startListening(){
   if(!isOpen.current)return;cancelRecognition();stopPlayback();
   const ctx=audioContext.current;if(!ctx){conversation.current=false;setConversationActive(false);setStatus('Audio is unavailable in this browser.');return}
-  let introduced=false;
+  let introduced=false;const connectionStarted=performance.now();trackCareEvent('voice_start','voice');
   const connection=new CareLiveVoice(ctx,{
    onState:state=>{if(!isOpen.current)return;setListening(state==='listening');setSpeaking(state==='speaking');setMicrophoneBusy(state==='connecting');
     if(state==='connecting')setStatus('Connecting to Brittany…');
-    if(state==='listening'){setStatus('Brittany is listening. Speak naturally; you can interrupt her.');if(!introduced){introduced=true;if(historyRef.current.length===0)connection.greet()}}
+    if(state==='listening'){setStatus('Brittany is listening. Speak naturally; you can interrupt her.');if(!introduced){introduced=true;trackCareEvent('voice_connected','voice',performance.now()-connectionStarted);if(historyRef.current.length===0)connection.greet()}}
     if(state==='speaking')setStatus('Brittany is speaking. Your microphone is still listening.');
    },
+   onAction:action=>{if(isOpen.current)actionCallback.current?.(action)},
+   onTurnComplete:()=>trackCareEvent('voice_turn_complete','voice'),
    onStatus:text=>{if(isOpen.current)setStatus(text)},
    onInputLevel:level=>{if(isOpen.current)setMicrophoneLevel(level)},
    onTranscript:(role,text,id)=>{if(isOpen.current)callback.current(role,text,id)},
-   onError:text=>{if(isOpen.current){setMicrophoneLevel(0);conversation.current=false;setConversationActive(false);setStatus(text)}}
+   onError:text=>{trackCareEvent('voice_error','voice');if(isOpen.current){setMicrophoneLevel(0);conversation.current=false;setConversationActive(false);setStatus(text)}}
   },historyRef.current);live.current=connection;void connection.start();
  }
  function beginConversation(){if(conversation.current)return;session.current++;conversation.current=true;setConversationActive(true);setEnabled(true);startListening()}

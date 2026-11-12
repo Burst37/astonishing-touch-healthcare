@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const ts=require('typescript');
-function load(file,deps={}){const module={exports:{}};new Function('require','module','exports',ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText)(id=>deps[id],module,module.exports);return module.exports}
+function load(file,deps={}){const module={exports:{}};new Function('require','module','exports',ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText)(id=>id==='@/lib/care-plan'?load('lib/care-plan.ts'):deps[id],module,module.exports);return module.exports}
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 function environment(permission){
  const saved=Object.fromEntries(['navigator','AudioContext','AudioWorkletNode','WebSocket','fetch'].map(k=>[k,Object.getOwnPropertyDescriptor(global,k)]));
@@ -13,7 +13,7 @@ function environment(permission){
  global.AudioContext=Context;global.AudioWorkletNode=class {constructor(){this.port={onmessage:null,close(){}};nodes.push(this)}connect(){}disconnect(){}};
  global.WebSocket=class {static OPEN=1;constructor(url){this.url=url;this.readyState=1;this.bufferedAmount=0;sockets.push(this)}send(v){sent.push(JSON.parse(v))}close(){this.readyState=3}};
  global.fetch=async()=>Response.json({token:'one-use-token',model:'gemini-3.8-live'});
- const {CareLiveVoice}=load('app/care-live-voice.ts');const output=new Context();const voice=new CareLiveVoice(output,{onState:s=>events.push(s),onTranscript:(...args)=>events.push(args),onError:m=>events.push(m)});
+ const {CareLiveVoice}=load('app/care-live-voice.ts');const output=new Context();const voice=new CareLiveVoice(output,{onState:s=>events.push(s),onTranscript:(...args)=>events.push(args),onError:m=>events.push(m),onAction:action=>events.push(['action',action])});
  return {voice,output,sent,sockets,nodes,started,stopped,events,stream,counts:()=>({tracksStopped,contextsClosed}),restore(){voice.close();for(const [k,d] of Object.entries(saved)){if(d)Object.defineProperty(global,k,d);else delete global[k]}}};
 }
 test('Live microphone streams without recording and waits for authenticated setup',async()=>{
@@ -93,3 +93,5 @@ test('An authenticated session with no capture packets reports the microphone fa
 test('A new voice conversation can greet without fabricating a visitor transcript',async()=>{
  const e=environment();try{await e.voice.start();e.sockets[0].onmessage({data:JSON.stringify({setupComplete:{}})});await flush();e.voice.greet();assert.equal(e.sent.at(-1).clientContent.turns[0].parts[0].text,'Hello.');assert.equal(e.sent.at(-1).clientContent.turnComplete,true);assert.equal(e.events.some(x=>Array.isArray(x)&&x[0]==='user'),false)}finally{e.restore()}
 });
+
+test('Live care action opens the requested review card without claiming a completed booking',async()=>{const e=environment();try{await e.voice.start();e.sockets[0].onmessage({data:JSON.stringify({setupComplete:{}})});await flush();e.sockets[0].onmessage({data:JSON.stringify({toolCall:{functionCalls:[{id:'action-1',name:'show_care_action',args:{action:'schedule_visit'}}]}})});await flush();assert.ok(e.events.some(v=>Array.isArray(v)&&v[0]==='action'&&v[1]==='schedule_visit'));const result=e.sent.at(-1).toolResponse.functionResponses[0].response;assert.equal(result.shown,true);assert.match(result.note,/No call, email, inquiry submission or appointment has been completed/)}finally{e.restore()}});

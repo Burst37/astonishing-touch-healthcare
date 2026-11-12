@@ -1,7 +1,8 @@
+import {isCareAction,type CareAction} from '@/lib/care-plan';
 export type LiveState='connecting'|'listening'|'speaking'|'idle';
 type Role='user'|'assistant';
 export type VoiceHistory={role:Role;content:string};
-type Callbacks={onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void,onInputLevel?:(level:number)=>void,onTurnComplete?:()=>void,onStatus?:(message:string)=>void};
+type Callbacks={onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void,onInputLevel?:(level:number)=>void,onTurnComplete?:()=>void,onStatus?:(message:string)=>void,onAction?:(action:CareAction)=>void};
 type ServerContent={interrupted?:boolean,turnComplete?:boolean,inputTranscription?:{text?:string},outputTranscription?:{text?:string},modelTurn?:{parts?:{inlineData?:{data?:string,mimeType?:string}}[]}};
 
 export function canUseLiveVoice(){return typeof window!=='undefined'&&!!navigator.mediaDevices?.getUserMedia&&typeof AudioWorkletNode!=='undefined'&&typeof WebSocket!=='undefined'}
@@ -75,7 +76,7 @@ export class CareLiveVoice {
  private async receive(raw:string|Blob|ArrayBuffer){
   try{
    const text=typeof raw==='string'?raw:raw instanceof Blob?await raw.text():new TextDecoder().decode(raw);if(this.stopped)return;
-   const message=JSON.parse(text) as {setupComplete?:object,error?:object,goAway?:object,toolCall?:{functionCalls?:{id:string,name:string,args?:{query?:string}}[]},serverContent?:ServerContent};
+   const message=JSON.parse(text) as {setupComplete?:object,error?:object,goAway?:object,toolCall?:{functionCalls?:{id:string,name:string,args?:{query?:string,action?:string}}[]},serverContent?:ServerContent};
    if(message.error){this.fail('Brittany’s live voice is unavailable. Please try again.');return}
    if(message.setupComplete){
     clearTimeout(this.setupTimer);
@@ -98,7 +99,12 @@ export class CareLiveVoice {
   }catch{if(!this.stopped)this.fail('Brittany’s audio connection was interrupted. Please reconnect.')}
  }
  private nextTurn(){this.turn++;this.texts={user:'',assistant:''}}
- private async lookup(call:{id:string,name:string,args?:{query?:string}}){
+ private async lookup(call:{id:string,name:string,args?:{query?:string,action?:string}}){
+  if(call.name==='show_care_action'&&isCareAction(call.args?.action)){
+   const shown=Boolean(this.callbacks.onAction);
+   this.callbacks.onAction?.(call.args.action);
+   this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:{shown,action:call.args.action,note:'This only shows a button for the visitor to review and select. No call, email, inquiry submission or appointment has been completed. If no calendar is connected, the scheduling button opens a care request instead.'}}]}});return;
+  }
   if(call.name!=='lookup_current_information'||!call.args?.query){this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:{error:'Unsupported request'}}]}});return}
   try{const response=await fetch('/api/assistant',{method:'POST',headers:{'Content-Type':'application/json'},signal:this.abort.signal,body:JSON.stringify({message:call.args.query,history:[]})});const data=await response.json();this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:data}]}})}catch{this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:{error:'Current information could not be verified.'}}]}})}
  }

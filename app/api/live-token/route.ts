@@ -20,7 +20,7 @@ export async function POST(request:Request){
   contextWindowCompression:{triggerTokens:'12000',slidingWindow:{targetTokens:'6000'}},
   inputAudioTranscription:{},outputAudioTranscription:{},
   realtimeInputConfig:{automaticActivityDetection:{disabled:false,silenceDurationMs:300,prefixPaddingMs:40}},
-  tools:[{functionDeclarations:[{name:'lookup_current_information',description:'Verify current news, weather, sports or other time-sensitive facts. Never include personal or health information in the query.',parameters:{type:'OBJECT',properties:{query:{type:'STRING'}},required:['query']}}]}],
+  tools:[{functionDeclarations:[{name:'show_care_action',description:'Show a relevant next-step button in the visitor’s chat panel when they ask to start care, arrange a visit, get directions or call the office. This displays a button only; never claim a call was placed, an email sent, a request saved, or an appointment booked.',parameters:{type:'OBJECT',properties:{action:{type:'STRING',enum:['request_care','schedule_visit','directions','call_office']}},required:['action']}},{name:'lookup_current_information',description:'Verify current news, weather, sports or other time-sensitive facts. Never include personal or health information in the query.',parameters:{type:'OBJECT',properties:{query:{type:'STRING'}},required:['query']}}]}],
  };
  try{
   const now=Date.now();

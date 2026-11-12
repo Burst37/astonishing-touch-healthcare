@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const ts=require('typescript');
-function load(file,dependencies){const module={exports:{}};const source=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;new Function('require','module','exports',source)(id=>{if(!(id in dependencies))throw Error(id);return dependencies[id]},module,module.exports);return module.exports}
+function load(file,dependencies){const module={exports:{}};const source=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;new Function('require','module','exports',source)(id=>{if(id==='@/lib/care-plan')return load('lib/care-plan.ts',{});if(id==='./care-events')return {trackCareEvent(){}};if(!(id in dependencies))throw Error(id);return dependencies[id]},module,module.exports);return module.exports}
 test('Urgent questions return help before storage, pricing or provider routing',async()=>{
  let storageCalls=0;
  const {POST}=load('app/api/assistant/route.ts',{'@/lib/rate-limit':{allowRequest(){storageCalls++;throw Error('storage unavailable')}},'cloudflare:workers':{env:{}},'@/app/content':{business:{},services:[],faqs:[],directionsUrl:''},'@/app/care-knowledge':{},'@/app/current-information':{}});
