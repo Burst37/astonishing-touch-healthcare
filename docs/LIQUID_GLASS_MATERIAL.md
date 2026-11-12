@@ -33,3 +33,5 @@ Reviewed original implementation sources rather than relying on generic glassmor
 - https://kube.io/blog/liquid-glass-css-svg/ — refraction and specular-light implementation explanation. Its SVG backdrop-filter demonstration has browser limitations; the dashboard keeps a CSS implementation.
 
 These are implementation references, not evidence that the supplied rendered UI kit came from those authors. The supplied image remains the visual target.
+
+Public-site generic button selectors explicitly exclude descendants of `.team-app`; this prevents the site’s later-loaded neumorphic hover styles from bleaching dashboard gel buttons.

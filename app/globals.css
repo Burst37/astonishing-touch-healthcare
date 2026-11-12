@@ -300,13 +300,13 @@ footer .brand.brand-original{width:350px;flex-shrink:0;max-width:100%}
 @media(prefers-reduced-motion:reduce){.scene-transitions .service-chapter .chapter-copy,.motion-ready .service-chapter .chapter-copy>*{transform:none!important;opacity:1!important}}
 
 /* One neumorphic surface for every action, selection and disclosure. */
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){background:linear-gradient(145deg,#edf2f4,#dbe4e9)!important;color:var(--neo-ink)!important;border:1px solid #cbd7de!important;box-shadow:var(--neo-raised)!important;border-radius:999px!important;text-shadow:none!important;backdrop-filter:none;transition:box-shadow .22s ease,background .22s ease,transform .22s ease}
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){background:linear-gradient(145deg,#edf2f4,#dbe4e9)!important;color:var(--neo-ink)!important;border:1px solid #cbd7de!important;box-shadow:var(--neo-raised)!important;border-radius:999px!important;text-shadow:none!important;backdrop-filter:none;transition:box-shadow .22s ease,background .22s ease,transform .22s ease}
 .button::before{display:none}
 body :is(.text-link,.chapter-cta,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){padding:13px 20px;min-height:44px;text-decoration:none;max-width:100%}
 .chapter-copy .chapter-cta{display:flex;width:fit-content;gap:18px;font-size:.9rem;margin-top:22px}
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:active,[aria-pressed=true],[aria-current=true],[aria-current=location],[data-state=open]),body .chapter-nav>a.active{background:#dde7ec!important;box-shadow:var(--neo-pressed)!important}
-@media(hover:hover) and (pointer:fine){body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):hover{box-shadow:var(--neo-hover)!important}body :is(button:not(.chapter-secondary),.button):not(:disabled):active{box-shadow:var(--neo-pressed)!important}}
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link):focus-visible{outline:3px solid #007f88!important;outline-offset:5px!important}
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:active,[aria-pressed=true],[aria-current=true],[aria-current=location],[data-state=open]),body .chapter-nav>a.active{background:#dde7ec!important;box-shadow:var(--neo-pressed)!important}
+@media(hover:hover) and (pointer:fine){body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):hover{box-shadow:var(--neo-hover)!important}body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button):not(:disabled):active{box-shadow:var(--neo-pressed)!important}}
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link):focus-visible{outline:3px solid #007f88!important;outline-offset:5px!important}
 body button:disabled{opacity:.55;cursor:not-allowed}
 body .menu-button{min-width:46px;min-height:46px;padding:11px}
 body .chat-form button{margin:6px;min-width:40px;padding:10px}
@@ -331,7 +331,7 @@ body .scroll-cue svg{border:0;padding:0}
 @media(max-width:1250px){.desktop-nav{display:none}.menu-button{display:block}}
 @media(max-width:950px){.chapter-nav{gap:5px}.hero-bottom{right:170px;flex-wrap:wrap;gap:14px;align-items:flex-start}.scroll-cue{max-width:none}}
 @media(max-width:600px){.chapter-nav{gap:4px}.chapter-nav>a{min-width:0;flex:1;padding:8px 2px}.hero-bottom{right:145px}.hero-copy{padding-bottom:65px}.gallery-controls.orbit-controls{max-width:calc(100% - 40px)}.orbit-controls .gallery-dots{order:3;width:100%;justify-content:center}body .faq-list [data-slot=accordion-trigger]{padding:20px;font-size:1rem}.chapter-copy .chapter-cta{font-size:.875rem;padding:13px 16px}}
-@media(prefers-contrast:more){body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link){box-shadow:none!important;border:2px solid currentColor!important}}
+@media(prefers-contrast:more){body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link){box-shadow:none!important;border:2px solid currentColor!important}}
 
 /* Gallery hover polish stays inside each card's carousel positioning. */
 .orbit-card{transition:box-shadow .35s ease,border-color .35s ease}
@@ -362,16 +362,16 @@ body :is(.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-n
   --neo-hover:5px 5px 7px rgba(16,44,70,.29),inset 1px 1px 1px rgba(255,255,255,.88),inset -2px -2px 3px rgba(105,128,142,.30);
   --neo-pressed:inset 3px 3px 5px rgba(68,90,105,.30),inset -2px -2px 4px rgba(255,255,255,.72);
 }
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){
   box-shadow:var(--neo-raised)!important;
   filter:none!important;
 }
 @media(hover:hover) and (pointer:fine){
-  body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):hover{
+  body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):hover{
     box-shadow:var(--neo-hover)!important;
   }
 }
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:active,[aria-pressed=true],[aria-current=true],[aria-current=location],[data-state=open]),
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:active,[aria-pressed=true],[aria-current=true],[aria-current=location],[data-state=open]),
 body .chapter-nav>a.active{
   box-shadow:var(--neo-pressed)!important;
 }
@@ -455,13 +455,13 @@ body .guide-panel{width:min(440px,100vw)!important;max-width:100vw!important;hei
 @media(max-width:600px){body .guide-launcher{width:68px;height:68px;min-width:68px;min-height:68px;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom))}body .guide-launcher>img{width:60px;height:60px}body .guide-panel{padding:20px 16px max(16px,env(safe-area-inset-bottom));border-radius:0}.hero-bottom{padding-right:80px}.guide-panel>.guide-head{padding-top:4px}.guide-panel .voice-toggle{padding:10px;font-size:.75rem}}
 
 /* Tactile pill states: directional depth, contained highlights, no outer light. */
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
 @media(hover:hover) and (pointer:fine){
- body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):hover{transform:translateY(-2px);box-shadow:var(--neo-hover)!important;background:linear-gradient(145deg,#f0f4f6,#d9e3e9)!important}
+ body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):hover{transform:translateY(-2px);box-shadow:var(--neo-hover)!important;background:linear-gradient(145deg,#f0f4f6,#d9e3e9)!important}
 }
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):active{transform:translateY(1px);background:#dce5ea!important;box-shadow:var(--neo-pressed)!important}
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a):is([aria-pressed=true],[aria-current=location],[data-state=open]){box-shadow:var(--neo-pressed)!important}
-@media(prefers-reduced-motion:reduce){body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:hover,:active){transform:none}}
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):active{transform:translateY(1px);background:#dce5ea!important;box-shadow:var(--neo-pressed)!important}
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a):is([aria-pressed=true],[aria-current=location],[data-state=open]){box-shadow:var(--neo-pressed)!important}
+@media(prefers-reduced-motion:reduce){body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:hover,:active){transform:none}}
 
 /* Official Fontshare delivery: typography changes independently of pill size. */
 /* Satoshi */
@@ -486,7 +486,7 @@ body :is(button:not(.chapter-secondary),.button,.chapter-nav>a):is([aria-pressed
 
 
 
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){font-family:'Satoshi',Arial,Helvetica,sans-serif;font-weight:700;letter-spacing:-.015em;font-kerning:normal;font-synthesis:none}
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){font-family:'Satoshi',Arial,Helvetica,sans-serif;font-weight:700;letter-spacing:-.015em;font-kerning:normal;font-synthesis:none}
 /* Preserve the existing header and hero pill boxes while changing their labels. */
 .desktop-nav>a{height:47.6875px;flex-shrink:0;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center}
 .desktop-nav>a:nth-child(1){width:95.90625px}.desktop-nav>a:nth-child(2){width:93px}.desktop-nav>a:nth-child(3){width:128.25px}.desktop-nav>a:nth-child(4){width:87.1875px}
@@ -576,8 +576,8 @@ body button#ask-brittany-launcher:hover>img{transform:translateY(-2px)!important
 
 /* Every pill uses the same visibly heavy label, including phone and motion controls. */
 .care-planner{display:grid;gap:22px;margin-top:22px}.care-planner fieldset{border:0;padding:0;margin:0;display:grid;gap:12px}.care-planner legend,.planner-label{font-weight:700;line-height:1.5;margin-bottom:14px}.planner-label{display:grid;gap:12px}.care-planner select{width:100%;min-height:52px;padding:12px;border:1px solid #b9cbd2;border-radius:14px;background:#f3f7f8;color:#102c46}.planner-choice{display:flex;align-items:center;gap:12px;padding:16px;border:1px solid #c2d2d9;border-radius:14px;background:#f4f8f8;cursor:pointer}.planner-choice:has(input:checked){border-color:#007f88;background:#e8f5f3}.planner-choice input{accent-color:#007f88;width:20px;height:20px;flex-shrink:0}.planner-progress{font-size:.85rem;color:#007f88;font-weight:700}.planner-summary{display:grid;gap:14px;padding:20px;background:#edf4f5;border-radius:18px;margin:0}.planner-summary dt{font-size:.8rem;color:#536471}.planner-summary dd{margin:3px 0 0;font-weight:700}.planner-call{display:flex;align-items:center;gap:12px;width:fit-content;min-height:44px;text-decoration:underline;text-underline-offset:4px}.care-planner .planner-back{width:fit-content;min-height:44px;padding:10px 18px}.care-action-card{padding:18px;border:1px solid #bed8d8;background:#eaf5f4;border-radius:18px;margin:12px 0;display:grid;gap:12px}.care-action-card button{display:flex;align-items:center;justify-content:center;gap:12px;padding:14px;min-height:48px}.inquiry-dialog{max-height:90svh;overflow-y:auto}
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.header-phone),
-body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.header-phone) :is(span,strong,small){
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.header-phone),
+body :is(button:not(.chapter-secondary):not(:where(.team-app *)),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.header-phone) :is(span,strong,small){
  font-family:'Satoshi',Arial,Helvetica,sans-serif;
  font-weight:900!important;
 }
