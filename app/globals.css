@@ -540,6 +540,7 @@ body button#ask-brittany-launcher:hover>img{transform:translateY(-2px)!important
 /* A held outgoing film and feathered incoming scene replace the straight seam.
    The browser retains native scrolling, hash links and touch momentum. */
 .film-transitions .care-chapters{position:relative;isolation:isolate;background:#102c46}
+.film-transitions .service-chapter{scroll-margin-top:0}
 .global-film-control{position:fixed;right:190px;bottom:30px;z-index:41}
 .film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature){
  --film-feather:0px;
