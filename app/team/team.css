@@ -29,7 +29,7 @@ body .team-app .team-button{position:relative;isolation:isolate;overflow:visible
    Shared across navigation and action pills; no broad opaque white overlays. */
 body .team-app :is(.team-button,.team-nav-button){
  --gel-light:#ffffff9c;--gel-face:#eee5ef70;--gel-mid:#d2bfce44;--gel-bottom:#bcacbf80;
- --gel-rim:#fff5ed;--gel-dispersion:#edd0e8;--gel-shadow:#40304852;
+ --gel-rim:#fff5ed;--gel-dispersion:#e3d4d5;--gel-shadow:#40304852;
  color:#283144!important;border:1px solid #ffffffa6!important;
  background:radial-gradient(ellipse at 16% 15%,var(--gel-light),transparent 44%),linear-gradient(178deg,var(--gel-face),var(--gel-mid) 65%,var(--gel-bottom))!important;
  backdrop-filter:blur(10px) saturate(190%)!important;-webkit-backdrop-filter:blur(10px) saturate(190%)!important;
@@ -41,6 +41,11 @@ body .team-app :is(.team-button.primary,.team-nav-button.selected){--gel-light:#
 body .team-app .team-section-heading>.team-button{--gel-light:#c2fff58c;--gel-face:#41ddd1a6;--gel-mid:#12b9b9bd;--gel-bottom:#09a6afd9;--gel-rim:#d5fff8;--gel-dispersion:#8cf7dfb3;--gel-shadow:#275d6e73;color:#153743!important;border-color:#b4fff4a6!important}
 body .team-app :is(.team-button,.team-nav-button):hover:not(:disabled){transform:translateY(-2px);filter:saturate(1.12);box-shadow:inset 0 2px 2px #fffffff0,inset 2px 0 3px #ffffff70,inset -2px 0 3px #ffffff85,inset 0 -3px 3px #ffffff73,2px 7px 0 -1px var(--gel-dispersion),3px 8px 2px -1px #ffffffb3,13px 26px 18px -5px var(--gel-shadow)!important}
 body .team-app :is(.team-button,.team-nav-button):active:not(:disabled){transform:translateY(3px);filter:saturate(1.15);box-shadow:inset 0 3px 4px #49315d40,inset 0 -2px 2px #ffffffc9,1px 3px 0 var(--gel-dispersion),6px 12px 11px -3px var(--gel-shadow)!important}
+/* Interaction sheen adapted from Liquid Glass Components v2.1.0 (MIT).
+   https://github.com/jcm-developer/liquid-glass-components
+   License retained in docs/licenses/liquid-glass-components.txt. */
+body .team-app :is(.team-button,.team-nav-button):is(:hover,:active):not(:disabled)::before{background:radial-gradient(ellipse at 25% 30%,#ffffff7a,transparent 65%),linear-gradient(178deg,#ffffff9c 0%,#ffffff24 24%,transparent 70%)}
+body .team-app :is(.team-button,.team-nav-button):active:not(:disabled){scale:1.015}
 .team-app .team-button.large{padding:18px 32px;font-size:17px}.team-app .team-button.compact{padding:10px 16px;font-size:12px}.team-app button:disabled{opacity:.5;cursor:not-allowed}.team-app :focus-visible{outline:3px solid #4d3297;outline-offset:4px}
 body .team-app .team-text-button,.team-inline{font-size:13px;font-weight:900;color:#443478!important;text-decoration:underline;text-underline-offset:4px;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:6px 0!important;min-height:36px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .team-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-bottom:12px}.team-metric{display:flex;flex-direction:column;gap:12px;padding:24px;min-height:188px;overflow:hidden;background:linear-gradient(132deg,#ffaca382,#b37af5a1 48%,#63e6df70);box-shadow:inset 0 2px 2px #ffffffe0,inset 0 -2px 3px #c5cbffb3,10px 21px 19px #40334d40,0 5px 2px #e7d4ee3d}.team-metric:nth-child(2){background:linear-gradient(132deg,#5ce6de82,#65bde670 48%,#9572e680)}.team-metric:nth-child(3){background:linear-gradient(132deg,#ffaaa782,#d278e68a 48%,#93a6ed70)}.team-metric:nth-child(4){background:linear-gradient(132deg,#a47aed82,#8796e382 48%,#50ded591)}.team-metric::after{content:'';position:absolute;right:17px;top:18px;width:27px;height:17px;border-radius:999px;border:2px solid #f4dfff94;box-shadow:inset 0 0 3px #fff8,0 0 3px #fff8;pointer-events:none}.team-metric>svg{color:#4e3779;stroke-width:1.5;background:#fff4;width:38px;height:38px;padding:8px;border:1px solid #fff9;border-radius:14px;box-shadow:inset 0 1px 2px #fffc,3px 5px 8px #493a6426}.team-metric strong{font-size:40px;line-height:1;font-weight:900}.team-metric span{font-size:12px;font-weight:900;color:#293c51}
@@ -74,3 +79,5 @@ body .team-app .team-text-button,.team-inline{font-size:13px;font-weight:900;col
 @media(forced-colors:active){.team-app .team-shell,.team-app .team-panel,.team-app .team-button,.team-app .team-nav-button,.team-app input,.team-app select{border:1px solid CanvasText!important;box-shadow:none!important}.team-app .team-panel::before,.team-app .team-shell::before,.team-app .team-button::before,.team-app .team-button::after,.team-app .team-nav-button::before,.team-app .team-nav-button::after{display:none}.team-app .team-nav-button.selected{outline:2px solid Highlight!important}}
 
 @media(prefers-reduced-transparency:reduce){body .team-app :is(.team-button,.team-nav-button){backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#eae5ed!important}body .team-app :is(.team-button.primary,.team-nav-button.selected){background:#7634d4!important}body .team-app .team-section-heading>.team-button{background:#34bfb9!important}body .team-app :is(.team-button,.team-nav-button)::before,body .team-app :is(.team-button,.team-nav-button)::after{display:none}}
+
+@media(prefers-reduced-motion:reduce){body .team-app :is(.team-button,.team-nav-button):active{scale:1}}

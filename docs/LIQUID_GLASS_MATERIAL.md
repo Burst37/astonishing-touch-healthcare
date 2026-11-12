@@ -23,3 +23,13 @@ Keep the public website’s neumorphic controls and transparent logo independent
 ## Review
 
 Compare rendered desktop and phone views with the reference. Check colored reflections underneath objects, small bright edge highlights, clear glass instead of milky white cards, raised shadows, vivid controls and readable labels. Exercise selected/hover states so broad application button rules cannot bleach the violet controls. Run a production build and check a narrow phone view for document overflow before sharing a preview.
+
+## Working-code references
+
+Reviewed original implementation sources rather than relying on generic glassmorphism descriptions:
+
+- https://github.com/jcm-developer/liquid-glass-components — button isolation, separate interaction sheen, rim and prominent tint variants. The interaction sheen is adapted under MIT; see `docs/licenses/liquid-glass-components.txt`.
+- https://github.com/joinauro/liquid-glass-button-generator — jelly button generator; inspected the layered surface/depth/reflection approach, without copying or installing its canvas/particle runtime.
+- https://kube.io/blog/liquid-glass-css-svg/ — refraction and specular-light implementation explanation. Its SVG backdrop-filter demonstration has browser limitations; the dashboard keeps a CSS implementation.
+
+These are implementation references, not evidence that the supplied rendered UI kit came from those authors. The supplied image remains the visual target.
