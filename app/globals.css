@@ -301,12 +301,12 @@ footer .brand.brand-original{width:350px;flex-shrink:0;max-width:100%}
 
 /* One neumorphic surface for every action, selection and disclosure. */
 :root{--neo-face:#edf2f4;--neo-ink:#13364b;--neo-raised:5px 5px 10px rgba(75,91,99,.18),-5px -5px 10px rgba(255,255,255,.92),inset 1px 1px 1px rgba(255,255,255,.72);--neo-pressed:inset 3px 3px 6px rgba(75,91,99,.18),inset -3px -3px 6px rgba(255,255,255,.86);--neo-hover:6px 6px 12px rgba(75,91,99,.2),-6px -6px 12px rgba(255,255,255,.94),inset 1px 1px 1px rgba(255,255,255,.72)}
-body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue){background:var(--neo-face)!important;color:var(--neo-ink)!important;border:1px solid rgba(255,255,255,.58)!important;box-shadow:var(--neo-raised)!important;border-radius:999px!important;text-shadow:none!important;backdrop-filter:none;transition:box-shadow .22s ease,background .22s ease,transform .22s ease}
+body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){background:var(--neo-face)!important;color:var(--neo-ink)!important;border:1px solid rgba(255,255,255,.58)!important;box-shadow:var(--neo-raised)!important;border-radius:999px!important;text-shadow:none!important;backdrop-filter:none;transition:box-shadow .22s ease,background .22s ease,transform .22s ease}
 .button::before{display:none}
-body :is(.text-link,.chapter-cta,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue){padding:13px 20px;min-height:44px;text-decoration:none;max-width:100%}
+body :is(.text-link,.chapter-cta,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){padding:13px 20px;min-height:44px;text-decoration:none;max-width:100%}
 .chapter-copy .chapter-cta{display:flex;width:fit-content;gap:18px;font-size:.9rem;margin-top:22px}
-body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue):is(:active,[aria-pressed=true],[aria-current=true],[aria-current=location],[data-state=open]),body .chapter-nav>a.active{background:#dde7ec!important;box-shadow:var(--neo-pressed)!important}
-@media(hover:hover) and (pointer:fine){body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue):not(:disabled):hover{box-shadow:var(--neo-hover)!important}body :is(button,.button):not(:disabled):active{box-shadow:var(--neo-pressed)!important}}
+body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:active,[aria-pressed=true],[aria-current=true],[aria-current=location],[data-state=open]),body .chapter-nav>a.active{background:#dde7ec!important;box-shadow:var(--neo-pressed)!important}
+@media(hover:hover) and (pointer:fine){body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):hover{box-shadow:var(--neo-hover)!important}body :is(button,.button):not(:disabled):active{box-shadow:var(--neo-pressed)!important}}
 body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link):focus-visible{outline:3px solid #007f88!important;outline-offset:5px!important}
 body button:disabled{opacity:.55;cursor:not-allowed}
 body .menu-button{min-width:46px;min-height:46px;padding:11px}
@@ -328,7 +328,7 @@ body .gallery-dots button[aria-current=true]::after{background:#007f88}
 body .inquiry-form select{background:var(--neo-face);border:1px solid #ffffff80;border-radius:16px;box-shadow:var(--neo-pressed);color:var(--neo-ink)}
 .chapter-nav{gap:10px}
 .desktop-nav{gap:12px}.desktop-nav>a{font-size:.82rem;white-space:nowrap}.desktop-nav>a::after{display:none}
-body .scroll-cue svg{border:0;padding:8px}
+body .scroll-cue svg{border:0;padding:0}
 @media(max-width:1250px){.desktop-nav{display:none}.menu-button{display:block}}
 @media(max-width:950px){.chapter-nav{gap:5px}.hero-bottom{right:170px;flex-wrap:wrap;gap:14px;align-items:flex-start}.scroll-cue{max-width:none}}
 @media(max-width:600px){.chapter-nav{gap:4px}.chapter-nav>a{min-width:0;flex:1;padding:8px 2px}.hero-bottom{right:145px}.hero-copy{padding-bottom:65px}.gallery-controls.orbit-controls{max-width:calc(100% - 40px)}.orbit-controls .gallery-dots{order:3;width:100%;justify-content:center}body .faq-list [data-slot=accordion-trigger]{padding:20px;font-size:1rem}.chapter-copy .chapter-cta{font-size:.875rem;padding:13px 16px}}
@@ -354,7 +354,7 @@ body .scroll-cue svg{border:0;padding:8px}
 /* Refined neumorphism: soft molded surfaces without outer glow. */
 body .guide-launcher>img{border:4px solid var(--neo-face);box-shadow:4px 4px 9px rgba(75,91,99,.18),-4px -4px 9px rgba(255,255,255,.92)}
 body .guide-launcher>span{box-shadow:4px 4px 9px rgba(75,91,99,.18),-4px -4px 9px rgba(255,255,255,.92)}
-body :is(.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue){filter:none!important}
+body :is(.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){filter:none!important}
 
 
 /* Neumorphic correction: tactile surfaces, no halo/glow. */
@@ -365,16 +365,16 @@ body :is(.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-n
   --neo-hover:5px 6px 12px rgba(16,44,70,.18),inset 1px 1px 2px rgba(255,255,255,.94),inset -1px -1px 2px rgba(102,124,135,.11);
   --neo-pressed:inset 4px 4px 8px rgba(80,101,112,.18),inset -4px -4px 8px rgba(255,255,255,.9);
 }
-body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue){
+body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){
   box-shadow:var(--neo-raised)!important;
   filter:none!important;
 }
 @media(hover:hover) and (pointer:fine){
-  body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue):not(:disabled):hover{
+  body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):hover{
     box-shadow:var(--neo-hover)!important;
   }
 }
-body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.scroll-cue):is(:active,[aria-pressed=true],[aria-current=true],[aria-current=location],[data-state=open]),
+body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:active,[aria-pressed=true],[aria-current=true],[aria-current=location],[data-state=open]),
 body .chapter-nav>a.active{
   box-shadow:var(--neo-pressed)!important;
 }
@@ -422,7 +422,7 @@ body .guide-launcher:hover>span{
 .hero{height:auto;min-height:100svh;max-height:none;display:grid;grid-template-rows:1fr auto;align-items:center;gap:48px;padding:160px clamp(24px,5.2vw,84px) 34px}
 .hero-copy{position:relative;inset:auto;transform:none;padding:0;max-width:900px;min-width:0}
 .hero-bottom{position:relative;inset:auto;display:flex;flex-wrap:wrap;align-items:center;gap:24px;min-width:0}
-body .hero-bottom .scroll-cue{padding:0;background:transparent;color:#fff;box-shadow:none!important;border:0;border-radius:0;max-width:none;font-size:.7rem;letter-spacing:.12em}
+body .hero-bottom .scroll-cue{padding:0;background:transparent;color:#fff;box-shadow:none!important;border:0;border-radius:0;max-width:none;min-height:44px;font-size:.7rem;letter-spacing:.12em}
 .hero-bottom .scroll-cue svg{border:0;border-radius:0;padding:0;width:20px;height:20px;flex-shrink:0}
 .hero-bottom .scroll-cue:hover{color:#91e1df}
 .mission-statement{grid-column:1/-1;max-width:1050px;border-top:1px solid #91e1df66;padding-top:32px}
