@@ -9,12 +9,12 @@ function environment(permission){
  const sent=[],sockets=[],nodes=[],started=[],stopped=[],events=[];let tracksStopped=0,contextsClosed=0;
  const stream={getTracks:()=>[{stop(){tracksStopped++}}],getAudioTracks:()=>[{addEventListener(){}}]};
  Object.defineProperty(global,'navigator',{configurable:true,value:{mediaDevices:{getUserMedia:permission||(async()=>stream)}}});
- class Context{constructor(options){if(options?.sampleRate)throw new DOMException('Device only supports its native sample rate','NotSupportedError');this.sampleRate=48000;this.currentTime=10;this.destination={};this.audioWorklet={addModule:async()=>{}}}resume(){return Promise.resolve()}close(){contextsClosed++;return Promise.resolve()}createMediaStreamSource(){return {connect(){},disconnect(){}}}createGain(){return {gain:{value:1},connect(){},disconnect(){}}}createBuffer(ch,n,rate){return {duration:n/rate,getChannelData:()=>new Float32Array(n)}}createBufferSource(){const source={connect(){},disconnect(){},start(t){started.push(t)},stop(){stopped.push(source)}};return source}}
+ class Context{constructor(options){if(options?.sampleRate)throw new DOMException('Device only supports its native sample rate','NotSupportedError');this.state='suspended';this.sampleRate=48000;this.currentTime=10;this.destination={};this.audioWorklet={addModule:async()=>{}}}resume(){this.state='running';return Promise.resolve()}close(){contextsClosed++;return Promise.resolve()}createMediaStreamSource(){return {connect(){},disconnect(){}}}createGain(){return {gain:{value:1},connect(){},disconnect(){}}}createBuffer(ch,n,rate){return {duration:n/rate,getChannelData:()=>new Float32Array(n)}}createBufferSource(){const source={connect(){},disconnect(){},start(t){started.push(t)},stop(){stopped.push(source)}};return source}}
  global.AudioContext=Context;global.AudioWorkletNode=class {constructor(){this.port={onmessage:null,close(){}};nodes.push(this)}connect(){}disconnect(){}};
  global.WebSocket=class {static OPEN=1;constructor(url){this.url=url;this.readyState=1;this.bufferedAmount=0;sockets.push(this)}send(v){sent.push(JSON.parse(v))}close(){this.readyState=3}};
  global.fetch=async()=>Response.json({token:'one-use-token',model:'gemini-3.8-live'});
- const {CareLiveVoice}=load('app/care-live-voice.ts');const voice=new CareLiveVoice(new Context(),{onState:s=>events.push(s),onTranscript:(...args)=>events.push(args),onError:m=>events.push(m)});
- return {voice,sent,sockets,nodes,started,stopped,events,stream,counts:()=>({tracksStopped,contextsClosed}),restore(){voice.close();for(const [k,d] of Object.entries(saved)){if(d)Object.defineProperty(global,k,d);else delete global[k]}}};
+ const {CareLiveVoice}=load('app/care-live-voice.ts');const output=new Context();const voice=new CareLiveVoice(output,{onState:s=>events.push(s),onTranscript:(...args)=>events.push(args),onError:m=>events.push(m)});
+ return {voice,output,sent,sockets,nodes,started,stopped,events,stream,counts:()=>({tracksStopped,contextsClosed}),restore(){voice.close();for(const [k,d] of Object.entries(saved)){if(d)Object.defineProperty(global,k,d);else delete global[k]}}};
 }
 test('Live microphone streams without recording and waits for authenticated setup',async()=>{
  const e=environment();try{
@@ -22,7 +22,7 @@ test('Live microphone streams without recording and waits for authenticated setu
  e.nodes[0].port.onmessage({data:new ArrayBuffer(16)});assert.equal(e.sent.length,1);
  e.sockets[0].onmessage({data:JSON.stringify({setupComplete:{}})});await flush();
  e.nodes[0].port.onmessage({data:new ArrayBuffer(16)});assert.equal(e.sent[1].realtimeInput.audio.mimeType,'audio/pcm;rate=16000');assert.ok(e.voice.connected);
- e.voice.close();assert.equal(e.counts().tracksStopped,1);assert.equal(e.counts().contextsClosed,1);assert.equal(e.sockets[0].readyState,3);
+ e.voice.close();assert.equal(e.counts().tracksStopped,1);assert.equal(e.counts().contextsClosed,0);assert.equal(e.sockets[0].readyState,3);
  }finally{e.restore()}
 });
 test('Each audio chunk plays before turn completion and interruption clears every queued source',async()=>{
@@ -63,7 +63,7 @@ test('Native 48 kHz microphone streams 20ms 16 kHz PCM packets',()=>{
 });
 test('Busy microphone reports phone call contention and releases audio resources',async()=>{
  const e=environment(async()=>{throw new DOMException('Device in use','NotReadableError')});
- try{await e.voice.start();assert.ok(e.events.some(value=>typeof value==='string'&&value.includes('End any phone call')));assert.equal(e.sockets.length,0);assert.equal(e.counts().contextsClosed,1);assert.equal(e.voice.connected,false)}finally{e.restore()}
+ try{await e.voice.start();assert.ok(e.events.some(value=>typeof value==='string'&&value.includes('End any phone call')));assert.equal(e.sockets.length,0);assert.equal(e.counts().contextsClosed,0);assert.equal(e.voice.connected,false)}finally{e.restore()}
 });
 
 test('Authentication starts while microphone permission is pending',async()=>{
@@ -72,4 +72,24 @@ test('Authentication starts while microphone permission is pending',async()=>{
 });
 test('Switching from typed chat carries recent context before microphone frames',async()=>{
  const e=environment();try{e.voice.history=[{role:'user',content:'I am asking about laundry.'},{role:'assistant',content:'We can discuss laundry assistance.'}];await e.voice.start();e.sockets[0].onmessage({data:JSON.stringify({setupComplete:{}})});await flush();assert.equal(e.sent[0].clientContent.turnComplete,false);assert.equal(e.sent[0].clientContent.turns[0].parts[0].text,'I am asking about laundry.');assert.equal(e.sent[0].clientContent.turns[1].role,'model');e.nodes[0].port.onmessage({data:new ArrayBuffer(640)});assert.ok(e.sent[1].realtimeInput)}finally{e.restore()}
+});
+
+
+test('Microphone permission cannot leave the reply context suspended',async()=>{
+ let e;e=environment(async()=>{e.output.state='suspended';return e.stream});
+ try{await e.voice.start();assert.equal(e.output.state,'running')}finally{e.restore()}
+});
+
+
+test('Returned PCM resumes browser audio before scheduling a spoken reply',async()=>{
+ const e=environment();try{await e.voice.start();const socket=e.sockets[0];socket.onmessage({data:JSON.stringify({setupComplete:{}})});await flush();e.output.state='suspended';socket.onmessage({data:JSON.stringify({serverContent:{modelTurn:{parts:[{inlineData:{data:Buffer.alloc(4800).toString('base64'),mimeType:'audio/pcm;rate=24000'}}]}}})});await flush();assert.equal(e.output.state,'running');assert.equal(e.started.length,1)}finally{e.restore()}
+});
+test('Interruption discards reply chunks waiting for audio to resume',async()=>{
+ const e=environment();try{await e.voice.start();const socket=e.sockets[0];socket.onmessage({data:JSON.stringify({setupComplete:{}})});await flush();let resume;e.output.state='suspended';e.output.resume=()=>new Promise(resolve=>resume=()=>{e.output.state='running';resolve()});socket.onmessage({data:JSON.stringify({serverContent:{modelTurn:{parts:[{inlineData:{data:Buffer.alloc(4800).toString('base64'),mimeType:'audio/pcm;rate=24000'}}]}}})});await flush();socket.onmessage({data:JSON.stringify({serverContent:{interrupted:true}})});resume();await flush();assert.equal(e.started.length,0)}finally{e.restore()}
+});
+test('An authenticated session with no capture packets reports the microphone failure',async()=>{
+ const e=environment();const original=global.setTimeout;const timers=[];try{await e.voice.start();global.setTimeout=(fn,ms)=>{timers.push({fn,ms});return 123};e.sockets[0].onmessage({data:JSON.stringify({setupComplete:{}})});await flush();timers.find(x=>x.ms===3000).fn();assert.ok(e.events.some(x=>typeof x==='string'&&x.includes('not sending microphone audio')));assert.equal(e.voice.connected,false)}finally{global.setTimeout=original;e.restore()}
+});
+test('A new voice conversation can greet without fabricating a visitor transcript',async()=>{
+ const e=environment();try{await e.voice.start();e.sockets[0].onmessage({data:JSON.stringify({setupComplete:{}})});await flush();e.voice.greet();assert.equal(e.sent.at(-1).clientContent.turns[0].parts[0].text,'Hello.');assert.equal(e.sent.at(-1).clientContent.turnComplete,true);assert.equal(e.events.some(x=>Array.isArray(x)&&x[0]==='user'),false)}finally{e.restore()}
 });
