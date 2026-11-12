@@ -19,3 +19,13 @@ export const faqs = [
 ];
 
 export const directionsUrl='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(business.address+', '+business.city);
+
+// Original company copy, restored from astonishingtouchhealthcare.org.
+export const companyStory = {
+ introduction: 'Here at Astonishing Touch we want to change the standard of Home Health Care, as it seen in the Missouri region, for the better.',
+ about: [
+  'Astonishing Touch Home Health and Senior Services L.L.C. was established in 2018 by Brittany Wadley, founder and owner of ATHSS. ATHSS is a locally owned and operated in-home health care agency located in the heart of Creve Coeur. Our Staff is licensed, certified, insured and bonded.',
+  'Possessing a heart to serve Ms. Wadley has over 10 years of healthcare experience. At ATHSS we pride ourselves on our commitment in providing quality services and the level of care that our clients deserve.'
+ ],
+ mission: 'Our mission at Astonishing Touch is to provide outstanding home health care services that go beyond industry standards. We will accomplish this by employing professional minded caregivers who take ownership in the company and the care of your loved ones to heart.'
+};

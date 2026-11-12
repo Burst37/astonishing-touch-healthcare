@@ -417,3 +417,17 @@ body .guide-launcher:hover>span{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 36%;
   user-select:none;pointer-events:none;
 }
+
+/* Keep the care action and editorial scroll cue in separate flow rows. */
+.hero{height:auto;min-height:100svh;max-height:none;display:grid;grid-template-rows:1fr auto;align-items:center;gap:48px;padding:160px clamp(24px,5.2vw,84px) 34px}
+.hero-copy{position:relative;inset:auto;transform:none;padding:0;max-width:900px;min-width:0}
+.hero-bottom{position:relative;inset:auto;display:flex;flex-wrap:wrap;align-items:center;gap:24px;min-width:0}
+body .hero-bottom .scroll-cue{padding:0;background:transparent;color:#fff;box-shadow:none!important;border:0;border-radius:0;max-width:none;font-size:.7rem;letter-spacing:.12em}
+.hero-bottom .scroll-cue svg{border:0;border-radius:0;padding:0;width:20px;height:20px;flex-shrink:0}
+.hero-bottom .scroll-cue:hover{color:#91e1df}
+.mission-statement{grid-column:1/-1;max-width:1050px;border-top:1px solid #91e1df66;padding-top:32px}
+.mission-statement h3{font-size:clamp(1.65rem,3vw,2.6rem);color:#91e1df;margin:0 0 18px}
+.mission-statement p{font-size:clamp(1rem,1.4vw,1.22rem);line-height:1.75;color:#f3f7f8;max-width:80ch}
+@media(max-width:600px){.hero{padding:150px 24px 30px;gap:42px}.hero-copy{position:relative;inset:auto;transform:none;padding:0;width:100%}.hero-bottom{position:relative;inset:auto;align-items:center;gap:24px}body .hero-bottom .scroll-cue{font-size:.65rem;letter-spacing:.03em;gap:10px}.mission-statement{padding-top:26px}}
+
+.story-introduction{max-width:44ch;font-size:1.05rem;line-height:1.75;color:#f3f7f8;margin-top:28px}
