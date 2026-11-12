@@ -1,7 +1,7 @@
 export type LiveState='connecting'|'listening'|'speaking'|'idle';
 type Role='user'|'assistant';
 export type VoiceHistory={role:Role;content:string};
-type Callbacks={onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void,onInputLevel?:(level:number)=>void};
+type Callbacks={onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void,onInputLevel?:(level:number)=>void,onTurnComplete?:()=>void};
 type ServerContent={interrupted?:boolean,turnComplete?:boolean,inputTranscription?:{text?:string},outputTranscription?:{text?:string},modelTurn?:{parts?:{inlineData?:{data?:string,mimeType?:string}}[]}};
 
 export function canUseLiveVoice(){return typeof window!=='undefined'&&!!navigator.mediaDevices?.getUserMedia&&typeof AudioWorkletNode!=='undefined'&&typeof WebSocket!=='undefined'}
@@ -23,7 +23,8 @@ export class CareLiveVoice {
  private nonce=Date.now().toString(36)+Math.random().toString(36).slice(2,7);
  private setupTimer:ReturnType<typeof setTimeout>|undefined;
  private drainTimer:ReturnType<typeof setTimeout>|undefined;
- constructor(private output:AudioContext,private callbacks:Callbacks,private history:VoiceHistory[]=[]){}
+ constructor(private output:AudioContext,private callbacks:Callbacks,private history:VoiceHistory[]=[],private inputFactory?:()=>Promise<MediaStream>){}
+ get bufferedOutputSeconds(){return Math.max(0,this.nextTime-this.output.currentTime)}
  get connected(){return this.ready&&!this.stopped}
  async start(){
   this.callbacks.onState('connecting');
@@ -41,7 +42,7 @@ export class CareLiveVoice {
    this.input=new AudioContext();
    const audioReady=Promise.all([this.output.resume(),this.input.resume()]);
    void audioReady.catch(()=>{});
-   const stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+   const stream=await (this.inputFactory?this.inputFactory():navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:true}}));
    if(this.stopped){stream.getTracks().forEach(t=>t.stop());return}this.stream=stream;
    await audioReady.catch(()=>{throw Error('Audio playback could not start. End any phone call, then tap Talk to Brittany again.')});if(this.stopped)return;
    stream.getAudioTracks().forEach(track=>track.addEventListener('ended',()=>{if(!this.stopped)this.fail('The microphone disconnected. Tap Talk to Brittany to reconnect.')}));
@@ -81,7 +82,7 @@ export class CareLiveVoice {
     if(content.inputTranscription?.text)this.transcript('user',content.inputTranscription.text);
     if(content.outputTranscription?.text)this.transcript('assistant',content.outputTranscription.text);
     for(const part of content.modelTurn?.parts||[]){const audio=part.inlineData;if(audio?.data&&audio.mimeType?.startsWith('audio/pcm'))this.play(audio.data,Number(audio.mimeType.match(/rate=(\d+)/)?.[1]||24000))}
-    if(content.turnComplete){this.nextTurn();this.waitForDrain()}
+    if(content.turnComplete){this.nextTurn();this.waitForDrain();this.callbacks.onTurnComplete?.()}
    }
    for(const call of message.toolCall?.functionCalls||[]){void this.lookup(call)}
    if(message.goAway){this.fail('This voice session has ended. Tap Talk to Brittany to start a new one.')}
