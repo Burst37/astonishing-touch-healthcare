@@ -38,14 +38,16 @@ test('Each audio chunk plays before turn completion and interruption clears ever
 test('Ending while microphone permission is pending stops late tracks and never creates a socket',async()=>{
  let allow;const e=environment(()=>new Promise(resolve=>allow=resolve));try{const pending=e.voice.start();e.voice.close();allow(e.stream);await pending;assert.equal(e.counts().tracksStopped,1);assert.equal(e.sockets.length,0)}finally{e.restore()}
 });
-test('Live token locks model, custom identity, instructions and one-use expiry without exposing API key',async()=>{
- const previous={key:process.env.GEMINI_API_KEY,voice:process.env.GEMINI_TTS_VOICE,fetch:global.fetch};process.env.GEMINI_API_KEY='server-secret';process.env.GEMINI_TTS_VOICE='voice_test';let body,calls=0;
+test('Live token uses a compatible prebuilt voice separately from saved TTS identity',async()=>{
+ const previous={key:process.env.GEMINI_API_KEY,voice:process.env.GEMINI_TTS_VOICE,liveVoice:process.env.GEMINI_LIVE_VOICE,fetch:global.fetch};process.env.GEMINI_API_KEY='server-secret';process.env.GEMINI_TTS_VOICE='voice_test';delete process.env.GEMINI_LIVE_VOICE;let body,calls=0;
  try{
  global.fetch=async(url,options)=>{calls++;body=JSON.parse(options.body);assert.match(url,/auth_tokens$/);assert.equal(options.headers['x-goog-api-key'],'server-secret');return Response.json({name:'ephemeral-secret'})};
  const {POST}=load('app/api/live-token/route.ts',{'@/lib/rate-limit':{allowRequest:async()=>true},'@/app/care-knowledge':{brittanyInstructions:()=> 'Never quote prices.'}});
  const req=origin=>new Request('https://example.test/api/live-token',{method:'POST',headers:{origin}});
  assert.equal((await POST(req('https://other.test'))).status,403);assert.equal(calls,0);
  const response=await POST(req('https://example.test'));assert.deepEqual(await response.json(),{token:'ephemeral-secret',model:'gemini-3.8-live'});assert.equal(response.headers.get('cache-control'),'no-store');
- assert.equal(body.uses,1);assert.ok(!('fieldMask' in body));assert.equal(body.bidiGenerateContentSetup.generationConfig.speechConfig.voiceConfig.voice,'voice_test');assert.match(body.bidiGenerateContentSetup.systemInstruction.parts[0].text,/Never quote prices/);assert.ok(Date.parse(body.newSessionExpireTime)<Date.now()+61000);assert.ok(!JSON.stringify(body).includes('server-secret'));
- }finally{global.fetch=previous.fetch;for(const [k,v] of [['GEMINI_API_KEY',previous.key],['GEMINI_TTS_VOICE',previous.voice]]){if(v===undefined)delete process.env[k];else process.env[k]=v}}
+ assert.equal(body.uses,1);assert.ok(!('fieldMask' in body));assert.deepEqual(body.bidiGenerateContentSetup.generationConfig.speechConfig.voiceConfig,{prebuiltVoiceConfig:{voiceName:'Kore'}});assert.match(body.bidiGenerateContentSetup.systemInstruction.parts[0].text,/Never quote prices/);assert.ok(Date.parse(body.newSessionExpireTime)<Date.now()+61000);assert.ok(!JSON.stringify(body).includes('server-secret'));
+ process.env.GEMINI_LIVE_VOICE='voice_saved_tts';assert.equal((await POST(req('https://example.test'))).status,200);assert.equal(body.bidiGenerateContentSetup.generationConfig.speechConfig.voiceConfig.prebuiltVoiceConfig.voiceName,'Kore');
+ process.env.GEMINI_LIVE_VOICE='Aoede';assert.equal((await POST(req('https://example.test'))).status,200);assert.equal(body.bidiGenerateContentSetup.generationConfig.speechConfig.voiceConfig.prebuiltVoiceConfig.voiceName,'Aoede');
+ }finally{global.fetch=previous.fetch;for(const [k,v] of [['GEMINI_API_KEY',previous.key],['GEMINI_TTS_VOICE',previous.voice],['GEMINI_LIVE_VOICE',previous.liveVoice]]){if(v===undefined)delete process.env[k];else process.env[k]=v}}
 });
