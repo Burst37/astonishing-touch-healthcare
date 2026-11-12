@@ -1,9 +1,10 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
-import {CareLiveVoice,canUseLiveVoice} from './care-live-voice';
+import {CareLiveVoice,canUseLiveVoice,type VoiceHistory} from './care-live-voice';
 
-export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',text:string,id:string)=>void){
+export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',text:string,id:string)=>void,history:VoiceHistory[]=[]){
  const [enabled,setEnabled]=useState(true),[supported,setSupported]=useState(false),[listening,setListening]=useState(false),[speaking,setSpeaking]=useState(false),[voiceLevel,setVoiceLevel]=useState(0),[status,setStatus]=useState('Voice replies are on. You can type or talk to Brittany.');
+ const historyRef=useRef(history);historyRef.current=history;
  const [microphoneLevel,setMicrophoneLevel]=useState(0);
  const [microphoneBusy,setMicrophoneBusy]=useState(false);const [needsPlay,setNeedsPlay]=useState(false);const lastReply=useRef('');
  const [conversationActive,setConversationActive]=useState(false);const conversation=useRef(false);const session=useRef(0);
@@ -43,7 +44,11 @@ export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',
  function stopPlayback(){generation.current++;controller.current?.abort();audio.current?.pause();stopLevelMeter();if(audio.current){audio.current.onended=null;audio.current.onerror=null;}if(audioUrl.current){URL.revokeObjectURL(audioUrl.current);audioUrl.current=''}if('speechSynthesis'in window)window.speechSynthesis.cancel();setSpeaking(false)}
  function endConversation(){setNeedsPlay(false);session.current++;conversation.current=false;setConversationActive(false);cancelRecognition();stopPlayback();setStatus('Conversation ended. You can type or start talking again.')}
 
+ // Browser capability detection must happen after hydration.
+ // eslint-disable-next-line react-hooks/set-state-in-effect
  useEffect(()=>{const available=canUseLiveVoice();setSupported(available);if(!available)setStatus('Voice replies are on. Microphone input is unavailable in this browser, but you can still type and hear Brittany.');return()=>{generation.current++;controller.current?.abort();live.current?.close();audio.current?.pause();if(levelFrame.current!==null)cancelAnimationFrame(levelFrame.current);sourceNode.current?.disconnect();analyser.current?.disconnect();void audioContext.current?.close();if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);window.speechSynthesis?.cancel()}},[]);
+ // Closing the external dialog must synchronously release its microphone/audio.
+ // eslint-disable-next-line react-hooks/set-state-in-effect
  useEffect(()=>{if(!open){endConversation()}else{setStatus('Type a question, tap Talk to Brittany, or test your speaker.')}},[open]);
 
  function speakWithDeviceFallback(text:string,ticket:number){
@@ -67,7 +72,7 @@ export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',
   cancelRecognition();stopPlayback();const ticket=generation.current;const abort=new AbortController();controller.current=abort;setStatus('Preparing Brittany’s reply…');
   const spokenText=text.replace(/\[([^\]]+)\]\(https?:[^)]+\)/g,'$1').replace(/https?:\/\/\S+/g,'').replace(/[*#`]/g,'').trim();
   const sentences=spokenText.match(/[\s\S]+?(?:[.!?](?=\s|$)|$)/g)||[spokenText];const chunks:string[]=[];
-  for(const sentence of sentences){const parts=sentence.trim().replace(/\s+/g,' ').match(/.{1,650}(?:\s|$)|.{1,650}/g)||[];for(const part of parts){const last=chunks.length-1;if(last>=0&&chunks[last].length+part.length<650)chunks[last]+=' '+part.trim();else chunks.push(part.trim())}}
+  for(const sentence of sentences){const parts=sentence.trim().replace(/\s+/g,' ').match(/.{1,650}(?:\s|$)|.{1,650}/g)||[];for(const part of parts){const last=chunks.length-1;if(last>0&&chunks[last].length+part.length<420)chunks[last]+=' '+part.trim();else chunks.push(part.trim())}}
   const prepare=async(part:string)=>{try{const r=await fetch('/api/speech',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:part}),signal:abort.signal});if(!r.ok)return null;return await r.blob()}catch{return null}};
 
   try{
@@ -108,7 +113,7 @@ export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',
    onInputLevel:level=>{if(isOpen.current)setMicrophoneLevel(level)},
    onTranscript:(role,text,id)=>{if(isOpen.current)callback.current(role,text,id)},
    onError:text=>{if(isOpen.current){setMicrophoneLevel(0);conversation.current=false;setConversationActive(false);setStatus(text)}}
-  });live.current=connection;void connection.start();
+  },historyRef.current);live.current=connection;void connection.start();
  }
  function toggleListening(){prepareAudio();if(conversation.current){endConversation();return}session.current++;conversation.current=true;setConversationActive(true);setEnabled(true);startListening();}
  function sendLive(text:string){return live.current?.sendText(text)||false}

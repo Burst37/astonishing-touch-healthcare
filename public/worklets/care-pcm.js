@@ -1,6 +1,6 @@
 /* Stream signed little-endian PCM while the visitor talks; no recording/upload cycle. */
 class CarePCM extends AudioWorkletProcessor {
- constructor(){super();this.samples=new Int16Array(2048);this.count=0;this.phase=0;}
+ constructor(){super();this.samples=new Int16Array(320);this.count=0;this.phase=0;}
  process(inputs){
   const channel=inputs[0]?.[0];if(!channel)return true;
   const step=16000/sampleRate;

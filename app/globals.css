@@ -521,3 +521,10 @@ body .chapter-copy .chapter-secondary:hover>svg{transform:translate(3px,-3px)}
 .care-summary{padding-top:36px}
 @media(max-width:600px){.care-directory{padding-top:38px;padding-bottom:42px}.care-directory>.eyebrow{font-size:.7rem;letter-spacing:.1em;margin-bottom:20px}.care-directory-grid{grid-template-columns:1fr}.care-directory-grid>a{min-height:76px;gap:14px;grid-template-columns:26px minmax(0,1fr) 20px;padding:19px 0}.care-directory-name{font-size:1.5rem}}
 @media(prefers-reduced-motion:reduce){.care-directory-grid>a,.care-directory-grid>a>svg{transition:none}.care-directory-grid>a:hover>svg{transform:none}}
+
+/* Public answer resources: readable summaries, comparison tables and clear anchors. */
+.answer-summary{margin:32px 0 40px;padding:clamp(22px,4vw,38px);border-left:4px solid #087681;background:#eaf3f4;border-radius:0 20px 20px 0}
+.answer-summary h2{font-size:1.35rem;margin-top:0}.answer-summary p{font-size:1.14rem;line-height:1.8;margin-bottom:0}
+.guide-date{font-size:.85rem;color:#536471}.comparison-wrap{max-width:100%;overflow-x:auto}.care-comparison{border-collapse:collapse;width:100%;margin:20px 0 28px;text-align:left}.care-comparison caption{text-align:left;font-weight:700;padding:0 0 16px;color:#075564}.care-comparison th,.care-comparison td{padding:18px 16px;vertical-align:top;border-bottom:1px solid #cbd7de;line-height:1.6}.care-comparison thead{background:#eaf3f4}.care-comparison th[scope=row]{min-width:130px}.care-answer{scroll-margin-top:110px}.resource-page ul li{margin-bottom:10px}.resource-page a:focus-visible{outline:3px solid #007f88;outline-offset:4px}
+@media(max-width:600px){.care-comparison th,.care-comparison td{padding:14px 10px;font-size:.9rem}.answer-summary p{font-size:1rem}.resource-header nav{flex-wrap:wrap}}
+@media print{.resource-header,.resource-footer,.resource-page>.button,.question-index{display:none!important}.resource-page{padding:0!important;color:#000!important;max-width:none!important}.answer-summary{border:1px solid #999;background:none}.care-answer{break-inside:avoid}a{color:#000!important;box-shadow:none!important;background:none!important}table{break-inside:avoid}}

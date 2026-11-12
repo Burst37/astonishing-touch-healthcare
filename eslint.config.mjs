@@ -12,7 +12,16 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "worker-configuration.d.ts",
   ]),
+  {
+    files: ["tests/**/*.cjs"],
+    rules: {
+      // Node's native CommonJS harness deliberately transpiles modules in isolation.
+      "@typescript-eslint/no-require-imports": "off",
+      "@next/next/no-assign-module-variable": "off",
+    },
+  },
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],
     rules: {

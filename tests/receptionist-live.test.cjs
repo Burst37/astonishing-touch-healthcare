@@ -42,7 +42,7 @@ test('Live token uses a compatible prebuilt voice separately from saved TTS iden
  const previous={key:process.env.GEMINI_API_KEY,voice:process.env.GEMINI_TTS_VOICE,liveVoice:process.env.GEMINI_LIVE_VOICE,fetch:global.fetch};process.env.GEMINI_API_KEY='server-secret';process.env.GEMINI_TTS_VOICE='voice_test';delete process.env.GEMINI_LIVE_VOICE;let body,calls=0;
  try{
  global.fetch=async(url,options)=>{calls++;body=JSON.parse(options.body);assert.match(url,/auth_tokens$/);assert.equal(options.headers['x-goog-api-key'],'server-secret');return Response.json({name:'ephemeral-secret'})};
- const {POST}=load('app/api/live-token/route.ts',{'@/lib/rate-limit':{allowRequest:async()=>true},'@/app/care-knowledge':{brittanyInstructions:()=> 'Never quote prices.'}});
+ const {POST}=load('app/api/live-token/route.ts',{'@/lib/rate-limit':{allowRequest:async()=>true},'@/app/care-knowledge':{brittanyLiveInstructions:()=> 'Never quote prices.'}});
  const req=origin=>new Request('https://example.test/api/live-token',{method:'POST',headers:{origin}});
  assert.equal((await POST(req('https://other.test'))).status,403);assert.equal(calls,0);
  const response=await POST(req('https://example.test'));assert.deepEqual(await response.json(),{token:'ephemeral-secret',model:'gemini-3.8-live'});assert.equal(response.headers.get('cache-control'),'no-store');
@@ -52,16 +52,24 @@ test('Live token uses a compatible prebuilt voice separately from saved TTS iden
  }finally{global.fetch=previous.fetch;for(const [k,v] of [['GEMINI_API_KEY',previous.key],['GEMINI_TTS_VOICE',previous.voice],['GEMINI_LIVE_VOICE',previous.liveVoice]]){if(v===undefined)delete process.env[k];else process.env[k]=v}}
 });
 
-test('Native 48 kHz microphone is resampled to the promised 16 kHz PCM packets',()=>{
+test('Native 48 kHz microphone streams 20ms 16 kHz PCM packets',()=>{
  const vm=require('node:vm');const packets=[];let Processor;
  const context={sampleRate:48000,AudioWorkletProcessor:class {constructor(){this.port={postMessage:buffer=>packets.push(buffer)}}},registerProcessor:(_name,type)=>Processor=type};
  vm.runInNewContext(fs.readFileSync('public/worklets/care-pcm.js','utf8'),context);
  const processor=new Processor();
  for(let block=0;block<48;block++)processor.process([[new Float32Array(128).fill(.5)]]);
- assert.equal(packets.length,1);assert.equal(packets[0].byteLength,4096);
- const samples=new Int16Array(packets[0]);assert.equal(samples.length,2048);assert.ok(samples.every(value=>Math.abs(value-16383)<=1));
+ assert.equal(packets.length,6);assert.equal(packets[0].byteLength,640);
+ const samples=new Int16Array(packets[0]);assert.equal(samples.length,320);assert.ok(samples.every(value=>Math.abs(value-16383)<=1));
 });
 test('Busy microphone reports phone call contention and releases audio resources',async()=>{
  const e=environment(async()=>{throw new DOMException('Device in use','NotReadableError')});
  try{await e.voice.start();assert.ok(e.events.some(value=>typeof value==='string'&&value.includes('End any phone call')));assert.equal(e.sockets.length,0);assert.equal(e.counts().contextsClosed,1);assert.equal(e.voice.connected,false)}finally{e.restore()}
+});
+
+test('Authentication starts while microphone permission is pending',async()=>{
+ let allow,calls=0;const e=environment(()=>new Promise(resolve=>allow=resolve));const original=global.fetch;
+ try{global.fetch=async()=>{calls++;return Response.json({token:'one-use-token',model:'gemini-3.8-live'})};const pending=e.voice.start();assert.equal(calls,1);assert.equal(e.sockets.length,0);allow(e.stream);await pending;assert.equal(e.sockets.length,1)}finally{global.fetch=original;e.restore()}
+});
+test('Switching from typed chat carries recent context before microphone frames',async()=>{
+ const e=environment();try{e.voice.history=[{role:'user',content:'I am asking about laundry.'},{role:'assistant',content:'We can discuss laundry assistance.'}];await e.voice.start();e.sockets[0].onmessage({data:JSON.stringify({setupComplete:{}})});await flush();assert.equal(e.sent[0].clientContent.turnComplete,false);assert.equal(e.sent[0].clientContent.turns[0].parts[0].text,'I am asking about laundry.');assert.equal(e.sent[0].clientContent.turns[1].role,'model');e.nodes[0].port.onmessage({data:new ArrayBuffer(640)});assert.ok(e.sent[1].realtimeInput)}finally{e.restore()}
 });

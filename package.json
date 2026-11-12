@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "npm run build && node --test tests/search-structure.test.cjs tests/receptionist-lifecycle.test.cjs tests/receptionist-live.test.cjs"
+    "test": "npm run build && node --test tests/search-structure.test.cjs tests/receptionist-lifecycle.test.cjs tests/receptionist-live.test.cjs tests/jev-router.test.mjs",
+    "evaluate:jev": "node scripts/evaluate-jev.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

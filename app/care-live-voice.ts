@@ -1,5 +1,6 @@
 export type LiveState='connecting'|'listening'|'speaking'|'idle';
 type Role='user'|'assistant';
+export type VoiceHistory={role:Role;content:string};
 type Callbacks={onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void,onInputLevel?:(level:number)=>void};
 type ServerContent={interrupted?:boolean,turnComplete?:boolean,inputTranscription?:{text?:string},outputTranscription?:{text?:string},modelTurn?:{parts?:{inlineData?:{data?:string,mimeType?:string}}[]}};
 
@@ -22,10 +23,17 @@ export class CareLiveVoice {
  private nonce=Date.now().toString(36)+Math.random().toString(36).slice(2,7);
  private setupTimer:ReturnType<typeof setTimeout>|undefined;
  private drainTimer:ReturnType<typeof setTimeout>|undefined;
- constructor(private output:AudioContext,private callbacks:Callbacks){}
+ constructor(private output:AudioContext,private callbacks:Callbacks,private history:VoiceHistory[]=[]){}
  get connected(){return this.ready&&!this.stopped}
  async start(){
   this.callbacks.onState('connecting');
+  // Fetch authentication while the device grants permission and initializes audio.
+  const tokenRequest=fetch('/api/live-token',{method:'POST',signal:this.abort.signal}).then(async response=>{
+   const data=await response.json() as {token?:string,model?:string,error?:string};
+   if(!response.ok||!data.token)throw Error(data.error||'Brittany could not connect. Please try again.');
+   return {...data,token:data.token};
+  });
+  void tokenRequest.catch(()=>{});
   try{
    // Both contexts are resumed in the tap handler, before awaiting permission/network.
    // Use the hardware's native rate; the worklet converts it to 16 kHz.
@@ -40,10 +48,8 @@ export class CareLiveVoice {
    await this.input.audioWorklet.addModule('/worklets/care-pcm.js');if(this.stopped)return;
    this.recorder=new AudioWorkletNode(this.input,'care-pcm');this.source=this.input.createMediaStreamSource(stream);this.sink=this.input.createGain();this.sink.gain.value=0;
    this.source.connect(this.recorder);this.recorder.connect(this.sink);this.sink.connect(this.input.destination);
-   this.recorder.port.onmessage=event=>{if(this.connected){const samples=new Int16Array(event.data);let peak=0;for(const value of samples)peak=Math.max(peak,Math.abs(value)/32768);this.callbacks.onInputLevel?.(Math.min(1,peak*4));if((this.socket?.bufferedAmount||0)>256000){this.fail('The voice connection is too slow. Tap Talk to Brittany to reconnect.');return}this.send({realtimeInput:{audio:{data:toBase64(new Uint8Array(event.data)),mimeType:'audio/pcm;rate=16000'}}})}};
-   const response=await fetch('/api/live-token',{method:'POST',signal:this.abort.signal});
-   const data=await response.json() as {token?:string,model?:string,error?:string};if(this.stopped)return;
-   if(!response.ok||!data.token)throw Error(data.error||'Brittany could not connect. Please try again.');
+   this.recorder.port.onmessage=event=>{if(this.connected){const samples=new Int16Array(event.data);let peak=0;for(const value of samples)peak=Math.max(peak,Math.abs(value)/32768);this.callbacks.onInputLevel?.(Math.min(1,peak*4));if((this.socket?.bufferedAmount||0)>32000){this.fail('The voice connection is too slow. Tap Talk to Brittany to reconnect.');return}this.send({realtimeInput:{audio:{data:toBase64(new Uint8Array(event.data)),mimeType:'audio/pcm;rate=16000'}}})}};
+   const data=await tokenRequest;if(this.stopped)return;
    this.socket=new WebSocket('wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContentConstrained?access_token='+encodeURIComponent(data.token));
    this.setupTimer=setTimeout(()=>this.fail('The voice connection timed out. Please try again.'),20000);
    this.socket.onopen=()=>this.send({setup:{model:'models/'+data.model}});
@@ -62,7 +68,13 @@ export class CareLiveVoice {
    const text=typeof raw==='string'?raw:raw instanceof Blob?await raw.text():new TextDecoder().decode(raw);if(this.stopped)return;
    const message=JSON.parse(text) as {setupComplete?:object,error?:object,goAway?:object,toolCall?:{functionCalls?:{id:string,name:string,args?:{query?:string}}[]},serverContent?:ServerContent};
    if(message.error){this.fail('Brittany’s live voice is unavailable. Please try again.');return}
-   if(message.setupComplete){clearTimeout(this.setupTimer);this.ready=true;this.callbacks.onState('listening')}
+   if(message.setupComplete){
+    clearTimeout(this.setupTimer);
+    // Preserve typed conversation when switching to voice, before sending mic audio.
+    const turns=this.history.slice(-12).filter(m=>(m.role==='user'||m.role==='assistant')&&typeof m.content==='string'&&m.content.trim()).map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content.slice(0,3000)}]}));
+    if(turns.length)this.send({clientContent:{turns,turnComplete:false}});
+    this.ready=true;this.callbacks.onState('listening');
+   }
    const content=message.serverContent;
    if(content){
     if(content.interrupted){this.interrupt();this.nextTurn()}
