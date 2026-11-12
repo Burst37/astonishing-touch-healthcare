@@ -2,6 +2,10 @@
 
 Reference: Mr. Black’s Liquid Glass UI Kit image. Approved direction on November 12, 2026: clear sculpted glass, saturated violet and turquoise raised controls, pearl/peach/slate background, visible physical depth. The rejected iteration was pale, opaque and flat.
 
+## Gloss correction
+
+The user clarified that the controls should look like polished translucent jelly, with vivid violet/aqua color rather than dull pastel or matte frosting. The previous small inner highlight and short shadow were insufficient. Build a curved specular cap, a deep saturated transparent body, a separately drawn lower refracting wall, bright lower rim and a longer directional cast shadow. Apply this to every action and navigation pill, including neutral controls. Use the shared gel variables in `app/team/team.css` to preserve geometry across colors. Do not substitute isolated light dots for a glossy body.
+
 ## Required light layers
 
 1. Surface: a neutral warm-to-slate canvas, with broad subdued color beneath transparent objects.
