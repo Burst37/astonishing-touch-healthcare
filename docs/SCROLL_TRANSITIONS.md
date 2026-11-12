@@ -2,9 +2,9 @@
 
 The previous effect inset and rounded each service independently. Adjacent videos still met at a straight horizontal boundary.
 
-The replacement uses GSAP ScrollTrigger: the outgoing scene holds its last viewport while the next scene scrolls above it through a feathered transparency mask. The feather reduces to zero by the top of the viewport. The outgoing film gains a restrained push-in and darkens as it is covered. Scrolling backward reverses the effect. Long chapters remain in natural flow before the outgoing viewport holds.
+The replacement uses a sequential fade through dark. GSAP holds the last viewport of the outgoing scene and reserves a 32vh handoff interval. The whole scene, including video and headings, fades completely out over the first 24vh. Only after that reserved interval can the next scene enter the viewport; it then fades in over 40vh. There is no feather mask, double exposure, camera push, or overlapping visible video. Reverse scrolling reverses the same sequence.
 
-Applied to hero → story, all nine service scenes, and the final service → static team portrait. Mobile keeps the readable 16:9 service media and complete descriptions/actions; feather depth is shorter. Native scrolling, browser touch momentum, anchors and keyboard navigation remain. No Lenis dependency or synthetic wheel handling. Pause motion and reduced-motion remove all pins and masks. GSAP contexts and font/load refresh callbacks are cleaned up on unmount.
+Applied to hero → story, all nine service scenes, and the final service → static team portrait. Long chapters remain in natural flow until their bottom reaches the viewport bottom. Mobile retains readable 16:9 service media and complete descriptions/actions. Native scrolling, browser touch momentum, anchors and keyboard navigation remain. Pause motion and reduced-motion remove every pin and fade. The header stays transparent. GSAP contexts and font/load refresh callbacks are cleaned up on unmount.
 
 ## Reference review
 
@@ -15,7 +15,7 @@ Applied to hero → story, all nine service scenes, and the final service → st
 - https://60fps.design/shots/filter/scroll — scroll interaction reference collection; direction for reversible, input-linked transitions.
 - https://www.fontinlogo.com/ — typography reference, outside the current transition change.
 
-The overlap/dissolve is an original implementation suited to this site's existing films, rather than a claim that any listed site uses this exact effect.
+The fade-through-dark sequence is an original implementation suited to this site's existing films, rather than a claim that any listed site uses this exact effect.
 
 Implementation documentation: https://gsap.com/docs/v3/Plugins/ScrollTrigger/ and https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/ .
 
