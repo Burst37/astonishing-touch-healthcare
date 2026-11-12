@@ -9,7 +9,7 @@ function environment(permission){
  const sent=[],sockets=[],nodes=[],started=[],stopped=[],events=[];let tracksStopped=0,contextsClosed=0;
  const stream={getTracks:()=>[{stop(){tracksStopped++}}],getAudioTracks:()=>[{addEventListener(){}}]};
  Object.defineProperty(global,'navigator',{configurable:true,value:{mediaDevices:{getUserMedia:permission||(async()=>stream)}}});
- class Context{constructor(){this.currentTime=10;this.destination={};this.audioWorklet={addModule:async()=>{}}}resume(){return Promise.resolve()}close(){contextsClosed++;return Promise.resolve()}createMediaStreamSource(){return {connect(){},disconnect(){}}}createGain(){return {gain:{value:1},connect(){},disconnect(){}}}createBuffer(ch,n,rate){return {duration:n/rate,getChannelData:()=>new Float32Array(n)}}createBufferSource(){const source={connect(){},disconnect(){},start(t){started.push(t)},stop(){stopped.push(source)}};return source}}
+ class Context{constructor(options){if(options?.sampleRate)throw new DOMException('Device only supports its native sample rate','NotSupportedError');this.sampleRate=48000;this.currentTime=10;this.destination={};this.audioWorklet={addModule:async()=>{}}}resume(){return Promise.resolve()}close(){contextsClosed++;return Promise.resolve()}createMediaStreamSource(){return {connect(){},disconnect(){}}}createGain(){return {gain:{value:1},connect(){},disconnect(){}}}createBuffer(ch,n,rate){return {duration:n/rate,getChannelData:()=>new Float32Array(n)}}createBufferSource(){const source={connect(){},disconnect(){},start(t){started.push(t)},stop(){stopped.push(source)}};return source}}
  global.AudioContext=Context;global.AudioWorkletNode=class {constructor(){this.port={onmessage:null,close(){}};nodes.push(this)}connect(){}disconnect(){}};
  global.WebSocket=class {static OPEN=1;constructor(url){this.url=url;this.readyState=1;this.bufferedAmount=0;sockets.push(this)}send(v){sent.push(JSON.parse(v))}close(){this.readyState=3}};
  global.fetch=async()=>Response.json({token:'one-use-token',model:'gemini-3.8-live'});
@@ -50,4 +50,18 @@ test('Live token uses a compatible prebuilt voice separately from saved TTS iden
  process.env.GEMINI_LIVE_VOICE='voice_saved_tts';assert.equal((await POST(req('https://example.test'))).status,200);assert.equal(body.bidiGenerateContentSetup.generationConfig.speechConfig.voiceConfig.prebuiltVoiceConfig.voiceName,'Kore');
  process.env.GEMINI_LIVE_VOICE='Aoede';assert.equal((await POST(req('https://example.test'))).status,200);assert.equal(body.bidiGenerateContentSetup.generationConfig.speechConfig.voiceConfig.prebuiltVoiceConfig.voiceName,'Aoede');
  }finally{global.fetch=previous.fetch;for(const [k,v] of [['GEMINI_API_KEY',previous.key],['GEMINI_TTS_VOICE',previous.voice],['GEMINI_LIVE_VOICE',previous.liveVoice]]){if(v===undefined)delete process.env[k];else process.env[k]=v}}
+});
+
+test('Native 48 kHz microphone is resampled to the promised 16 kHz PCM packets',()=>{
+ const vm=require('node:vm');const packets=[];let Processor;
+ const context={sampleRate:48000,AudioWorkletProcessor:class {constructor(){this.port={postMessage:buffer=>packets.push(buffer)}}},registerProcessor:(_name,type)=>Processor=type};
+ vm.runInNewContext(fs.readFileSync('public/worklets/care-pcm.js','utf8'),context);
+ const processor=new Processor();
+ for(let block=0;block<48;block++)processor.process([[new Float32Array(128).fill(.5)]]);
+ assert.equal(packets.length,1);assert.equal(packets[0].byteLength,4096);
+ const samples=new Int16Array(packets[0]);assert.equal(samples.length,2048);assert.ok(samples.every(value=>Math.abs(value-16383)<=1));
+});
+test('Busy microphone reports phone call contention and releases audio resources',async()=>{
+ const e=environment(async()=>{throw new DOMException('Device in use','NotReadableError')});
+ try{await e.voice.start();assert.ok(e.events.some(value=>typeof value==='string'&&value.includes('End any phone call')));assert.equal(e.sockets.length,0);assert.equal(e.counts().contextsClosed,1);assert.equal(e.voice.connected,false)}finally{e.restore()}
 });

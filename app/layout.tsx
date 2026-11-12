@@ -1,6 +1,8 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import {searchConfig} from './search-config';
+// Let Android shrink the chat viewport when the on-screen keyboard opens.
+export const viewport: Viewport = {width:'device-width',initialScale:1,viewportFit:'cover',interactiveWidget:'resizes-content'};
 export const metadata: Metadata = {
  metadataBase:new URL('https://www.astonishingtouchhealthcare.org/'),
  title:'Home Care in Creve Coeur | Astonishing Touch',

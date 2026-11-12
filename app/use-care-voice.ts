@@ -4,12 +4,13 @@ import {CareLiveVoice,canUseLiveVoice} from './care-live-voice';
 
 export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',text:string,id:string)=>void){
  const [enabled,setEnabled]=useState(true),[supported,setSupported]=useState(false),[listening,setListening]=useState(false),[speaking,setSpeaking]=useState(false),[voiceLevel,setVoiceLevel]=useState(0),[status,setStatus]=useState('Voice replies are on. You can type or talk to Brittany.');
+ const [microphoneLevel,setMicrophoneLevel]=useState(0);
  const [microphoneBusy,setMicrophoneBusy]=useState(false);const [needsPlay,setNeedsPlay]=useState(false);const lastReply=useRef('');
  const [conversationActive,setConversationActive]=useState(false);const conversation=useRef(false);const session=useRef(0);
  const live=useRef<CareLiveVoice|null>(null),audio=useRef<HTMLAudioElement|null>(null),audioUrl=useRef(''),generation=useRef(0),controller=useRef<AbortController|null>(null),isOpen=useRef(open),callback=useRef(onTranscript),audioContext=useRef<AudioContext|null>(null),analyser=useRef<AnalyserNode|null>(null),sourceNode=useRef<MediaElementAudioSourceNode|null>(null),levelFrame=useRef<number|null>(null);
  isOpen.current=open;callback.current=onTranscript;
 
- function cancelRecognition(){live.current?.close();live.current=null;setListening(false);setMicrophoneBusy(false)}
+ function cancelRecognition(){live.current?.close();live.current=null;setListening(false);setMicrophoneBusy(false);setMicrophoneLevel(0)}
 
  function stopLevelMeter(){if(levelFrame.current!==null){cancelAnimationFrame(levelFrame.current);levelFrame.current=null}setVoiceLevel(0)}
  // Run synchronously from a click/tap, before any request. Reuse this unlocked
@@ -21,7 +22,7 @@ export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',
     void audio.current.play().catch(()=>{});
    }
    const C=window.AudioContext||(window as unknown as {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
-   if(C){if(!audioContext.current)audioContext.current=new C();if(audioContext.current.state!=='running')void audioContext.current.resume().catch(()=>{});}
+   if(C){if(!audioContext.current||audioContext.current.state==='closed')audioContext.current=new C();if(audioContext.current.state!=='running')void audioContext.current.resume().catch(()=>{});}
   }catch{/* Native playback remains available without the animation meter. */}
  }
 
@@ -43,7 +44,7 @@ export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',
  function endConversation(){setNeedsPlay(false);session.current++;conversation.current=false;setConversationActive(false);cancelRecognition();stopPlayback();setStatus('Conversation ended. You can type or start talking again.')}
 
  useEffect(()=>{const available=canUseLiveVoice();setSupported(available);if(!available)setStatus('Voice replies are on. Microphone input is unavailable in this browser, but you can still type and hear Brittany.');return()=>{generation.current++;controller.current?.abort();live.current?.close();audio.current?.pause();if(levelFrame.current!==null)cancelAnimationFrame(levelFrame.current);sourceNode.current?.disconnect();analyser.current?.disconnect();void audioContext.current?.close();if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);window.speechSynthesis?.cancel()}},[]);
- useEffect(()=>{if(!open){endConversation()}},[open]);
+ useEffect(()=>{if(!open){endConversation()}else{setStatus('Type a question, tap Talk to Brittany, or test your speaker.')}},[open]);
 
  function speakWithDeviceFallback(text:string,ticket:number){
   return new Promise<boolean>(resolve=>{
@@ -97,21 +98,23 @@ export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',
 
  function startListening(){
   if(!isOpen.current)return;cancelRecognition();stopPlayback();
-  const ctx=audioContext.current;if(!ctx){setStatus('Audio is unavailable in this browser.');return}
+  const ctx=audioContext.current;if(!ctx){conversation.current=false;setConversationActive(false);setStatus('Audio is unavailable in this browser.');return}
   const connection=new CareLiveVoice(ctx,{
    onState:state=>{if(!isOpen.current)return;setListening(state==='listening');setSpeaking(state==='speaking');setMicrophoneBusy(state==='connecting');
     if(state==='connecting')setStatus('Connecting to Brittany…');
     if(state==='listening')setStatus('Brittany is listening. Speak naturally; you can interrupt her.');
     if(state==='speaking')setStatus('Brittany is speaking. Your microphone is still listening.');
    },
+   onInputLevel:level=>{if(isOpen.current)setMicrophoneLevel(level)},
    onTranscript:(role,text,id)=>{if(isOpen.current)callback.current(role,text,id)},
-   onError:text=>{if(isOpen.current){conversation.current=false;setConversationActive(false);setStatus(text)}}
+   onError:text=>{if(isOpen.current){setMicrophoneLevel(0);conversation.current=false;setConversationActive(false);setStatus(text)}}
   });live.current=connection;void connection.start();
  }
  function toggleListening(){prepareAudio();if(conversation.current){endConversation();return}session.current++;conversation.current=true;setConversationActive(true);setEnabled(true);startListening();}
  function sendLive(text:string){return live.current?.sendText(text)||false}
 
  function toggleEnabled(){prepareAudio();if(enabled){endConversation();setEnabled(false);setStatus('Voice replies are off.');}else{setEnabled(true);setStatus('Voice replies are on.');void speak('Welcome to Ask Brittany, your virtual care receptionist. How can I help you today?',true);}}
+ function testSpeaker(){prepareAudio();setEnabled(true);void speak('Hello, I’m Brittany, your virtual care receptionist. If you can hear me, spoken replies are working.',true)}
  function replay(){prepareAudio();setEnabled(true);if(lastReply.current)void speak(lastReply.current,true);}
- return {sendLive,pauseInput:cancelRecognition,microphoneBusy,prepareAudio,needsPlay,replay,enabled,supported,listening,speaking,voiceLevel,status,speak,stop:endConversation,toggleListening,toggleEnabled,conversationActive,endConversation,session};
+ return {testSpeaker,microphoneLevel,sendLive,pauseInput:cancelRecognition,microphoneBusy,prepareAudio,needsPlay,replay,enabled,supported,listening,speaking,voiceLevel,status,speak,stop:endConversation,toggleListening,toggleEnabled,conversationActive,endConversation,session};
 }

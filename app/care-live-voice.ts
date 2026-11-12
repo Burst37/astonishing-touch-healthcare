@@ -1,6 +1,6 @@
 export type LiveState='connecting'|'listening'|'speaking'|'idle';
 type Role='user'|'assistant';
-type Callbacks={onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void};
+type Callbacks={onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void,onInputLevel?:(level:number)=>void};
 type ServerContent={interrupted?:boolean,turnComplete?:boolean,inputTranscription?:{text?:string},outputTranscription?:{text?:string},modelTurn?:{parts?:{inlineData?:{data?:string,mimeType?:string}}[]}};
 
 export function canUseLiveVoice(){return typeof window!=='undefined'&&!!navigator.mediaDevices?.getUserMedia&&typeof AudioWorkletNode!=='undefined'&&typeof WebSocket!=='undefined'}
@@ -28,14 +28,19 @@ export class CareLiveVoice {
   this.callbacks.onState('connecting');
   try{
    // Both contexts are resumed in the tap handler, before awaiting permission/network.
-   void this.output.resume();this.input=new AudioContext({sampleRate:16000});void this.input.resume();
+   // Use the hardware's native rate; the worklet converts it to 16 kHz.
+   // Forcing 16 kHz fails on devices that only expose 44.1/48 kHz audio.
+   this.input=new AudioContext();
+   const audioReady=Promise.all([this.output.resume(),this.input.resume()]);
+   void audioReady.catch(()=>{});
    const stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
    if(this.stopped){stream.getTracks().forEach(t=>t.stop());return}this.stream=stream;
+   await audioReady.catch(()=>{throw Error('Audio playback could not start. End any phone call, then tap Talk to Brittany again.')});if(this.stopped)return;
    stream.getAudioTracks().forEach(track=>track.addEventListener('ended',()=>{if(!this.stopped)this.fail('The microphone disconnected. Tap Talk to Brittany to reconnect.')}));
    await this.input.audioWorklet.addModule('/worklets/care-pcm.js');if(this.stopped)return;
    this.recorder=new AudioWorkletNode(this.input,'care-pcm');this.source=this.input.createMediaStreamSource(stream);this.sink=this.input.createGain();this.sink.gain.value=0;
    this.source.connect(this.recorder);this.recorder.connect(this.sink);this.sink.connect(this.input.destination);
-   this.recorder.port.onmessage=event=>{if(this.connected){if((this.socket?.bufferedAmount||0)>256000){this.fail('The voice connection is too slow. Tap Talk to Brittany to reconnect.');return}this.send({realtimeInput:{audio:{data:toBase64(new Uint8Array(event.data)),mimeType:'audio/pcm;rate=16000'}}})}};
+   this.recorder.port.onmessage=event=>{if(this.connected){const samples=new Int16Array(event.data);let peak=0;for(const value of samples)peak=Math.max(peak,Math.abs(value)/32768);this.callbacks.onInputLevel?.(Math.min(1,peak*4));if((this.socket?.bufferedAmount||0)>256000){this.fail('The voice connection is too slow. Tap Talk to Brittany to reconnect.');return}this.send({realtimeInput:{audio:{data:toBase64(new Uint8Array(event.data)),mimeType:'audio/pcm;rate=16000'}}})}};
    const response=await fetch('/api/live-token',{method:'POST',signal:this.abort.signal});
    const data=await response.json() as {token?:string,model?:string,error?:string};if(this.stopped)return;
    if(!response.ok||!data.token)throw Error(data.error||'Brittany could not connect. Please try again.');
@@ -44,9 +49,9 @@ export class CareLiveVoice {
    this.socket.onopen=()=>this.send({setup:{model:'models/'+data.model}});
    this.socket.onmessage=event=>{void this.receive(event.data)};
    this.socket.onerror=()=>this.fail('Brittany’s voice connection failed. Please try again.');
-   this.socket.onclose=()=>{if(!this.stopped)this.fail('The voice connection ended. Tap Talk to Brittany to reconnect.')};
+   this.socket.onclose=event=>{if(!this.stopped){console.warn('Brittany live connection closed',event.code);this.fail(event.code===1006?'The browser lost the voice connection. Check your connection or open this page in Chrome or Safari.':'The voice connection ended. Tap Talk to Brittany to reconnect.')}};
   }catch(error){if(this.stopped)return;const name=error instanceof Error?error.name:'';
-   this.fail(name==='NotAllowedError'?'Microphone access is blocked. Allow microphone access in your browser and try again.':name==='NotFoundError'?'No microphone was found. Check your device microphone or type your question.':name==='NotReadableError'?'Your microphone is busy. Close the other app using it and try again.':error instanceof Error?error.message:'Unable to start the microphone.');
+   this.fail(name==='NotAllowedError'?'Microphone access is blocked. Allow microphone access in your browser and try again.':name==='NotFoundError'?'No microphone was found. Check your device microphone or type your question.':name==='NotReadableError'?'Your microphone is busy. End any phone call or close the other voice app, then try again.':error instanceof Error?error.message:'Unable to start the microphone.');
   }
  }
  private send(value:unknown){if(!this.stopped&&this.socket?.readyState===WebSocket.OPEN)this.socket.send(JSON.stringify(value))}
