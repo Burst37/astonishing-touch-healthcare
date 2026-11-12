@@ -573,3 +573,10 @@ body button#ask-brittany-launcher:hover>img{transform:translateY(-2px)!important
 @media(prefers-reduced-motion:reduce){
  .film-transitions :is(.hero,.promise-scene,.service-chapter,.team-feature){-webkit-mask-image:none;mask-image:none}
 }
+
+/* Every pill uses the same visibly heavy label, including phone and motion controls. */
+body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.header-phone),
+body :is(button:not(.chapter-secondary),.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action,.header-phone) :is(span,strong,small){
+ font-family:'Satoshi',Arial,Helvetica,sans-serif;
+ font-weight:900!important;
+}
