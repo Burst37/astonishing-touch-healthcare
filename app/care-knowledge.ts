@@ -1,7 +1,9 @@
 import {business,services,faqs,companyStory} from './content';
+import {careQuestions} from './search-content';
 import {serviceDetails} from './service-details';
 export const careKnowledge={
  reviewed:'2026-09-05',
+ publicQuestions:careQuestions,
  mission:companyStory.mission,
  story:companyStory.about,
  organization:{founder:'Brittany Wadley',founded:'2018',ownership:'Locally owned and operated',location:'Creve Coeur, Missouri'},
