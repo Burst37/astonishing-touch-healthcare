@@ -462,3 +462,35 @@ body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.m
 body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):not(:disabled):active{transform:translateY(1px);background:#dce5ea!important;box-shadow:var(--neo-pressed)!important}
 body :is(button,.button,.chapter-nav>a):is([aria-pressed=true],[aria-current=location],[data-state=open]){box-shadow:var(--neo-pressed)!important}
 @media(prefers-reduced-motion:reduce){body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action):is(:hover,:active){transform:none}}
+
+/* Official Fontshare delivery: typography changes independently of pill size. */
+/* Satoshi */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('https://cdn.fontshare.com/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff2') format('woff2'),
+       url('https://cdn.fontshare.com/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.woff') format('woff'),
+       url('https://cdn.fontshare.com/wf/LAFFD4SDUCDVQEXFPDC7C53EQ4ZELWQI/PXCT3G6LO6ICM5I3NTYENYPWJAECAWDD/GHM6WVH6MILNYOOCXHXB5GTSGNTMGXZR.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('https://cdn.fontshare.com/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2') format('woff2'),
+       url('https://cdn.fontshare.com/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff') format('woff'),
+       url('https://cdn.fontshare.com/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.ttf') format('truetype');
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+
+
+body :is(button,.button,.chapter-nav>a,.chapter-cta,.text-link,.desktop-nav>a,.mobile-nav>a,.resource-header nav>a,.resource-home-links>a,.message-action){font-family:'Satoshi',Arial,Helvetica,sans-serif;font-weight:700;letter-spacing:-.015em;font-kerning:normal;font-synthesis:none}
+/* Preserve the existing header and hero pill boxes while changing their labels. */
+.desktop-nav>a{height:47.6875px;flex-shrink:0;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center}
+.desktop-nav>a:nth-child(1){width:95.90625px}.desktop-nav>a:nth-child(2){width:93px}.desktop-nav>a:nth-child(3){width:128.25px}.desktop-nav>a:nth-child(4){width:87.1875px}
+.header-actions>.button{width:159.53125px;height:49.4375px;gap:12px;white-space:nowrap;flex-shrink:0}
+.hero-copy>.button{width:300.21875px;max-width:100%;height:61.59375px;gap:20px;font-weight:900;white-space:nowrap}
+.film-control{width:132.25px;height:45.1875px;justify-content:center;white-space:nowrap}
+@media(max-width:600px){.hero-copy>.button{width:257.3125px;height:54.90625px;gap:16px}.film-control{width:auto;height:auto}}
