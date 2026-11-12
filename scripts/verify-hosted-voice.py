@@ -1,5 +1,5 @@
 """Synthetic two-turn API probe. No user microphone, credentials or recordings in output."""
-import array,base64,io,json,sys,threading,time,urllib.request,wave
+import array,base64,io,json,re,sys,threading,time,urllib.request,wave
 from websockets.sync.client import connect
 base=sys.argv[1].rstrip('/')
 def post(path,body):
@@ -51,4 +51,6 @@ with connect(url,open_timeout=25,close_timeout=3,max_size=4000000) as socket:
   rows.append({'syntheticQuestion':question,'firstAudioAfterInputMs':round((state['first']-ended)*1000) if state['first'] else None,'outputAudioBytes':state['bytes'],'reply':state['transcript']})
   print('Completed synthetic turn '+str(len(rows)),file=sys.stderr,flush=True)
  socket.close();worker.join(timeout=2)
-print(json.dumps({'scope':'Synthetic streamed API test; excludes physical phone microphone and speaker playback','setupMs':setup_ms,'turns':rows},indent=2))
+checks={'officeHoursCorrect':bool(re.search(r'\b9(?::00)?\s*a\.?m|\bnine\b',rows[0]['reply'],re.I) and re.search(r'\b5(?::00)?\s*p\.?m|\bfive\b',rows[0]['reply'],re.I)),'weekendClosureCorrect':bool(re.search(r'closed|not open',rows[1]['reply'],re.I)),'bothTurnsHaveAudio':all(row['outputAudioBytes']>1000 for row in rows)}
+print(json.dumps({'checks':checks,'scope':'Synthetic streamed API test; excludes physical phone microphone and speaker playback','setupMs':setup_ms,'turns':rows},indent=2))
+if not all(checks.values()):sys.exit(1)

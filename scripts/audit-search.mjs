@@ -10,7 +10,8 @@ for(const url of urls){const path=new URL(url).pathname;const response=await fet
  if((html.match(/<h1(?:\s|>)/g)||[]).length!==1)issues.push('Expected one H1');
  if(!/<title>[^<]+<\/title>/.test(html))issues.push('Missing title');
  if(!/<meta name="description" content="[^"]+"/.test(html))issues.push('Missing description');
- if(!html.includes('rel="canonical" href="'+canonical+path+'"'))issues.push('Canonical mismatch');
+ const canonicalTag=html.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/);
+ if(!canonicalTag||new URL(canonicalTag[1]).href!==new URL(path,canonical).href)issues.push('Canonical mismatch');
  const schemas=[...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
  for(const s of schemas){try{JSON.parse(s[1])}catch{issues.push('Invalid structured data')}}
  if(path!=='/privacy'&&!schemas.length)issues.push('Missing structured data');

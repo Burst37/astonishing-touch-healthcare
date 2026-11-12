@@ -32,7 +32,7 @@ Field Core Web Vitals, real search demand, competitor backlinks, Google Business
 
 - The microphone worklet now emits 320 samples at 16 kHz: 20ms per packet instead of 2048 samples / 128ms. This removes up to 108ms of packet accumulation; it is not a measured total conversational speedup.
 - Authentication overlaps microphone permission/audio initialization instead of beginning after device setup.
-- Live audio uses a dedicated prompt with one copy of authoritative service facts. Measured source payload: 12,162 bytes versus 25,010 for the full text-assistant prompt, before the previous Live-specific suffix.
+- Live audio uses a dedicated prompt with one copy of authoritative service facts. The initial compact prompt was 12,162 bytes versus 25,010 for the full text prompt. A hosted answer-quality probe caught omitted office hours; the compact prompt now explicitly includes hours and FAQs. Preserving answer accuracy takes priority over prompt size.
 - Context-window compression is configured for longer audio sessions; session resumption is not implemented.
 - Typed conversation context is carried into a newly opened Live session before microphone frames are sent.
 - Existing streamed playback, interruption cancellation, mobile gesture-unlocked audio and native-rate resampling remain.
@@ -55,9 +55,10 @@ Recovered completed MiniMax H3 job `379e016e-d264-49c2-b471-eb6f19b82e5f`, using
 
 ## Verification and limits
 
-- Production build and TypeScript passed; 28 automated tests passed after the initial implementation.
+- Production build and TypeScript passed; 29 automated tests passed after the initial implementation.
 - ESLint passes with warnings for existing raw image usage and hook lifecycle patterns; native CommonJS tests use scoped lint rules.
 - Tests cover 20ms resampling, concurrent auth, typed-to-live context, audio interruption/cleanup, Jev confidence/timeouts, metadata, guide discovery, matching schema, comparison-table semantics and invalid slugs.
+- A first hosted probe of the shorter prompt returned false office-hours answers. This failed the factual acceptance criteria; hours and FAQs were restored and the synthetic probe now fails on incorrect hours/weekend answers. Do not use that earlier sample as a success benchmark.
 - On the previous hosted preview, browser speaker playback and an office-hours AI reply worked. The cloud browser had no microphone device; this cannot certify capture on the owner's phone.
 - `scripts/verify-hosted-voice.py` uses synthetic spoken questions to probe the real Live API; it excludes physical microphone and speaker behavior.
 - `scripts/audit-search.mjs` checks deployed HTTP status, initial-HTML metadata, H1 count, schema parsing and review indexing restrictions. It is not a search-ranking or field-performance measurement.
