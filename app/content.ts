@@ -18,6 +18,7 @@ export const faqs = [
  {q:'When can I reach the office?',a:'Office hours are Monday through Friday, 9:00 a.m. to 5:00 p.m. The office is closed Saturday and Sunday. The published after-hours number is (314) 276-4607.'}
 ];
 
+export const appleDirectionsUrl='https://maps.apple.com/directions?mode=driving&destination='+encodeURIComponent(business.address+', '+business.city);
 export const directionsUrl='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(business.address+', '+business.city);
 
 // Original company copy, restored from astonishingtouchhealthcare.org.

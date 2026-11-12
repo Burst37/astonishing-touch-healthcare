@@ -32,3 +32,9 @@ The hosted browser checks used the SEO/AEO preview at commit 0a62fc7. The new pe
 5. Keep staff login, private client storage and SMS disabled until the dedicated agency account, email templates and messaging setup are complete. These are separate activation dependencies and do not block publishing the informational site with honest call/email contact options.
 
 No Wix migration, DNS mutation, production promotion, real invitation, SMS, booking, inquiry submission or search-console submission occurred during this readiness pass.
+
+## Conversational intelligence extension
+
+The deployment candidate also includes full-page business retrieval, sourced local news/weather/sports/events answers, voice source cards, and destination-specific route links. See BRITTANY_INTELLIGENCE.md. Core business context remains bounded, with full guides retrieved on demand. These changes preserve deterministic pricing and clinical boundaries and do not add private patient/staff access.
+
+Final candidate validation after the conversational-intelligence and dual-map changes: production build, TypeScript and all 60 tests pass. Office directions now offer both Google Maps and Apple Maps on the homepage/contact page, in the care action card and in typed/live destination responses.

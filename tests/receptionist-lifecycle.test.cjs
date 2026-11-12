@@ -5,7 +5,7 @@ const ts=require('typescript');
 function load(file,dependencies){const module={exports:{}};const source=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;new Function('require','module','exports',source)(id=>{if(id==='@/lib/care-plan')return load('lib/care-plan.ts',{});if(id==='./care-events')return {trackCareEvent(){}};if(!(id in dependencies))throw Error(id);return dependencies[id]},module,module.exports);return module.exports}
 test('Urgent questions return help before storage, pricing or provider routing',async()=>{
  let storageCalls=0;
- const {POST}=load('app/api/assistant/route.ts',{'@/lib/rate-limit':{allowRequest(){storageCalls++;throw Error('storage unavailable')}},'cloudflare:workers':{env:{}},'@/app/content':{business:{},services:[],faqs:[],directionsUrl:''},'@/app/care-knowledge':{},'@/app/current-information':{}});
+ const {POST}=load('app/api/assistant/route.ts',{'@/lib/rate-limit':{allowRequest(){storageCalls++;throw Error('storage unavailable')}},'cloudflare:workers':{env:{}},'@/app/content':{business:{},services:[],faqs:[],directionsUrl:''},'@/app/care-knowledge':{},'@/app/business-information':{},'@/lib/care-directions':{},'@/app/current-information':{}});
  for(const message of ['I have chest pain. How much does care cost?','My dad can’t breathe','She cannot breathe']){
   const response=await POST(new Request('https://example.test/api/assistant',{method:'POST',headers:{origin:'https://example.test'},body:JSON.stringify({message})}));
   assert.equal(response.status,200);assert.match((await response.json()).reply,/call 911/);

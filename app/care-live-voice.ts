@@ -2,7 +2,8 @@ import {isCareAction,type CareAction} from '@/lib/care-plan';
 export type LiveState='connecting'|'listening'|'speaking'|'idle';
 type Role='user'|'assistant';
 export type VoiceHistory={role:Role;content:string};
-type Callbacks={onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void,onInputLevel?:(level:number)=>void,onTurnComplete?:()=>void,onStatus?:(message:string)=>void,onAction?:(action:CareAction)=>void};
+export type LiveReference={sources?:{url:string;title:string}[];checkedAt?:string;directionsUrl?:string;appleDirectionsUrl?:string;searchSuggestions?:string};
+type Callbacks={onReference?:(reference:LiveReference)=>void,onState:(state:LiveState)=>void,onTranscript:(role:Role,text:string,id:string)=>void,onError:(message:string)=>void,onInputLevel?:(level:number)=>void,onTurnComplete?:()=>void,onStatus?:(message:string)=>void,onAction?:(action:CareAction)=>void};
 type ServerContent={interrupted?:boolean,turnComplete?:boolean,inputTranscription?:{text?:string},outputTranscription?:{text?:string},modelTurn?:{parts?:{inlineData?:{data?:string,mimeType?:string}}[]}};
 
 export function canUseLiveVoice(){return typeof window!=='undefined'&&!!navigator.mediaDevices?.getUserMedia&&typeof AudioWorkletNode!=='undefined'&&typeof WebSocket!=='undefined'}
@@ -109,8 +110,8 @@ export class CareLiveVoice {
    this.callbacks.onAction?.(call.args.action);
    this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:{shown,action:call.args.action,note:'This only shows a button for the visitor to review and select. No call, email, inquiry submission or appointment has been completed. If no calendar is connected, the scheduling button opens a care request instead.'}}]}});return;
   }
-  if(call.name!=='lookup_current_information'||!call.args?.query){this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:{error:'Unsupported request'}}]}});return}
-  try{const response=await fetch('/api/assistant',{method:'POST',headers:{'Content-Type':'application/json'},signal:this.abort.signal,body:JSON.stringify({message:call.args.query,history:[]})});const data=await response.json();this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:data}]}})}catch{this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:{error:'Current information could not be verified.'}}]}})}
+  if(!['lookup_current_information','lookup_business_information'].includes(call.name)||!call.args?.query){this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:{error:'Unsupported request'}}]}});return}
+  try{const businessLookup=call.name==='lookup_business_information';const response=await fetch(businessLookup?'/api/business-information':'/api/assistant',{method:'POST',headers:{'Content-Type':'application/json'},signal:this.abort.signal,body:JSON.stringify(businessLookup?{query:call.args.query}:{message:call.args.query,history:[]})});const data=await response.json();if(this.stopped)return;if(!response.ok)throw Error('Lookup unavailable');if(data.sources?.length||data.directionsUrl)this.callbacks.onReference?.({sources:data.sources,checkedAt:data.checkedAt,directionsUrl:data.directionsUrl,appleDirectionsUrl:data.appleDirectionsUrl,searchSuggestions:data.searchSuggestions});this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:data}]}})}catch{this.send({toolResponse:{functionResponses:[{id:call.id,name:call.name,response:{error:'Current information could not be verified.'}}]}})}
  }
  private async resumeOutput(){await this.output.resume();if(this.output.state&&this.output.state!=='running')throw Error('Your browser paused audio. Tap Talk to Brittany again to enable sound.')}
  private play(base64:string,rate:number){

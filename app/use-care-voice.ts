@@ -1,11 +1,12 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
-import {CareLiveVoice,canUseLiveVoice,type VoiceHistory} from './care-live-voice';
+import {CareLiveVoice,canUseLiveVoice,type VoiceHistory,type LiveReference} from './care-live-voice';
 import type {CareAction} from '@/lib/care-plan';
 import {trackCareEvent} from './care-events';
 
-export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',text:string,id:string)=>void,history:VoiceHistory[]=[],onAction?:(action:CareAction)=>void){
+export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',text:string,id:string)=>void,history:VoiceHistory[]=[],onAction?:(action:CareAction)=>void,onReference?:(reference:LiveReference)=>void){
  const [enabled,setEnabled]=useState(true),[supported,setSupported]=useState(false),[listening,setListening]=useState(false),[speaking,setSpeaking]=useState(false),[voiceLevel,setVoiceLevel]=useState(0),[status,setStatus]=useState('Voice replies are on. You can type or talk to Brittany.');
+ const referenceCallback=useRef(onReference);referenceCallback.current=onReference;
  const actionCallback=useRef(onAction);actionCallback.current=onAction;
  const historyRef=useRef(history);historyRef.current=history;
  const [microphoneLevel,setMicrophoneLevel]=useState(0);
@@ -115,6 +116,7 @@ export function useCareVoice(open:boolean,onTranscript:(role:'user'|'assistant',
     if(state==='speaking')setStatus('Brittany is speaking. Your microphone is still listening.');
    },
    onAction:action=>{if(isOpen.current)actionCallback.current?.(action)},
+   onReference:reference=>{if(isOpen.current)referenceCallback.current?.(reference)},
    onTurnComplete:()=>trackCareEvent('voice_turn_complete','voice'),
    onStatus:text=>{if(isOpen.current)setStatus(text)},
    onInputLevel:level=>{if(isOpen.current)setMicrophoneLevel(level)},
