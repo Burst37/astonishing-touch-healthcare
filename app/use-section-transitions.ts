@@ -1,8 +1,9 @@
 'use client';
-import {useEffect} from 'react';
+import {useEffect,useRef} from 'react';
 import {gsap} from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 export function useSectionTransitions(paused:boolean){
+ const launchAnchorRestored=useRef(false);
  useEffect(()=>{
   if(paused)return;
   gsap.registerPlugin(ScrollTrigger);
@@ -30,7 +31,18 @@ export function useSectionTransitions(paused:boolean){
     }
    });
    let alive=true;
-   void document.fonts.ready.then(()=>{if(alive)ScrollTrigger.refresh()});
+   void document.fonts.ready.then(()=>{
+    if(!alive)return;
+    ScrollTrigger.refresh();
+    // Pins add layout space after the browser's initial fragment positioning.
+    // Restore a launch deep link once; pause/restart must not move the reader.
+    if(!launchAnchorRestored.current){
+     launchAnchorRestored.current=true;
+     let id='';try{id=decodeURIComponent(location.hash.slice(1))}catch{/* Ignore malformed fragments. */}
+     const target=id?document.getElementById(id):null;
+     if(target){const anchor=target.parentElement?.classList.contains('pin-spacer')?target.parentElement:target;anchor.scrollIntoView({block:'start',behavior:'instant'});ScrollTrigger.update()}
+    }
+   });
    const refresh=()=>ScrollTrigger.refresh();
    addEventListener('load',refresh,{once:true});
    return()=>{alive=false;removeEventListener('load',refresh);context.revert();root.classList.remove('film-transitions')};
