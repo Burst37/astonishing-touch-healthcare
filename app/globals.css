@@ -506,3 +506,18 @@ body .chapter-copy .chapter-secondary:hover{background:transparent!important;box
 body .chapter-copy .chapter-secondary>svg{transition:transform .18s ease}
 body .chapter-copy .chapter-secondary:hover>svg{transform:translate(3px,-3px)}
 @media(prefers-reduced-motion:reduce){body .chapter-copy .chapter-secondary>svg{transition:none;transform:none}}
+
+/* A full service directory replaces the compact numbered pill navigation. */
+.care-directory{padding:52px clamp(24px,5.2vw,84px) 60px;background:linear-gradient(115deg,#075564 0%,#102c46 80%);color:#fff}
+.care-directory>.eyebrow{color:#a3dedb;margin-bottom:34px;font-size:.8rem;letter-spacing:.14em}
+.care-directory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(28px,5vw,80px)}
+.care-directory-grid>a{display:grid;grid-template-columns:30px minmax(0,1fr) 21px;align-items:center;gap:18px;min-height:92px;padding:22px 0;border-bottom:1px solid #ffffff30;background:none;border-radius:0;box-shadow:none;color:#fff;transition:color .2s ease,border-color .2s ease}
+.care-directory-grid>a:last-child:nth-child(odd){grid-column:1/-1}
+.care-directory-number{font-family:Georgia,'Times New Roman',serif;font-size:.95rem;font-weight:700;font-style:italic;color:#a3cdd9}
+.care-directory-name{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.4rem,2.5vw,2.15rem);font-weight:700;letter-spacing:-.035em;line-height:1.2}
+.care-directory-grid>a>svg{color:#a3dedb;transition:transform .2s ease}
+.care-directory-grid>a:hover{color:#a3dedb;border-color:#a3dedb}
+.care-directory-grid>a:hover>svg{transform:translate(3px,-3px)}
+.care-summary{padding-top:36px}
+@media(max-width:600px){.care-directory{padding-top:38px;padding-bottom:42px}.care-directory>.eyebrow{font-size:.7rem;letter-spacing:.1em;margin-bottom:20px}.care-directory-grid{grid-template-columns:1fr}.care-directory-grid>a{min-height:76px;gap:14px;grid-template-columns:26px minmax(0,1fr) 20px;padding:19px 0}.care-directory-name{font-size:1.5rem}}
+@media(prefers-reduced-motion:reduce){.care-directory-grid>a,.care-directory-grid>a>svg{transition:none}.care-directory-grid>a:hover>svg{transform:none}}
