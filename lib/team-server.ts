@@ -16,7 +16,7 @@ export async function teamSession(){
  if(!auth?.data.user||!access)return null;
  const db=teamDb(access);const {data:staff}=await db.from('ath_staff').select('id,name,role,active').eq('id',auth.data.user.id).single();
  if(!staff?.active||!['owner','manager','employee'].includes(staff.role))return null;
- return{db,staff:staff as Staff,session};
+ return{db,staff:staff as Staff,email:auth.data.user.email,session};
 }
 export function teamResponse(body:unknown,status=200,session?:{access_token:string;refresh_token:string;expires_in:number}|null){
  const response=NextResponse.json(body,{status,headers:{'Cache-Control':'private, no-store, max-age=0','Vary':'Cookie'}});
