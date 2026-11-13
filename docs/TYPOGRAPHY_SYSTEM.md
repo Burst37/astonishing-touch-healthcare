@@ -1,4 +1,9 @@
-# Typography
-Display: Georgia editorial serif, normal + italic accents. Body: Arial/Helvetica human-readable sans. System fonts, no remote font dependency.
-Hero clamp(3.8rem,8vw,8.5rem), line height 1.03; heading clamp(2.6rem,5vw,5.5rem), 1.08; body 1.05–1.2rem, 1.65; utility >=.875rem.
-Fluid margins 24–80px. Body measure <=60ch. Mobile deliberate breaks, no fixed text heights.
+# Astonishing Touch typography
+
+One upright family: Satoshi from the official Fontshare stylesheet. Normal 400 for body, 700 for section headings, 900 for the hero and pill labels. All font-family declarations use the shared body/display tokens. The client's original logo artwork is preserved.
+
+No serif fallback in website typography, italic display accents, colored individual words, all-caps tracked labels or decorative service numbering. Headings use direct service names and navigation language. Case and emphasis come from scale and weight. Body text stays readable with a constrained measure; headings wrap with balance and break long words safely.
+
+Public pills keep their current dimensions. Muted slate faces, directional dark shadows and contained inset highlights give molded depth without external light or hover glow. Active state presses inward; reduced motion removes movement. The separate workspace retains the specifically requested glass/gel surface and uses the same upright type tokens.
+
+Font delivery remains official Fontshare CDN; this change adds the regular upright weight rather than synthesizing it from the existing bold cuts. Branding, routing, inquiries, microphone, maps, team permissions and profile/report functions retain their wiring.
