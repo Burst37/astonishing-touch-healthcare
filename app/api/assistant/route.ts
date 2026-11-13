@@ -1,3 +1,6 @@
+import {lookupBusinessInformation} from '@/app/business-information';
+import {careDirections} from '@/lib/care-directions';
+import {safeBookingUrl} from '@/lib/care-plan';
 import {allowRequest} from '@/lib/rate-limit';
 import {business,services,faqs,directionsUrl} from '@/app/content';
 import {brittanyInstructions} from '@/app/care-knowledge';
@@ -31,9 +34,10 @@ const priceQuestion=/\b(price|prices|pricing|cost|costs|costing|rate|rates|fee|f
  if(priceQuestion.test(message)||pricingFollowup)return Response.json({reply:'A live Astonishing Touch team member can walk you through pricing and payment questions. Please call '+business.phone+', Monday through Friday, 9 a.m. to 5 p.m., or select Request a care conversation below. I cannot provide quotes or estimates here.',mode:'guide',handoff:'pricing'},{headers:{'Cache-Control':'no-store'}});
 const config=process.env as Record<string,string|undefined>;
  const booking=/\b(booking|appointments?|schedule (?:a |my |the )?(?:visit|consultation|call)|reserve a time|book (?:a |my |the )?(?:visit|appointment|consultation|call))\b/i.test(message);
- if(booking){const url=config.BOOKING_URL;const valid=url?.startsWith('https://');return Response.json({reply:valid?'You can choose a real opening using Schedule an appointment below. Your appointment is confirmed only when the scheduler confirms it. Would you like help deciding what to discuss at the visit?':'I can help you get an appointment arranged. Online scheduling isn’t connected yet, so call our office at '+business.phone+' or use Request a care conversation. The office will confirm the time with you.',mode:'guide',bookingUrl:valid?url:undefined},{headers:{'Cache-Control':'no-store'}})}
- if(/\b(directions|navigate|navigation|drive to|driving|how do i get|where are you|your address)\b/i.test(message))return Response.json({reply:'Our office is at '+business.address+', '+business.city+'. Tap Get directions below for a route from your starting location. Our office hours are Monday through Friday, 9 a.m. to 5 p.m. Please call ahead to arrange your visit.',mode:'guide',directionsUrl},{headers:{'Cache-Control':'no-store'}});
- const newsFollowup=currentTopic.test(lastUser)&&/\b(that|those|it|more|else|why|when|where|what about|tell me)\b/i.test(message);
+ if(booking){const url=safeBookingUrl(config.BOOKING_URL);const valid=Boolean(url);return Response.json({reply:valid?'You can choose a real opening using Schedule an appointment below. Your appointment is confirmed only when the scheduler confirms it. Would you like help deciding what to discuss at the visit?':'I can help you get an appointment arranged. Online scheduling isn’t connected yet, so call our office at '+business.phone+' or use Request a care conversation. The office will confirm the time with you.',mode:'guide',action:'schedule_visit',bookingUrl:valid?url:undefined},{headers:{'Cache-Control':'no-store'}})}
+ if(/\b(directions|navigate|navigation|drive to|driving|how (?:do|can) (?:i|we) get|where are you|your address)\b/i.test(message))return Response.json(careDirections(message),{headers:{'Cache-Control':'no-store'}});
+ if(/\b(callback|call me|care inquiry|care conversation|care planner|start care|request care)\b/i.test(message))return Response.json({reply:'I’ve placed an Open care planner button below. It will help you prepare your request and choose how to contact our team. Nothing is submitted until you complete the contact step.',mode:'guide',action:'request_care'},{headers:{'Cache-Control':'no-store'}});
+ const newsFollowup=currentTopic.test(lastUser)&&/\b(that|those|it|more|else|why|when|where|what about|tell me|tomorrow|tonight|saturday|sunday|weekend|win|won|playing|opponent|score|team|tickets)\b/i.test(message);
  if((currentTopic.test(message)&&(!/\b(office|hours|your care|your services|care today|care tomorrow)\b/i.test(message)||/\b(news|headlines|weather|forecast)\b/i.test(message)))||newsFollowup)return Response.json(await currentInformation(message,history),{headers:{'Cache-Control':'no-store'}});
 
  // Use Gemini directly when selected, or when a Gemini key is present and no
@@ -43,7 +47,7 @@ const config=process.env as Record<string,string|undefined>;
    const model=config.CARE_AI_MODEL?.startsWith('gemini-3.8-')?config.CARE_AI_MODEL:'gemini-3.8-flash';
    const response=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{
     method:'POST',signal:AbortSignal.timeout(15000),headers:{'Content-Type':'application/json','x-goog-api-key':config.GEMINI_API_KEY},
-    body:JSON.stringify({systemInstruction:{parts:[{text:brittanyInstructions()}]},contents:[...history.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),{role:'user',parts:[{text:message}]}],generationConfig:{maxOutputTokens:1200,thinkingConfig:{thinkingLevel:'low'}}})
+    body:JSON.stringify({systemInstruction:{parts:[{text:brittanyInstructions()+'\nRELEVANT PUBLISHED PAGES: '+JSON.stringify(lookupBusinessInformation(message).knowledge)}]},contents:[...history.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),{role:'user',parts:[{text:message}]}],generationConfig:{maxOutputTokens:1200,thinkingConfig:{thinkingLevel:'low'}}})
    });
    if(response.ok){const data=await response.json() as {candidates?:{content?:{parts?:{text?:string}[]};finishReason?:string}[]};const candidate=data.candidates?.[0];const reply=candidate?.content?.parts?.map(p=>p.text||'').join('').trim();if(reply&&reply.length<=6000&&candidate?.finishReason!=='MAX_TOKENS')return Response.json({reply,mode:'ai'},{headers:{'Cache-Control':'no-store'}})}
   }catch{/* bounded published-information fallback */}
