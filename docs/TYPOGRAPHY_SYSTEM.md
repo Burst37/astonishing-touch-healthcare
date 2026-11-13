@@ -7,3 +7,5 @@ No serif fallback in website typography, italic display accents, colored individ
 Public pills keep their current dimensions. Muted slate faces, directional dark shadows and contained inset highlights give molded depth without external light or hover glow. Active state presses inward; reduced motion removes movement. The separate workspace retains the specifically requested glass/gel surface and uses the same upright type tokens.
 
 Font delivery remains official Fontshare CDN; this change adds the regular upright weight rather than synthesizing it from the existing bold cuts. Branding, routing, inquiries, microphone, maps, team permissions and profile/report functions retain their wiring.
+
+Pill lettering uses one shared engraved-type token across public navigation, video actions, disclosures, dialogs/receptionist controls, workspace buttons and status pills. A dark upper cut and a one-pixel lower highlight are confined to the glyphs; neither shadow is blurred. Disabled controls and forced-colors mode remove the decorative text shadows. Video/body actions use compact 44px minimum touch targets and 14px bold labels. Header pill dimensions remain unchanged.

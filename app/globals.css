@@ -763,3 +763,25 @@ button:disabled{cursor:not-allowed;background:var(--care-tone-148)!important;col
 @media(max-width:600px){.hero h1{font-size:clamp(3.2rem,11.5vw,4.3rem);max-width:13ch}.service-chapter h3{font-size:clamp(2.5rem,9.8vw,3.5rem)}.hero-description{font-size:1rem}.resource-page h1{font-size:clamp(2.4rem,9vw,3.5rem)}}
 @media(min-width:1920px){.section-pad{padding-inline:max(84px,calc((100% - 1536px)/2))}.site-header{padding-inline:max(64px,calc((100% - 1600px)/2))}.hero-copy{margin-left:max(0px,calc((100% - 1536px)/2))}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* One engraving recipe for every pill label, including portal-mounted controls. */
+:root{
+ --pill-engrave-light:rgba(245,248,249,.85);
+ --pill-engrave-cut:rgba(16,44,70,.28);
+ --pill-engraved-type:0 1px 0 var(--pill-engrave-light),0 -.5px 0 var(--pill-engrave-cut);
+}
+body :is(button,[role=button],.button,.chapter-cta,.chapter-nav>a,.desktop-nav>a,.mobile-nav>a,.text-link,.resource-header nav>a,.resource-home-links>a,.message-action,.header-phone,.team-button,.team-nav-button,.team-badge){
+ text-shadow:var(--pill-engraved-type)!important;
+}
+/* The workspace's colored/selected pills use the same cut and lower lip. */
+body .team-app :is(.team-button,.team-nav-button,.team-button.primary,.team-nav-button.selected,.team-badge){
+ text-shadow:var(--pill-engraved-type)!important;
+}
+/* No new header dimensions: only video/body actions lose their excess padding. */
+body :is(.hero-copy>.button,.chapter-copy>.chapter-cta,.team-copy>.button,.promise-detail>.text-link,.care-heading .text-link,.next-step .button,.contact-section .button){
+ width:fit-content;max-width:100%;height:auto;min-height:44px;padding:10px 16px;
+ font-size:.875rem;line-height:1.4;gap:10px;white-space:normal;
+}
+body :is(.hero-copy>.button,.chapter-copy>.chapter-cta,.team-copy>.button,.promise-detail>.text-link,.care-heading .text-link,.next-step .button,.contact-section .button)>svg{width:16px;height:16px}
+body :is(button,[role=button]):disabled{text-shadow:none!important}
+@media(forced-colors:active){body :is(button,[role=button],.button,.chapter-cta,.chapter-nav>a,.desktop-nav>a,.mobile-nav>a,.text-link,.resource-header nav>a,.resource-home-links>a,.message-action,.header-phone),body .team-app :is(.team-button,.team-nav-button,.team-button.primary,.team-nav-button.selected,.team-badge){text-shadow:none!important}}
