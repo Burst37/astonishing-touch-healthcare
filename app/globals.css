@@ -793,7 +793,8 @@ body .site-action-dock>button:active,body .site-action-dock button#ask-brittany-
 body .site-action-dock button#ask-brittany-launcher>img{display:block;width:28px!important;height:28px!important;flex-shrink:0;margin:0;padding:0;border:0!important;border-radius:50%;object-fit:cover;box-shadow:none!important;transform:none!important}
 body .site-action-dock button#ask-brittany-launcher>.guide-launcher-label{display:block!important;margin:0!important;padding:0!important;background:transparent!important;color:inherit!important;border:0;border-radius:0;box-shadow:none!important;font-size:inherit!important;line-height:inherit;text-shadow:inherit!important}
 .site-action-dock .dock-label-short{display:none}
-body:has(.site-action-dock){padding-bottom:0}
+body:has(.site-action-dock){padding-bottom:0;background:var(--care-tone-34)}
+body:has(.site-action-dock) footer{padding-bottom:24px}
 @media(max-width:600px){.site-action-dock{padding-bottom:max(16px,env(safe-area-inset-bottom));width:calc(100% - 24px);max-width:420px;grid-template-columns:minmax(0,.75fr) minmax(0,.95fr) minmax(0,1.3fr);gap:6px}body .site-action-dock>button,body .site-action-dock button#ask-brittany-launcher{padding:8px 6px!important;gap:5px;font-size:.75rem}.site-action-dock .dock-label-full{display:none}.site-action-dock .dock-label-short{display:inline}.site-action-dock .dock-care>svg{display:none}.site-action-dock .global-film-control>svg{display:none}body .site-action-dock button#ask-brittany-launcher>img{width:26px!important;height:26px!important}}
 
 @media(max-width:360px){body .site-action-dock>button,body .site-action-dock button#ask-brittany-launcher{padding-inline:4px!important}body .site-action-dock button#ask-brittany-launcher>img{width:22px!important;height:22px!important}}
