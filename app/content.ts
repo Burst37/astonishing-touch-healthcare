@@ -30,3 +30,9 @@ export const companyStory = {
  ],
  mission: 'Our mission at Astonishing Touch is to provide outstanding home health care services that go beyond industry standards. We will accomplish this by employing professional minded caregivers who take ownership in the company and the care of your loved ones to heart.'
 };
+
+// Official profile destinations linked by the original company website.
+export const socialProfiles = [
+ {name: "Facebook", url: "https://www.facebook.com/pages/category/Home-Health-Care-Service/Astonishing-Touch-Home-Health-Senior-Services-LLC-467976113966962/"},
+ {name: "Instagram", url: "https://www.instagram.com/ath_healthcare/"}
+] as const;
